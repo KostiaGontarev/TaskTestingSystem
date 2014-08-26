@@ -40,15 +40,16 @@ namespace TTS.UI
             content = new IOContent();
             ContentIOBorder.Child = content;
         }
-        public EditTask(ITask task):this()
+        public EditTask(ITask task)
+            : this()
         {
             try
             {
                 this.task = task;
             }
-            catch(NullReferenceException e)
+            catch (NullReferenceException e)
             {
-                MessageBox.Show("Невозможно открыть задание",e.ToString());
+                MessageBox.Show("Невозможно открыть задание", e.ToString());
                 this.Close();
             }
             this.DisplayCurrentTask();
@@ -78,7 +79,7 @@ namespace TTS.UI
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
-            content.AddButtonIO();      
+            content.AddButtonIO();
         }
 
         private void PlusButtonClick(object sender, RoutedEventArgs e)

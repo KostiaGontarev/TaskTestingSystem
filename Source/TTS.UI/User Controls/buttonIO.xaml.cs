@@ -13,10 +13,10 @@ using System.Windows.Shapes;
 
 namespace TTS.UI.UserControls
 {
-	/// <summary>
-	/// Interaction logic for buttonIO.xaml
-	/// </summary>
-	public partial class buttonIO : UserControl
+    /// <summary>
+    /// Interaction logic for buttonIO.xaml
+    /// </summary>
+    public partial class buttonIO : UserControl
     {
         #region Members
         private EditIO Edit_InputOutput;
@@ -26,11 +26,12 @@ namespace TTS.UI.UserControls
 
         #region Constructors
         public buttonIO()
-		{
-			this.InitializeComponent();
-		}
+        {
+            this.InitializeComponent();
+        }
 
-        public buttonIO(string input, string output):this()
+        public buttonIO(string input, string output)
+            : this()
         {
             this.Input_TextBox.Text = input;
             this.Output_TextBox.Text = output;
