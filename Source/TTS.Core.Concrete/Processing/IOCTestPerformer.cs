@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Threading;
 using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 using TTS.Core.Concrete.Model;
@@ -14,7 +12,8 @@ namespace TTS.Core.Concrete.Processing
         #region Data Members
         private ICharacteristic result;
         private ITestInfo testInfo;
-        private Thread executionThread;
+        private string inputPath;
+        private string outputPath;
         #endregion
 
         #region Properties
@@ -52,21 +51,6 @@ namespace TTS.Core.Concrete.Processing
         {
             try
             {
-                this.executionThread = new Thread(this.TestProcess);
-                this.executionThread.Start();
-            }
-            catch (Exception exc)
-            {
-                throw new Exception("The test was interrupted by error!", exc);
-            }
-        }
-        #endregion
-
-        #region Assistants
-        private void TestProcess()
-        {
-            try
-            {
                 this.PrepareInput();
                 this.Process.Start();
                 this.Process.WaitForExit();
@@ -77,25 +61,16 @@ namespace TTS.Core.Concrete.Processing
                 throw new Exception("The test was interrupted by error!", exc);
             }
         }
+        #endregion
+
+        #region Assistants
         private void PrepareInput()
         {
-            string execPath = Process.StartInfo.FileName;
-            string path = execPath.Substring(execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
-            string inputPath = path + "input.txt";
-            FileInfo input = new FileInfo(inputPath);
-            using (FileStream stream = input.Create())
-            {
-                byte[] buffer = Encoding.Unicode.GetBytes(this.testInfo.Input);
-                stream.Write(buffer, 0, buffer.Length);
-            }
+            File.WriteAllText(this.inputPath, this.testInfo.Input);
         }
         private void CheckOutput()
         {
-            string execPath = Process.StartInfo.FileName;
-            string path = execPath.Substring(execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
-            string outputPath = path + "output.txt";
-            string output = File.ReadAllText(outputPath);
-
+            string output = File.ReadAllText(this.outputPath);
             if (output.Equals(this.testInfo.Output))
             {
                 this.result.Value = true;
@@ -116,7 +91,10 @@ namespace TTS.Core.Concrete.Processing
             try
             {
                 if (File.Exists(this.Process.StartInfo.FileName))
+                {
                     this.Process = process;
+                    this.ConstructIOFilePath();
+                }
             }
             catch (ArgumentNullException)
             {
@@ -126,6 +104,14 @@ namespace TTS.Core.Concrete.Processing
             {
                 throw new ArgumentException("The process is incorrect!", exc);
             }
+        }
+
+        private void ConstructIOFilePath()
+        {
+            string execPath = this.Process.StartInfo.FileName;
+            string path = execPath.Substring(execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
+            this.inputPath = path + "input.txt";
+            this.outputPath = path + "output.txt";
         }
         #endregion
     }
