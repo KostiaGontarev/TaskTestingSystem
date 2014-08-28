@@ -47,8 +47,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="29*"></RowDefinition>
-                <RowDefinition Height="255*"></RowDefinition>
-                <RowDefinition Height="38*"></RowDefinition>
+                <RowDefinition Height="260*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
             </Grid.RowDefinitions>
 
 
@@ -65,7 +65,7 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="BrowseButton" Content="Добавить" Margin="8"></Button>
+                <Button Name="BrowseButton" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5"/>
             </Grid>
 
 

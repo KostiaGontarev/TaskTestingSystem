@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 
 using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
@@ -65,14 +66,14 @@ namespace TTS.UI.Forms
         {
             //Здесь будет не совсем это - здесь будет проверка по типам требований. Потом уточню
             RequirementSetupControl requirementSetupControl = new RequirementSetupControl();
-            this.RequirementsPanel.Children.Add(requirementSetupControl);
+            this.RequirementsStackPanel.Children.Add(requirementSetupControl);
         }
         private void MinusButton_OnClick(object sender, RoutedEventArgs e)
         {
             //Надо делать выделяемый элемент и удалять выделенный, но пока и так сойдёт.
-            if (this.RequirementsPanel.Children.Count != 0)
+            if (this.RequirementsStackPanel.Children.Count != 0)
             {
-                this.RequirementsPanel.Children.RemoveAt(this.RequirementsPanel.Children.Count - 1);
+                this.RequirementsStackPanel.Children.RemoveAt(this.RequirementsStackPanel.Children.Count - 1);
             }
         }
 
@@ -99,16 +100,25 @@ namespace TTS.UI.Forms
         }
         private void SaveDescription()
         {
-            if (!String.IsNullOrWhiteSpace(this.DescriptionTextBox.Text))
-                this.Task.Description = this.DescriptionTextBox.Text;
+            TextRange textRange = new TextRange(DescriptionTask.Document.ContentStart,
+                DescriptionTask.Document.ContentEnd);
+
+            string str = textRange.Text.Replace("\r\n", "");
+
+            if (!String.IsNullOrWhiteSpace(str))
+            {
+                this.Task.Description = str;
+            }
             else
+            {
                 this.errorsList.Add("Условие");
+            }
         }
         private void SaveRequirements()
         {
-            if (this.RequirementsPanel.Children.Count != 0)
+            if (this.RequirementsStackPanel.Children.Count != 0)
             {
-                foreach (UIElement element in this.RequirementsPanel.Children)
+                foreach (UIElement element in this.RequirementsStackPanel.Children)
                 {
                     if (element is RequirementSetupControl)
                     {
@@ -167,7 +177,7 @@ namespace TTS.UI.Forms
         private void DisplayNameAndDescription()
         {
             this.NameTextBox.Text = this.Task.Name ?? String.Empty;
-            this.DescriptionTextBox.Text = this.Task.Description ?? String.Empty;
+            this.DescriptionTask.AppendText(this.Task.Description ?? String.Empty);
         }
         private void DisplayRequirements()
         {
@@ -178,7 +188,7 @@ namespace TTS.UI.Forms
                     RequirementTypeComboBox = { SelectedItem = characteristic.Type },
                     RequirementValueTextBox = { Text = characteristic.Value.ToString() }
                 };
-                this.RequirementsPanel.Children.Add(requirementSetupControl);
+                this.RequirementsStackPanel.Children.Add(requirementSetupControl);
             }
         }
         private void DisplayIO()

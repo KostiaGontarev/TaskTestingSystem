@@ -74,7 +74,8 @@ namespace TTS.UI.Forms
             {
                 ITask task = this.TasksList.SelectedItem as ITask;
                 this.controller.Tasks.Remove(task);
-                this.TasksList.Items.Refresh();
+                this.TasksList.Items.Remove(this.TasksList.SelectedItem);
+                //this.TasksList.Items.Refresh();
             }
         }
 
@@ -91,10 +92,13 @@ namespace TTS.UI.Forms
             this.taskEditWindow.ShowDialog();
 
             ITask task = this.taskEditWindow.Task;
+            controller.Tasks.Add(task);
+
             if (task != null)
             {
                 this.TasksList.Items.Add(task);
             }
+            //добавить чтобы он сразу бфыл выделен после создания
         }
         private void OpenTaskEditWindow(ITask task)
         {

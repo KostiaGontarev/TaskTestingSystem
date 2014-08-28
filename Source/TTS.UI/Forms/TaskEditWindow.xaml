@@ -13,23 +13,29 @@
             <ColumnDefinition Width="0.55*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Margin="8">
-
+        <Grid Grid.Column="0" Margin="8,8,8,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"></RowDefinition>
-                <RowDefinition Height="0.3*"></RowDefinition>
+                <RowDefinition Height="0.35*"></RowDefinition>
+                <RowDefinition Height="0.7*"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="0.205*"></RowDefinition>
+                <RowDefinition Height="0.27*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" VerticalAlignment="Top" Content="Название"></Label>
             <TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
-            <Label Grid.Row="1" VerticalAlignment="Top" Content="Условие"></Label>
-            <TextBox x:Name="DescriptionTextBox" Grid.Row="1" VerticalAlignment="Bottom"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.35*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"></Label>
+                <RichTextBox Name="DescriptionTask" Grid.Row="1"></RichTextBox>
+            </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.24*"></RowDefinition>
+                    <RowDefinition Height="0.32*"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
@@ -57,51 +63,44 @@
 
                 </Grid>
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <StackPanel x:Name="RequirementsPanel"></StackPanel>
-                    </Border>
-                </ScrollViewer>
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="RequirementsStackPanel" Height="96">
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
             </Grid>
 
             <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"></Button>
             <Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"></Button>
-
         </Grid>
 
-        <Grid Grid.Column="1" Margin="8">
+        <Grid Grid.Column="1" Margin="8,8,8,0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="28*"></RowDefinition>
-                <RowDefinition Height="0*"/>
-                <RowDefinition Height="243*"></RowDefinition>
-                <RowDefinition Height="35*"></RowDefinition>
+                <RowDefinition Height="23*"></RowDefinition>
+                <RowDefinition Height="116*"></RowDefinition>
+                <RowDefinition Height="18*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*"></RowDefinition>
-                    <RowDefinition Height="0.5*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <!-- Что это за хрень? :)) Исправляй, солдат!)-->
-                <Label Grid.Row="0" Content="Нажмите 'Добавить' и перетащите файлы, либо исп-" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True"/>
-                <Label Grid.Row="1" Content="равьте содержимое с помощью клика по элементу" FontSize="8" Padding="0,0"></Label>
-
+                <Label Width="200" HorizontalAlignment="Left">
+                    <TextBlock TextWrapping="WrapWithOverflow" Width="190" FontSize="9" Height="37">
+                        Нажмите 'Добавить' и перетащите файлы, либо исправьте содержимое с помощью клика по 
+                        элементу
+                    </TextBlock>
+                </Label>
+                <Label Content="" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 
-            <!-- Убирай код ниже - либо как договорились в отдельный контрол, либо именуй нормально, ибо имена ниже - одно и тоже, и непонятно что за что отвечает-->
-            <ScrollViewer x:Name="ContentIOScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <Border Grid.Row="1" x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
+                <ScrollViewer x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto">
+                </ScrollViewer>
+            </Border>
 
-                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-
-                </Border>
-
-            </ScrollViewer>
-
-            <Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButton_OnClick"/>
+            <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" Height="24" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>
 
         </Grid>
     </Grid>
-
 </Window>
