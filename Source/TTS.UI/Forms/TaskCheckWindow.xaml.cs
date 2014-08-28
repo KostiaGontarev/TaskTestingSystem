@@ -14,12 +14,12 @@ namespace TTS.UI.Forms
             get { return this.task; }
         }
 
-        public TaskCheck()
+        public TaskCheckWindow()
         {
             this.InitializeComponent();
         }
 
-        public TaskCheck(ITask task)
+        public TaskCheckWindow(ITask task)
             : this()
         {
             this.task = task;
