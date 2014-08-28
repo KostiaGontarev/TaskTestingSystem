@@ -5,7 +5,7 @@ using TTS.Core.Abstract.Model;
 
 namespace TTS.UI.Forms
 {
-    public partial class TaskCheck : Window
+    public partial class TaskCheckWindow : Window
     {
         private ITask task;
 
