@@ -1,105 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using TTS.Core.Abstract.Model;
-using TTS.Core.Concrete.Model;
 
-namespace TTS.UI
+using TTS.Core.Abstract.Controllers;
+using TTS.Core.Abstract.Model;
+
+using TTS.Core.Concrete;
+
+
+namespace TTS.UI.Forms
 {
 	public partial class MainWindow : Window
     {
         #region Data Members
-        private EditTask wEditTask;
-        private TaskCheck wTaskCheck;
+	    private readonly ITaskController controller;
+        private TaskEditWindow taskEditWindow;
+        private TaskCheck taskCheck;
         #endregion
 
         #region Constructors
         public MainWindow()
 		{
 			this.InitializeComponent();
+            this.controller = CoreAccessor.GetTaskController();
 		}
         #endregion
 
         #region Event Handlers
-        private void CheckButtonClick(object sender, RoutedEventArgs e)
+        private void CheckButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if ((TasksList.Items.Count == 0))
+            if ((this.controller.Tasks.Count == 0))
             {
-                MessageBox.Show("Добавьте какое-либо задание перед проверкой.", "Список заданий пуст");
+                MessageBox.Show("Список задач пуст.", "Ошибка!");
             }
-            else if (TasksList.SelectedItem == null)
+            else if (this.TasksList.SelectedItem == null)
             {
-                MessageBox.Show("Выберите задание для проверки.", "Ни один элемент не выбран");
+                MessageBox.Show("Вы не выбрали задачу для проверки.", "Ошибка!");
             }
             else
             {
-                TaskCheckOpen((ITask)TasksList.SelectedItem);
+                this.OpenTaskCheckWindow();
             }
         }
-
-        private void AddButtonClick(object sender, RoutedEventArgs e)
+        private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            EditTaskOpen();
+            this.OpenTaskEditWindow();
         }
-
         private void EditButtonClick(object sender, RoutedEventArgs e)
         {
-            if ((TasksList.Items.Count == 0))
+            if ((this.controller.Tasks.Count == 0))
             {
-                MessageBox.Show("Добавьте какое-либо задание перед редактированием.", "Список заданий пуст");
+                MessageBox.Show("Список задач пуст.", "Ошибка!");
             }
-            else if (TasksList.SelectedItem == null)
+            else if (this.TasksList.SelectedItem == null)
             {
-                MessageBox.Show("Выберите задание для редактирования.", "Ни один элемент не выбран");
+                MessageBox.Show("Элемент для редактирования не выбран.", "Ошибка!");
             }
             else
             {
-                EditTaskOpen((ITask)TasksList.SelectedItem);
+                this.OpenTaskEditWindow(this.TasksList.SelectedItem as ITask);
+            }
+        }
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)
+        {
+            if ((this.controller.Tasks.Count == 0))
+            {
+                MessageBox.Show("Список задач пуст.", "Ошибка!");
+            }
+            else if (this.TasksList.SelectedItem == null)
+            {
+                MessageBox.Show("Элемент для удаления не выбран.", "Ошибка!");
+            }
+            else
+            {
+                ITask task = this.TasksList.SelectedItem as ITask;
+                this.controller.Tasks.Remove(task);
+                this.TasksList.Items.Refresh();
             }
         }
 
-        private void DeleteButtonClick(object sender, RoutedEventArgs e)
+        private void TasksList_OnDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-        }
-
-        private void TasksListDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            EditTaskOpen((ITask)TasksList.SelectedItem);
+            this.OpenTaskEditWindow(this.TasksList.SelectedItem as ITask);
         }
         #endregion
 
         #region Assistance
-        private void EditTaskOpen()
+        private void OpenTaskEditWindow()
         {
-            wEditTask = new EditTask();
-            wEditTask.ShowDialog();
-            if (wEditTask.Task != null)
+            this.taskEditWindow = new TaskEditWindow();
+            this.taskEditWindow.ShowDialog();
+
+            ITask task = this.taskEditWindow.Task;
+            if (task != null)
             {
-                TasksList.Items.Add(wEditTask.Task);
+                this.TasksList.Items.Add(task);
             }
         }
-
-        private void EditTaskOpen(ITask task)
+        private void OpenTaskEditWindow(ITask task)
         {
-            wEditTask = new EditTask(task);
-            wEditTask.ShowDialog();
-            TasksList.SelectedItem = wEditTask.Task;
-            TasksList.Items.Refresh();
+            this.taskEditWindow = new TaskEditWindow(task);
+            this.taskEditWindow.ShowDialog();
+
+            this.TasksList.SelectedItem = this.taskEditWindow.Task;
+            this.TasksList.Items.Refresh();
         }
-
-        private void TaskCheckOpen(ITask task)
+        private void OpenTaskCheckWindow()
         {
-            wTaskCheck = new TaskCheck(task);
-            wTaskCheck.ShowDialog();
+            ITask task = this.TasksList.SelectedItem as ITask;
+            this.taskCheck = new TaskCheck(task);
+            this.taskCheck.ShowDialog();
         }
         #endregion
     }

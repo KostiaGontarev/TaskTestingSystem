@@ -8,38 +8,32 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TTS.Core.Abstract.Model;
 
 namespace TTS.UI
 {
 	/// <summary>
-	/// Interaction logic for Window1.xaml
+	/// Interaction logic for Check.xaml
 	/// </summary>
-	public partial class TaskCheck : Window
+	public partial class Test : UserControl
 	{
         private ITask task;
 
-        public ITask Task
-        {
-            get { return this.task; }
+        public ITask Task { 
+            get { return task; } 
         }
 
-		public TaskCheck()
+		public Test()
 		{
 			this.InitializeComponent();
-			
-			// Insert code required on object creation below this point.
 		}
 
-        public TaskCheck(ITask task):this()
+        public Test(ITask task)
+            : this()
         {
             this.task = task;
-            foreach(var a in task.Requirements)
-            {
-
-            }
         }
-
 	}
 }
