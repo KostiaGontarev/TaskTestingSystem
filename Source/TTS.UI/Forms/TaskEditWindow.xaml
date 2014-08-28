@@ -1,10 +1,9 @@
 ﻿<Window
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	x:Class="TTS.UI.EditTask"
-	x:Name="Window"    
-    xmlns:cust="clr-namespace:TTS.UI.UserControls"
-	Title="Редактировать задание"
+	x:Class="TTS.UI.Forms.TaskEditWindow"
+	x:Name="Window"
+    Title="Редактирование задачи"
 	Width="400" Height="350" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
 	
 	<Grid x:Name="LayoutRoot">
@@ -26,11 +25,11 @@
 				
 				<Label Grid.Row="0" VerticalAlignment="Top" Content="Название"></Label>
                 
-				<TextBox x:Name="NameTask" Grid.Row="0" VerticalAlignment="Bottom"/>
+				<TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
                 
 				<Label Grid.Row="1" VerticalAlignment="Top" Content="Условие"></Label>
                 
-				<TextBox x:Name="ConditionTask" Grid.Row="1" VerticalAlignment="Bottom"/>
+				<TextBox x:Name="DescriptionTextBox" Grid.Row="1" VerticalAlignment="Bottom"/>
                 
                 <Grid Grid.Row="2">
                     
@@ -49,13 +48,13 @@
 
                         <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"></Label>
                         
-                        <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButtonClick">
+                        <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButton_OnClick">
                             <Button.Background>
                                 <ImageBrush ImageSource="/TTS.UI;component/Pictures/Plus.jpg"/>
                             </Button.Background>
                         </Button>
                         
-                        <Button x:Name="Minusbutton" Grid.Column="2" Width="21" HorizontalAlignment="Center" Margin="6" Click="MinusbuttonClick">
+                        <Button x:Name="MinusButton" Grid.Column="2" Width="21" HorizontalAlignment="Center" Margin="6" Click="MinusButton_OnClick">
                             <Button.Background>
                                 <ImageBrush ImageSource="/TTS.UI;component/Pictures/Minus.jpg"/>
                             </Button.Background>
@@ -67,14 +66,14 @@
                         
                         <Border BorderBrush="Black" BorderThickness="1">
 
-                            <StackPanel x:Name="RequirementsStackPanel">                        
+                            <StackPanel x:Name="RequirementsPanel">                        
                             </StackPanel>                    
                         </Border>                        
                     </ScrollViewer>
                 </Grid>
                 
-                <Button x:Name="SaveButton" Grid.Row="5" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButtonClick"></Button>
-				<Button x:Name="CancelButton" Grid.Row="5" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButtonClick"></Button>	
+                <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"></Button>
+				<Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"></Button>	
                 
 			</Grid>
 			
@@ -93,13 +92,13 @@
 						<RowDefinition Height="0.5*"></RowDefinition>
 						<RowDefinition Height="0.5*"></RowDefinition>
 					</Grid.RowDefinitions>
-					
+					<!-- Что это за хрень? :)) Исправляй, солдат!)-->
 					<Label Grid.Row="0" Content="Нажмите 'Добавить' и перетащите файлы, либо исп-" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True"/>
 					<Label Grid.Row="1" Content="равьте содержимое с помощью клика по элементу" FontSize="8" Padding="0,0"></Label>
 					
 				</Grid>
-				
-				<ScrollViewer x:Name="ContentIOScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <!-- Убирай код ниже - либо как договорились в отдельный контрол, либо именуй нормально, ибо имена ниже - одно и тоже, и непонятно что за что отвечает-->
+            <ScrollViewer x:Name="ContentIOScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
 					
 					<Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
 											
@@ -107,7 +106,7 @@
 					
 				</ScrollViewer>
 					
-				<Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButtonClick"/>
+				<Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButton_OnClick"/>
 
             </Grid>
 			

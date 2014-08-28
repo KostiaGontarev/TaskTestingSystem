@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TTS.UI.Forms;
 
 namespace TTS.UI.UserControls
 {
@@ -19,7 +20,7 @@ namespace TTS.UI.UserControls
     public partial class buttonIO : UserControl
     {
         #region Members
-        private EditIO Edit_InputOutput;
+        private IOEditDialog ioEditInputOutput;
         private string content;
         public Action<buttonIO> Delete;
         #endregion
@@ -42,17 +43,17 @@ namespace TTS.UI.UserControls
         private void Input_File_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             content = Input_TextBox.Text;
-            Edit_InputOutput = new EditIO(content);
-            Edit_InputOutput.ShowDialog();
-            Input_TextBox.Text = Edit_InputOutput.Text;
+            ioEditInputOutput = new IOEditDialog(content);
+            ioEditInputOutput.ShowDialog();
+            Input_TextBox.Text = ioEditInputOutput.Text;
         }
 
         private void Output_File_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             content = Output_TextBox.Text;
-            Edit_InputOutput = new EditIO(content);
-            Edit_InputOutput.ShowDialog();
-            Output_TextBox.Text = Edit_InputOutput.Text;
+            ioEditInputOutput = new IOEditDialog(content);
+            ioEditInputOutput.ShowDialog();
+            Output_TextBox.Text = ioEditInputOutput.Text;
         }
 
         private void Delete_Files_Button_Click(object sender, RoutedEventArgs e)
