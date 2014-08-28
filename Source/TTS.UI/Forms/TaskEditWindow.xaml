@@ -5,165 +5,103 @@
 	x:Name="Window"
     Title="Редактирование задачи"
 	Width="400" Height="350" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
-	
-	<Grid x:Name="LayoutRoot">
-		 
-		<Grid.ColumnDefinitions>
-			
-			<ColumnDefinition Width="0.45*"></ColumnDefinition>
-			<ColumnDefinition Width="0.55*"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
-			
-			<Grid Grid.Column="0" Margin="8">
-				
-				<Grid.RowDefinitions>
-					<RowDefinition Height="0.3*"></RowDefinition>
-					<RowDefinition Height="0.3*"></RowDefinition>
-					<RowDefinition></RowDefinition>
-                    <RowDefinition Height="0.205*"></RowDefinition>
-                </Grid.RowDefinitions>
-				
-				<Label Grid.Row="0" VerticalAlignment="Top" Content="Название"></Label>
-                
-<<<<<<< HEAD:Source/TTS.UI/Forms/EditTask.xaml
-				<TextBox x:Name="NameTask" Grid.Row="0" VerticalAlignment="Bottom"/>
-                
-<<<<<<< HEAD:Source/TTS.UI/Forms/TaskEditWindow.xaml
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.45*"></ColumnDefinition>
+            <ColumnDefinition Width="0.55*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="8">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"></RowDefinition>
+                <RowDefinition Height="0.3*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="0.205*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" VerticalAlignment="Top" Content="Название"></Label>
+            <TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <Label Grid.Row="1" VerticalAlignment="Top" Content="Условие"></Label>
+            <TextBox x:Name="DescriptionTextBox" Grid.Row="1" VerticalAlignment="Bottom"/>
+
+            <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.35*"></RowDefinition>
+                    <RowDefinition Height="0.24*"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"></Label>
-                <RichTextBox Name="ConditionTask" Grid.Row="1"></RichTextBox>
-            </Grid>
-=======
-				<TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
-                
-				<Label Grid.Row="1" VerticalAlignment="Top" Content="Условие"></Label>
-                
-				<TextBox x:Name="DescriptionTextBox" Grid.Row="1" VerticalAlignment="Bottom"/>
-                
->>>>>>> origin/master:Source/TTS.UI/Forms/TaskEditWindow.xaml
-=======
-				<Label Grid.Row="1" VerticalAlignment="Top" Content="Условие"></Label>
-                
-				<TextBox x:Name="ConditionTask" Grid.Row="1" VerticalAlignment="Bottom"/>
-                
->>>>>>> parent of ce89810... Edit some mistakes in forms:Source/TTS.UI/Forms/EditTask.xaml
-                <Grid Grid.Row="2">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.24*"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                    
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="0.35*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.35*" ></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0">
 
-                        <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"></Label>
-                        
-                        <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButton_OnClick">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/TTS.UI;component/Pictures/Plus.jpg"/>
-                            </Button.Background>
-                        </Button>
-                        
-                        <Button x:Name="MinusButton" Grid.Column="2" Width="21" HorizontalAlignment="Center" Margin="6" Click="MinusButton_OnClick">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/TTS.UI;component/Pictures/Minus.jpg"/>
-                            </Button.Background>
-                        </Button>
-                        
-                    </Grid>
-                    
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        
-                        <Border BorderBrush="Black" BorderThickness="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.35*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.35*" ></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-<<<<<<< HEAD:Source/TTS.UI/Forms/TaskEditWindow.xaml
-<<<<<<< HEAD:Source/TTS.UI/Forms/EditTask.xaml
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                    <ScrollViewer  VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="RequirementsStackPanel" Height="96">                        
-                            </StackPanel>                 
-=======
-                            <StackPanel x:Name="RequirementsPanel">                        
-                            </StackPanel>                    
-                        </Border>                        
->>>>>>> origin/master:Source/TTS.UI/Forms/TaskEditWindow.xaml
-=======
-                            <StackPanel x:Name="RequirementsStackPanel">                        
-                            </StackPanel>                    
-                        </Border>                        
->>>>>>> parent of ce89810... Edit some mistakes in forms:Source/TTS.UI/Forms/EditTask.xaml
-                    </ScrollViewer>
+                    <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"></Label>
+
+                    <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButton_OnClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/TTS.UI;component/Pictures/Plus.jpg"/>
+                        </Button.Background>
+                    </Button>
+
+                    <Button x:Name="MinusButton" Grid.Column="2" Width="21" HorizontalAlignment="Center" Margin="6" Click="MinusButton_OnClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/TTS.UI;component/Pictures/Minus.jpg"/>
+                        </Button.Background>
+                    </Button>
+
                 </Grid>
-                
-                <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"></Button>
-				<Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"></Button>	
-                
-			</Grid>
-			
-			<Grid Grid.Column="1" Margin="8">
-                
-				<Grid.RowDefinitions>
-					<RowDefinition Height="28*"></RowDefinition>
-					<RowDefinition Height="0*"/>
-					<RowDefinition Height="243*"></RowDefinition>
-					<RowDefinition Height="35*"></RowDefinition>
-				</Grid.RowDefinitions>
-				
-				<Grid Grid.Row="0">
-					
-					<Grid.RowDefinitions>
-						<RowDefinition Height="0.5*"></RowDefinition>
-						<RowDefinition Height="0.5*"></RowDefinition>
-					</Grid.RowDefinitions>
-					<!-- Что это за хрень? :)) Исправляй, солдат!)-->
-					<Label Grid.Row="0" Content="Нажмите 'Добавить' и перетащите файлы, либо исп-" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True"/>
-					<Label Grid.Row="1" Content="равьте содержимое с помощью клика по элементу" FontSize="8" Padding="0,0"></Label>
-					
-				</Grid>
-<<<<<<< HEAD:Source/TTS.UI/Forms/TaskEditWindow.xaml
-<<<<<<< HEAD:Source/TTS.UI/Forms/EditTask.xaml
-            <Border Grid.Row="1" x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-                <ScrollViewer x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto">
-				</ScrollViewer>
-            </Border>
 
-            <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" HorizontalAlignment="Left" Click="AddButtonClick" Margin="0,6"/>
-=======
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <StackPanel x:Name="RequirementsPanel"></StackPanel>
+                    </Border>
+                </ScrollViewer>
+            </Grid>
+
+            <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"></Button>
+            <Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"></Button>
+
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="8">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28*"></RowDefinition>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="243*"></RowDefinition>
+                <RowDefinition Height="35*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!-- Что это за хрень? :)) Исправляй, солдат!)-->
+                <Label Grid.Row="0" Content="Нажмите 'Добавить' и перетащите файлы, либо исп-" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True"/>
+                <Label Grid.Row="1" Content="равьте содержимое с помощью клика по элементу" FontSize="8" Padding="0,0"></Label>
+
+            </Grid>
+
             <!-- Убирай код ниже - либо как договорились в отдельный контрол, либо именуй нормально, ибо имена ниже - одно и тоже, и непонятно что за что отвечает-->
             <ScrollViewer x:Name="ContentIOScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
-					
-					<Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-											
-					</Border>
-					
-				</ScrollViewer>
-					
-				<Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButton_OnClick"/>
->>>>>>> origin/master:Source/TTS.UI/Forms/TaskEditWindow.xaml
-=======
-				
-				<ScrollViewer x:Name="ContentIOScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
-					
-					<Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-											
-					</Border>
-					
-				</ScrollViewer>
-					
-				<Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButtonClick"/>
->>>>>>> parent of ce89810... Edit some mistakes in forms:Source/TTS.UI/Forms/EditTask.xaml
 
-            </Grid>
-			
-		</Grid>
-		
+                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
+
+                </Border>
+
+            </ScrollViewer>
+
+            <Button x:Name="AddButton" Grid.Row="3" Content="Добавить" Width="79" Height="25" HorizontalAlignment="Left" Click="AddButton_OnClick"/>
+
+        </Grid>
+    </Grid>
+
 </Window>

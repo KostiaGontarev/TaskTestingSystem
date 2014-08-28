@@ -15,24 +15,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-<<<<<<< HEAD:Source/TTS.UI/UserControls/RequirementSetupControl.xaml
-<<<<<<< HEAD:Source/TTS.UI/User Controls/Requirements.xaml
-        <ComboBox x:Name="RequirementComboBox" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch" SelectionChanged="RequirementComboBoxSelectionChanged">
-            <System:String>Использование CPU</System:String>
-            <System:String>Использование памяти</System:String>
-            <System:String>Время выполнения</System:String>
-=======
         <ComboBox x:Name="RequirementTypeComboBox" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch" SelectedIndex="0">
             <Declarations:CharacteristicType>MaxExecutionTime</Declarations:CharacteristicType>
             <Declarations:CharacteristicType>MaxMemoryUsage</Declarations:CharacteristicType>
             <Declarations:CharacteristicType>MaxCPUUsage</Declarations:CharacteristicType>
->>>>>>> origin/master:Source/TTS.UI/UserControls/RequirementSetupControl.xaml
-=======
-        <ComboBox x:Name="RequirementComboBox" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch">
-            <Declarations:CharacteristicType>MaxExecutionTime</Declarations:CharacteristicType>
-            <Declarations:CharacteristicType>MaxMemoryUsage</Declarations:CharacteristicType>
-            <Declarations:CharacteristicType>MaxCPUUsage</Declarations:CharacteristicType>
->>>>>>> parent of ce89810... Edit some mistakes in forms:Source/TTS.UI/User Controls/Requirements.xaml
         </ComboBox>
         <TextBox x:Name="RequirementValueTextBox" Grid.Column="1" Margin="5" HorizontalAlignment="Stretch"/>
 

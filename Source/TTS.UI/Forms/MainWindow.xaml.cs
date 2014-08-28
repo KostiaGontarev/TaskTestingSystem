@@ -14,7 +14,7 @@ namespace TTS.UI.Forms
         #region Data Members
 	    private readonly ITaskController controller;
         private TaskEditWindow taskEditWindow;
-        private TaskCheck taskCheck;
+        private TaskCheckWindow taskCheckWindow;
         #endregion
 
         #region Constructors
@@ -107,8 +107,8 @@ namespace TTS.UI.Forms
         private void OpenTaskCheckWindow()
         {
             ITask task = this.TasksList.SelectedItem as ITask;
-            this.taskCheck = new TaskCheck(task);
-            this.taskCheck.ShowDialog();
+            this.taskCheckWindow = new TaskCheckWindow(task);
+            this.taskCheckWindow.ShowDialog();
         }
         #endregion
     }
