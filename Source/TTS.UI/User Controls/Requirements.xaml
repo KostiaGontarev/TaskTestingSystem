@@ -4,10 +4,11 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:Declarations="clr-namespace:TTS.Core.Abstract.Declarations;assembly=TTS.Core.Abstract"
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d"
 	x:Class="TTS.UI.UserControls.Requirements"
 	x:Name="UserControl"
-	MinWidth="150" MinHeight="25" HorizontalAlignment="Stretch">
+	MinWidth="130" MinHeight="25" HorizontalAlignment="Stretch">
 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
@@ -15,10 +16,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ComboBox x:Name="RequirementComboBox" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch">
-            <Declarations:CharacteristicType>MaxExecutionTime</Declarations:CharacteristicType>
-            <Declarations:CharacteristicType>MaxMemoryUsage</Declarations:CharacteristicType>
-            <Declarations:CharacteristicType>MaxCPUUsage</Declarations:CharacteristicType>
+        <ComboBox x:Name="RequirementComboBox" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch" SelectionChanged="RequirementComboBoxSelectionChanged">
+            <System:String>Использование CPU</System:String>
+            <System:String>Использование памяти</System:String>
+            <System:String>Время выполнения</System:String>
         </ComboBox>
         <TextBox x:Name="RequirementsTextBox" Grid.Column="1" Margin="5" HorizontalAlignment="Stretch"/>
 

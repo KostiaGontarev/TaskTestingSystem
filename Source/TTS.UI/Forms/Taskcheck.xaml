@@ -46,20 +46,30 @@
 		<Grid Grid.Column="1">
 			
 			<Grid.RowDefinitions>
-				<RowDefinition Height="0.1*"></RowDefinition>
-				<RowDefinition></RowDefinition>
+				<RowDefinition Height="29*"></RowDefinition>
+				<RowDefinition Height="255*"></RowDefinition>
+                <RowDefinition Height="38*"></RowDefinition>
 			</Grid.RowDefinitions>
 			
-			<Label Grid.Row="0" Content="Исполняемые файлы" Margin="0"/>
-			
-			<ScrollViewer Grid.Row="1" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto">
-				<Border BorderBrush="Black" BorderThickness="1">
+			<Label Grid.Row="0" Content="Исполняемые файлы" Height="26" VerticalAlignment="Top"/>
+
+            <Border Grid.Row="1" Margin="4,0,4,4" BorderBrush="Black" BorderThickness="1">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
 					<StackPanel Grid.Row="1" Margin="3">
 					</StackPanel>
-				</Border>	
 			</ScrollViewer>
-			
-		</Grid>
+            </Border>
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Name="BrowseButton" Content="Добавить" Margin="8"></Button>
+            </Grid>
+
+
+        </Grid>
 					
 	</Grid>
 </Window>

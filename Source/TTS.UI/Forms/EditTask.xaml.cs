@@ -122,14 +122,17 @@ namespace TTS.UI
             else
             {
                 task.Name = NameTask.Text;
-                if (ConditionTask.Text == "")
+                TextRange textRange = new TextRange(ConditionTask.Document.ContentStart,
+                ConditionTask.Document.ContentEnd);
+                string str = textRange.Text.Replace("\r\n", "");
+                if (str == "")
                 {
                     MessageBox.Show("Введите условие для задания", "Введите условие");
                     return false;
                 }
                 else
                 {
-                    task.Description = ConditionTask.Text;
+                    task.Description = str;
                     return true;
                 }
             }
@@ -183,7 +186,7 @@ namespace TTS.UI
             }
             if (task.Description != null)
             {
-                this.ConditionTask.Text = task.Description;
+                this.ConditionTask.AppendText(task.Description);
             }
         }
         private void DisplayIO(ITask task)
