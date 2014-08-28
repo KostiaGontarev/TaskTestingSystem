@@ -46,11 +46,11 @@
 		<Grid Grid.Column="1">
 			
 			<Grid.RowDefinitions>
-				<RowDefinition Height="29*"></RowDefinition>
-				<RowDefinition Height="255*"></RowDefinition>
-                <RowDefinition Height="38*"></RowDefinition>
+				<RowDefinition Height="0.1*"></RowDefinition>
+				<RowDefinition></RowDefinition>
 			</Grid.RowDefinitions>
 			
+<<<<<<< HEAD:Source/TTS.UI/Forms/TaskCheckWindow.xaml
 <<<<<<< HEAD:Source/TTS.UI/Forms/Taskcheck.xaml
 			<Label Grid.Row="0" Content="Исполняемые файлы" Height="26" VerticalAlignment="Top"/>
 
@@ -66,19 +66,18 @@
 					<StackPanel Margin="3" />
 				</Border>	
 >>>>>>> origin/master:Source/TTS.UI/Forms/TaskCheckWindow.xaml
+=======
+			<Label Grid.Row="0" Content="Исполняемые файлы" Margin="0"/>
+			
+			<ScrollViewer Grid.Row="1" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto">
+				<Border BorderBrush="Black" BorderThickness="1">
+					<StackPanel Grid.Row="1" Margin="3">
+					</StackPanel>
+				</Border>	
+>>>>>>> parent of ce89810... Edit some mistakes in forms:Source/TTS.UI/Forms/Taskcheck.xaml
 			</ScrollViewer>
-            </Border>
-            
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button Name="BrowseButton" Content="Добавить" Margin="8"></Button>
-            </Grid>
-
-
-        </Grid>
+			
+		</Grid>
 					
 	</Grid>
 </Window>

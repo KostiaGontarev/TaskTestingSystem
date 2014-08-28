@@ -11,8 +11,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using TTS.Core.Abstract.Declarations;
-
 namespace TTS.UI.UserControls
 {
 	/// <summary>
@@ -20,30 +18,9 @@ namespace TTS.UI.UserControls
 	/// </summary>
 	public partial class Requirements : UserControl
 	{
-        private List<string> requirements;
-        private CharacteristicType type;
-
 		public Requirements()
 		{
 			this.InitializeComponent();
-            requirements = new List<string>();
-            requirements.Add("");
-        }
-
-        private void RequirementComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch ((string)RequirementComboBox.SelectedItem)
-            {
-                case "Использование памяти":
-                    type = CharacteristicType.MaxMemoryUsage;
-                    break;
-                case "Использование CPU": 
-                    type = CharacteristicType.MaxCPUUsage; 
-                    break;
-                case "Время выполнения": 
-                    type = CharacteristicType.MaxExecutionTime; 
-                    break;
-            }
-        }
+		}
 	}
 }
