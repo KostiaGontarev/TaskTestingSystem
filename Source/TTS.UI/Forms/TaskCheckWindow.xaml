@@ -20,8 +20,8 @@
                 <RowDefinition Height="0.10*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Margin="4,4,4,0" Content="Проверить текущий" Grid.Row="1" VerticalAlignment="Center" MinHeight="20"></Button>
-            <Button Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20"></Button>
+            <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенный" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"></Button>
+            <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick" ></Button>
 
             <Grid Grid.Row="0">
 
@@ -34,8 +34,7 @@
 
                 <ScrollViewer Grid.Row="1" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <StackPanel x:Name="TestsPanel" Margin="3">
-                        </StackPanel>
+                        <ListBox x:Name="TestsList" VerticalAlignment="Stretch" Focusable="False"/>
                     </Border>
                 </ScrollViewer>
 
@@ -65,7 +64,9 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="BrowseButton" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5"/>
+
+                <Button Name="AddButton" Grid.Column="0" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="AddButton_OnClick"/>
+                <Button Name="DeleteButton" Grid.Column="1" Content="Удалить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="DeleteButton_OnClick"/>
             </Grid>
 
 

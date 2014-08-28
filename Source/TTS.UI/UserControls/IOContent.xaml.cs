@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 using TTS.Core.Abstract.Model;
 
@@ -10,9 +11,22 @@ namespace TTS.UI.UserControls
 {
     public partial class IOContent : UserControl
     {
+        #region Members
+        private List<ITestInfo> listTestInfo;
+        #endregion
+
+        public List<ITestInfo> ListTestInfo
+        {
+            get
+            {
+                return listTestInfo;
+            }
+        }
+
         public IOContent()
         {
             this.InitializeComponent();
+            listTestInfo = new List<ITestInfo>();
         }
         public void AddButtonIO()
         {
@@ -30,19 +44,16 @@ namespace TTS.UI.UserControls
             ButtonsIOStackPanel.Children.Add(buttonIO);
         }
 
-        public void SaveContentIO(ITask task)
+        public void SaveListTestInfo()
         {
-            task.Tests.Clear();
             foreach (UIElement IO in ButtonsIOStackPanel.Children)
             {
                 buttonIO button = new buttonIO();
                 button = (buttonIO)IO;
-                if (button.Input_TextBox.Text != "" || button.Output_TextBox.Text != "")
+                button.SaveTestInfo();
+                if (button.TestInfo != null)
                 {
-                    ITestInfo testInfo = CoreAccessor.CreateTest();
-                    testInfo.Input = button.Input_TextBox.Text;
-                    testInfo.Output = button.Output_TextBox.Text;
-                    task.Tests.Add(testInfo);
+                    this.listTestInfo.Add(button.TestInfo);
                 }
             }
         }

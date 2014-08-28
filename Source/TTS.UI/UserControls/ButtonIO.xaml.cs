@@ -10,7 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using TTS.UI.Forms;
+using TTS.Core.Abstract.Model;
+using TTS.Core.Concrete;
 
 namespace TTS.UI.UserControls
 {
@@ -23,40 +26,67 @@ namespace TTS.UI.UserControls
         private IOEditDialog ioEditInputOutput;
         private string content;
         public Action<buttonIO> Delete;
+        private ITestInfo testInfo;
+        private string input;
+        private string output;
         #endregion
+
+        public ITestInfo TestInfo
+        {
+            get
+            {
+                return testInfo;
+            }
+        }
 
         #region Constructors
         public buttonIO()
         {
             this.InitializeComponent();
+            this.input = "";
+            this.output = "";
         }
 
         public buttonIO(string input, string output)
             : this()
         {
-            this.Input_TextBox.Text = input;
-            this.Output_TextBox.Text = output;
+            this.input = input;
+            this.output = output;
+            this.InputTextBox.Text = input;
+            this.OutputTextBox.Text = output;
         }
         #endregion
 
         #region Events
-        private void Input_File_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void InputFile_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            content = Input_TextBox.Text;
+            content = InputTextBox.Text;
             ioEditInputOutput = new IOEditDialog(content);
             ioEditInputOutput.ShowDialog();
-            Input_TextBox.Text = ioEditInputOutput.Text;
+            input = ioEditInputOutput.Text;
+            InputTextBox.Text = input;
         }
 
-        private void Output_File_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void OutputFile_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            content = Output_TextBox.Text;
+            content = OutputTextBox.Text;
             ioEditInputOutput = new IOEditDialog(content);
             ioEditInputOutput.ShowDialog();
-            Output_TextBox.Text = ioEditInputOutput.Text;
+            output = ioEditInputOutput.Text;
+            OutputTextBox.Text = output;
         }
 
-        private void Delete_Files_Button_Click(object sender, RoutedEventArgs e)
+        public void SaveTestInfo()
+        {
+            if (!String.IsNullOrWhiteSpace(input) || !String.IsNullOrWhiteSpace(output))
+            {
+                testInfo = CoreAccessor.CreateTest();
+                testInfo.Input = this.input;
+                testInfo.Output = this.output;
+            }
+        }
+
+        private void DeleteFiles_OnButtonClick(object sender, RoutedEventArgs e)
         {
             if (Delete != null)
             {

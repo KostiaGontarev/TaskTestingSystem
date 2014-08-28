@@ -37,7 +37,7 @@ namespace TTS.UI.Forms
             TextRange textRange = new TextRange(this.TextRichTextBox.Document.ContentStart, 
                 this.TextRichTextBox.Document.ContentEnd);
             if (!String.IsNullOrWhiteSpace(textRange.Text))
-                this.text = textRange.Text;
+                this.text = textRange.Text.Replace("\r\n","");
 
             this.Close();
         } 

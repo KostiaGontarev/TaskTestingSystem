@@ -3,25 +3,26 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:TTS.UI.UserControls"
 	mc:Ignorable="d"
-	x:Class="TTS.UI.UserControls.Exec_file"
+	x:Class="TTS.UI.UserControls.ExecutedFile"
 	x:Name="UserControl"
 	d:DesignWidth="150" d:DesignHeight="22" MinHeight="22" Width="Auto" MinWidth="190">
 
-	<Border BorderBrush="Black" BorderThickness="1">
-		
-		<Grid x:Name="LayoutRoot" Background="White">
-		
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition></ColumnDefinition>
-				<ColumnDefinition  Width="22"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
-		
-			<Label Grid.Column="0" Margin="2" FontSize="12" Padding="0" AllowDrop="True"></Label>
-			
-			<Ellipse Grid.Column="1" Margin="2" Fill="White"/>
-			
-		</Grid>
-		
-	</Border>
+    <Border BorderBrush="Black" BorderThickness="1">
+
+        <Grid x:Name="LayoutRoot" Background="White">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition  Width="22"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Name="FilePathLabel" Grid.Column="0" Margin="2" FontSize="12" Padding="0" AllowDrop="True"/>
+
+            <Ellipse Name="ResultFileEllipse" Grid.Column="1" Margin="2" Fill="White" Stroke="Black"/>
+
+        </Grid>
+
+    </Border>
 </UserControl>

@@ -18,22 +18,29 @@ namespace TTS.UI
 	/// Interaction logic for Check.xaml
 	/// </summary>
 	public partial class Test : UserControl
-	{
-        private ITask task;
+    {
+        #region Members
+        private ITestInfo testInfo;
+        #endregion
 
-        public ITask Task { 
-            get { return task; } 
+        #region Properties
+        public ITestInfo TestInfo { 
+            get { return testInfo; } 
         }
+        #endregion
 
-		public Test()
+        #region Constructors
+        public Test()
 		{
 			this.InitializeComponent();
 		}
 
-        public Test(ITask task)
+        public Test(ITestInfo testInfo, int i)
             : this()
         {
-            this.task = task;
+            this.testInfo = testInfo;
+            TestNameLabel.Content = "Тест №"+ i.ToString();
         }
-	}
+        #endregion
+    }
 }

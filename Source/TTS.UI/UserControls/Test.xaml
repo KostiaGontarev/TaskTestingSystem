@@ -6,20 +6,20 @@
 	mc:Ignorable="d"
 	x:Class="TTS.UI.Test"
 	x:Name="UserControl"
-	d:DesignWidth="150" d:DesignHeight="22" MinHeight="22" Width="Auto" MinWidth="150">
+	d:DesignWidth="150" d:DesignHeight="22" MinHeight="22" Width="Auto" MinWidth="100">
 	
 	<Border BorderBrush="Black" BorderThickness="1">
 		
-		<Grid x:Name="LayoutRoot" Background="White">
+		<Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Left" Width="148">
 		
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition></ColumnDefinition>
 				<ColumnDefinition  Width="22"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 		
-			<Label x:Name="TestNameLabel" Grid.Column="0" Margin="2" FontSize="12" Padding="0"></Label>
+			<Label x:Name="TestNameLabel" Grid.Column="0" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left" Width="122"></Label>
 			
-			<Ellipse Grid.Column="1" Margin="2" Fill="White"/>
+			<Ellipse Grid.Column="1" Margin="2" Fill="White" Stroke="Black"/>
 			
 		</Grid>
 		

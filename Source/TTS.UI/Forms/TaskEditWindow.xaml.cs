@@ -148,7 +148,12 @@ namespace TTS.UI.Forms
         }
         private void SaveIO()
         {
-            this.content.SaveContentIO(this.Task);
+            this.content.SaveListTestInfo();
+            this.task.Tests.Clear();
+            foreach (ITestInfo testInfo in this.content.ListTestInfo)
+            {
+                this.task.Tests.Add(testInfo);
+            }
         }
         private void CheckErrors()
         {

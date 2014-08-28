@@ -16,13 +16,13 @@
 			<ColumnDefinition Width="0.30*"/>
 		</Grid.ColumnDefinitions>
 		
-		<TextBox Grid.Column="0" Margin="2" x:Name="Input_TextBox" PreviewMouseDown="Input_File_PreviewMouseDown">
+		<TextBox Grid.Column="0" Margin="2" x:Name="InputTextBox" PreviewMouseDown="InputFile_OnPreviewMouseDown">
 		</TextBox>
 		
-		<TextBox Grid.Column="1" Margin="2" AllowDrop="True" x:Name="Output_TextBox" PreviewMouseDown="Output_File_PreviewMouseDown">
+		<TextBox Grid.Column="1" Margin="2" AllowDrop="True" x:Name="OutputTextBox" PreviewMouseDown="OutputFile_OnPreviewMouseDown">
 		</TextBox>
 		
-		<Button x:Name="Delete_Files_Button" Grid.Column="2" Margin="2" BorderBrush="White" Foreground="White" Click="Delete_Files_Button_Click">
+		<Button x:Name="Delete_Files_Button" Grid.Column="2" Margin="2" BorderBrush="White" Foreground="White" Click="DeleteFiles_OnButtonClick">
 			<Button.Background>
 				<ImageBrush ImageSource="/TTS.UI;component/Pictures/Delete.png"/>
 			</Button.Background>
