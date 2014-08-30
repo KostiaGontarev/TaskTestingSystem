@@ -40,7 +40,7 @@ namespace TTS.UI.Forms
         public TaskEditWindow(ITask task)
             : this()
         {
-            if (task != null)
+            if (task != null && !task.IsEmpty)
                 this.task = task;
             else
                 throw new ArgumentNullException("task");
@@ -58,7 +58,6 @@ namespace TTS.UI.Forms
         }
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.task = null;
             this.Close();
         }
 
