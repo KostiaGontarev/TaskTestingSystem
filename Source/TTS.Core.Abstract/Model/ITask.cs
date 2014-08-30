@@ -10,5 +10,7 @@ namespace TTS.Core.Abstract.Model
         IList<ITestInfo> Tests { get; }
         IList<ICharacteristic> Requirements { get; }
         IReadOnlyList<ITaskTestResult> Results { get; }
+
+        bool IsEmpty { get; }
     }
 }
