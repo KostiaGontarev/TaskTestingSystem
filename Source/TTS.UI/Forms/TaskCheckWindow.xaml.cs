@@ -1,49 +1,34 @@
 ﻿using System.Windows;
-using System.IO;
-using System;
 
 using Microsoft.Win32;
 
 using TTS.Core.Abstract.Model;
 
+using TTS.UI.UserControls;
 
 
 namespace TTS.UI.Forms
 {
     public partial class TaskCheckWindow : Window
     {
-        #region Members
-        private ITask task;
-        #endregion
-
-        #region Properties
-        public ITask Task
-        {
-            get { return this.task; }
-        }
+        #region Data Members
+        private readonly ITask task;
         #endregion
 
         #region Constructors
-        public TaskCheckWindow()
+        private TaskCheckWindow()
         {
             this.InitializeComponent();
         }
-
         public TaskCheckWindow(ITask task)
             : this()
         {
-            int i = 1;
             this.task = task;
-            foreach (ITestInfo testInfo in task.Tests)
-            {
-                Test test = new Test(testInfo, i);
-                TestsList.Items.Add(test);
-                i++;
-            }
+            this.SetupTests();
         }
         #endregion
 
-        #region Events
+        #region Event Handlers
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -53,21 +38,32 @@ namespace TTS.UI.Forms
                 
             }
         }
-
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void CheckCurrentButton_OnClick(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
         {
 
         }
+        #endregion
+
+        #region Assistants
+        private void SetupTests()
+        {
+            const string title = "Тест №";
+            int index = 1;
+            foreach (ITestInfo testInfo in this.task.Tests)
+            {
+                TestIndicator testIndicator = new TestIndicator(testInfo, title + index);
+                this.TestsListBox.Items.Add(testIndicator);
+                index++;
+            }
+        } 
         #endregion
     }
 }

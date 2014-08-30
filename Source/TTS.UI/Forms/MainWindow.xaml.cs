@@ -92,13 +92,12 @@ namespace TTS.UI.Forms
             this.taskEditWindow.ShowDialog();
 
             ITask task = this.taskEditWindow.Task;
-            controller.Tasks.Add(task);
-
             if (task != null)
             {
+                controller.Tasks.Add(task);
                 this.TasksList.Items.Add(task);
+                this.TasksList.SelectedItem = task;
             }
-            //добавить чтобы он сразу бфыл выделен после создания
         }
         private void OpenTaskEditWindow(ITask task)
         {

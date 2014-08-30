@@ -95,8 +95,7 @@
             </Grid>
 
             <Border Grid.Row="1" x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-                <ScrollViewer x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto">
-                </ScrollViewer>
+                <ScrollViewer x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" />
             </Border>
 
             <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" Height="24" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>

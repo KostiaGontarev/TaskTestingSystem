@@ -67,16 +67,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserControls\ButtonIO.xaml.cs" />
+    <Compile Include="UserControls\IOSetupControl.xaml.cs" />
     <Compile Include="UserControls\ExecutedFile.xaml.cs" />
-    <Compile Include="UserControls\IOContent.xaml.cs" />
-    <Compile Include="UserControls\Test.xaml.cs" />
+    <Compile Include="UserControls\IOPanel.xaml.cs" />
+    <Compile Include="UserControls\TestIndicator.xaml.cs" />
     <Compile Include="UserControls\RequirementSetupControl.xaml.cs" />
     <Page Include="Forms\TaskEditWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\IOEditDialog.xaml">
+    <Page Include="Forms\TextEditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -93,7 +93,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Forms\TaskEditWindow.xaml.cs" />
-    <Compile Include="Forms\IOEditDialog.xaml.cs" />
+    <Compile Include="Forms\TextEditDialog.xaml.cs" />
     <Compile Include="Forms\MainWindow.xaml.cs" />
     <Compile Include="Forms\TaskCheckWindow.xaml.cs" />
     <Page Include="Themes\BureauBlack.xaml">
@@ -124,7 +124,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ButtonIO.xaml">
+    <Page Include="UserControls\IOSetupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -132,7 +132,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\IOContent.xaml">
+    <Page Include="UserControls\IOPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -140,7 +140,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Test.xaml">
+    <Page Include="UserControls\TestIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

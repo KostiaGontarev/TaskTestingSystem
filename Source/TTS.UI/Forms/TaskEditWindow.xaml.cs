@@ -18,8 +18,8 @@ namespace TTS.UI.Forms
     {
         #region Data Members
         private readonly List<string> errorsList = new List<string>();
+        private readonly IOPanel ioPanel;
         private ITask task;
-        private IOContent content;
         #endregion
 
         #region Properties
@@ -34,8 +34,8 @@ namespace TTS.UI.Forms
         {
             this.InitializeComponent();
             this.task = CoreAccessor.CreateTask();
-            this.content = new IOContent();
-            this.ContentIOBorder.Child = this.content;
+            this.ioPanel = new IOPanel();
+            this.ContentIOBorder.Child = this.ioPanel;
         }
         public TaskEditWindow(ITask task)
             : this()
@@ -79,7 +79,7 @@ namespace TTS.UI.Forms
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.content.AddButtonIO();
+            this.ioPanel.AddItem();
         }
         #endregion
 
@@ -116,6 +116,7 @@ namespace TTS.UI.Forms
         }
         private void SaveRequirements()
         {
+            this.task.Requirements.Clear();
             if (this.RequirementsStackPanel.Children.Count != 0)
             {
                 foreach (UIElement element in this.RequirementsStackPanel.Children)
@@ -131,11 +132,8 @@ namespace TTS.UI.Forms
         {
             if (!String.IsNullOrWhiteSpace(requirementSetupControl.RequirementValueTextBox.Text))
             {
-                ICharacteristic characterictic = CoreAccessor.CreateCharacteristic();
-                characterictic.Type = (CharacteristicType)requirementSetupControl.RequirementTypeComboBox.SelectedItem;
-                double value = 0.0;
-                bool converted = double.TryParse(requirementSetupControl.RequirementValueTextBox.Text, out value);
-                characterictic.Value = value;
+                ICharacteristic characterictic = null;
+                bool converted = this.SetupCharacterictic(requirementSetupControl, out characterictic);
 
                 if (converted)
                 {
@@ -146,11 +144,21 @@ namespace TTS.UI.Forms
 
             this.errorsList.Add("Значение требования " + requirementSetupControl.RequirementTypeComboBox.Text);
         }
+        private bool SetupCharacterictic(RequirementSetupControl requirementSetupControl, out ICharacteristic characterictic)
+        {
+            characterictic = CoreAccessor.CreateCharacteristic();
+            characterictic.Type = (CharacteristicType) requirementSetupControl.RequirementTypeComboBox.SelectedItem;
+            double value = 0.0;
+            bool converted = double.TryParse(requirementSetupControl.RequirementValueTextBox.Text, out value);
+            characterictic.Value = value;
+            return converted;
+        }
+
         private void SaveIO()
         {
-            this.content.SaveListTestInfo();
+            List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
             this.task.Tests.Clear();
-            foreach (ITestInfo testInfo in this.content.ListTestInfo)
+            foreach (ITestInfo testInfo in testsInfo)
             {
                 this.task.Tests.Add(testInfo);
             }
@@ -200,7 +208,7 @@ namespace TTS.UI.Forms
         {
             foreach (ITestInfo testInfo in this.Task.Tests)
             {
-                this.content.AddButtonIO(testInfo.Input, testInfo.Output);
+                this.ioPanel.AddItem(testInfo);
             }
         }
         #endregion

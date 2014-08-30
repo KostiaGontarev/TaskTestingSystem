@@ -34,7 +34,7 @@
 
                 <ScrollViewer Grid.Row="1" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <ListBox x:Name="TestsList" VerticalAlignment="Stretch" Focusable="False"/>
+                        <ListBox x:Name="TestsListBox" VerticalAlignment="Stretch" Focusable="False"/>
                     </Border>
                 </ScrollViewer>
 

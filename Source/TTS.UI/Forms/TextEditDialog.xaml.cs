@@ -5,7 +5,7 @@ using System.Windows.Documents;
 
 namespace TTS.UI.Forms
 {
-	public partial class IOEditDialog : Window
+	public partial class TextEditDialog : Window
     {
         #region Data Members
 	    private string text;
@@ -19,7 +19,7 @@ namespace TTS.UI.Forms
         #endregion
 
         #region Constructors
-        public IOEditDialog(string text)
+        public TextEditDialog(string text)
 		{
 			this.InitializeComponent();
             this.text = text;
