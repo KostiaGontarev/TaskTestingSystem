@@ -160,7 +160,10 @@ namespace TTS.UI.Forms
             this.task.Tests.Clear();
             foreach (ITestInfo testInfo in testsInfo)
             {
-                this.task.Tests.Add(testInfo);
+                if (!String.IsNullOrWhiteSpace(testInfo.Input) || !String.IsNullOrWhiteSpace(testInfo.Output))
+                {
+                    this.task.Tests.Add(testInfo);
+                }
             }
         }
         private void CheckErrors()
@@ -212,5 +215,6 @@ namespace TTS.UI.Forms
             }
         }
         #endregion
+
     }
 }

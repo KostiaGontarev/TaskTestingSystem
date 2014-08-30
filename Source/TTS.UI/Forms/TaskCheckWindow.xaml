@@ -20,7 +20,7 @@
                 <RowDefinition Height="0.10*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенный" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"></Button>
+            <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенные" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"></Button>
             <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick" ></Button>
 
             <Grid Grid.Row="0">
@@ -32,12 +32,11 @@
 
                 <Label Grid.Row="0" Content="Список тестов" Margin="0"/>
 
-                <ScrollViewer Grid.Row="1" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto">
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <ListBox x:Name="TestsListBox" VerticalAlignment="Stretch" Focusable="False"/>
-                    </Border>
-                </ScrollViewer>
-
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="4,0,4,4" x:Name="TestsStackPanel" VerticalAlignment="Stretch" Focusable="False" Background="White"/>
+                    </ScrollViewer>
+                </Border>
             </Grid>
 
         </Grid>
@@ -53,9 +52,10 @@
 
             <Label Grid.Row="0" Content="Исполняемые файлы" Height="26" VerticalAlignment="Top"/>
 
+
             <Border Grid.Row="1" Margin="4,0,4,4" BorderBrush="Black" BorderThickness="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="3" />
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Name="TestingFilesStackPanel" Margin="3" />
                 </ScrollViewer>
             </Border>
 
@@ -66,10 +66,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Name="AddButton" Grid.Column="0" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="AddButton_OnClick"/>
-                <Button Name="DeleteButton" Grid.Column="1" Content="Удалить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="DeleteButton_OnClick"/>
             </Grid>
-
-
+            
         </Grid>
     </Grid>
 </Window>

@@ -16,7 +16,7 @@ namespace TTS.UI.UserControls
 	/// <summary>
 	/// Interaction logic for Exec_file.xaml
 	/// </summary>
-	public partial class ExecutedFile : UserControl
+	public partial class TestingFileControl : UserControl
     {
         #region Members
         private string filePath;
@@ -33,16 +33,17 @@ namespace TTS.UI.UserControls
         #endregion
 
         #region Constructors
-        public ExecutedFile()
+        public TestingFileControl()
 		{
 			this.InitializeComponent();
         }
 
-        public ExecutedFile(string filePath)
+        public TestingFileControl(string filePath)
             :this()
         {
             this.filePath = filePath;
             FilePathLabel.Content = this.filePath;
+            FilePathLabel.ToolTip = this.filePath;
         }
         #endregion
 

@@ -22,6 +22,7 @@ namespace TTS.UI.Forms
 		{
 			this.InitializeComponent();
             this.controller = CoreAccessor.GetTaskController();
+            TasksList.ItemsSource = this.controller.Tasks;
 		}
         #endregion
 
@@ -78,11 +79,6 @@ namespace TTS.UI.Forms
                 //this.TasksList.Items.Refresh();
             }
         }
-
-        private void TasksList_OnDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            this.OpenTaskEditWindow(this.TasksList.SelectedItem as ITask);
-        }
         #endregion
 
         #region Assistance
@@ -95,7 +91,7 @@ namespace TTS.UI.Forms
             if (task != null)
             {
                 controller.Tasks.Add(task);
-                this.TasksList.Items.Add(task);
+                TasksList.Items.Refresh();
                 this.TasksList.SelectedItem = task;
             }
         }
@@ -110,8 +106,15 @@ namespace TTS.UI.Forms
         private void OpenTaskCheckWindow()
         {
             ITask task = this.TasksList.SelectedItem as ITask;
-            this.taskCheckWindow = new TaskCheckWindow(task);
-            this.taskCheckWindow.ShowDialog();
+            if (task.Tests.Count == 0)
+            {
+                MessageBox.Show("Пожалуйста, добавьте файлы для проверки", "Нет файлов для проверки");
+            }
+            else
+            {
+                this.taskCheckWindow = new TaskCheckWindow(task);
+                this.taskCheckWindow.ShowDialog();
+            }
         }
         #endregion
     }

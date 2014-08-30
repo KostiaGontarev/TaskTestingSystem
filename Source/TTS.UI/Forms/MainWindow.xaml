@@ -25,7 +25,7 @@
 				<Button x:Name="DeleteButton" Content="Удалить" Height="22" FontWeight="Bold" BorderBrush="Black" Click="DeleteButtonClick"/>
 			</StackPanel>	
 			<DockPanel LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Stretch">
-                <ListBox x:Name="TasksList"  Width="222" VerticalAlignment="Stretch" Focusable="False" MouseDoubleClick="TasksList_OnDoubleClick">
+                <ListBox x:Name="TasksList"  Width="222" VerticalAlignment="Stretch" Focusable="False">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"/>

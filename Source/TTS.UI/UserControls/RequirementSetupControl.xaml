@@ -7,7 +7,7 @@
 	mc:Ignorable="d"
 	x:Class="TTS.UI.UserControls.RequirementSetupControl"
 	x:Name="UserControl"
-	MinWidth="150" MinHeight="25" HorizontalAlignment="Stretch">
+	MinWidth="100" MinHeight="25" HorizontalAlignment="Stretch">
 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>

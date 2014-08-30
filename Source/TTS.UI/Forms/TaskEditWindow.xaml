@@ -63,12 +63,12 @@
 
                 </Grid>
 
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                    <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <Border BorderBrush="Black" BorderThickness="1">
                         <StackPanel x:Name="RequirementsStackPanel" Height="96">
                         </StackPanel>
-                    </ScrollViewer>
-                </Border>
+                    </Border>
+                </ScrollViewer>
 
             </Grid>
 
@@ -87,16 +87,17 @@
             <Grid Grid.Row="0">
                 <Label Width="200" HorizontalAlignment="Left">
                     <TextBlock TextWrapping="WrapWithOverflow" Width="190" FontSize="9" Height="37">
-                        Нажмите 'Добавить' и перетащите файлы, либо исправьте содержимое с помощью клика по 
+                        Нажмите 'Добавить' и перетащите данные, либо исправьте содержимое с помощью клика по 
                         элементу
                     </TextBlock>
                 </Label>
                 <Label Content="" FontSize="8" Padding="0,0" Grid.IsSharedSizeScope="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 
-            <Border Grid.Row="1" x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-                <ScrollViewer x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" />
-            </Border>
+            <ScrollViewer Grid.Row="1" x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" >
+                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
+                </Border>
+            </ScrollViewer>
 
             <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" Height="24" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>
 
