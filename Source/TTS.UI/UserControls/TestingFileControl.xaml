@@ -24,7 +24,7 @@
 
             <Ellipse Name="ResultFileEllipse" Grid.Column="1" Margin="4" Fill="White" Stroke="Black"/>
             
-            <Button Grid.Column="2" BorderBrush="White" Foreground="White" >
+            <Button Name="DeLeteButton" Grid.Column="2" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick">
                 <Button.Background>
                     <ImageBrush ImageSource="/TTS.UI;component/Pictures/Delete.png"/>
                 </Button.Background>
