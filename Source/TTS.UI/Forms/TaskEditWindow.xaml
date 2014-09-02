@@ -30,7 +30,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"/>
-                <RichTextBox Name="DescriptionTask" Grid.Row="1"/>
+                <RichTextBox Name="DescriptionTextBox" Grid.Row="1"/>
             </Grid>
 
             <Grid Grid.Row="2">

@@ -26,7 +26,7 @@ namespace TTS.UI.Forms
 		{
 			this.InitializeComponent();
             this.controller = CoreAccessor.GetTaskController();
-            TasksList.ItemsSource = this.controller.Tasks;
+            this.TasksList.ItemsSource = this.controller.Tasks;
 		}
         #endregion
 
@@ -79,7 +79,7 @@ namespace TTS.UI.Forms
             {
                 ITask task = this.TasksList.SelectedItem as ITask;
                 this.controller.Tasks.Remove(task);
-                this.TasksList.Items.Remove(this.TasksList.SelectedItem);
+                this.TasksList.Items.Refresh();
             }
         }
         private void OpenButton_OnClick(object sender, RoutedEventArgs e)
@@ -91,8 +91,8 @@ namespace TTS.UI.Forms
             if (openTasksDialog.ShowDialog() == true)
             {
                 tasksFilePath = openTasksDialog.FileName;
-                controller.LoadFrom(tasksFilePath);
-                TasksList.Items.Refresh();
+                this.controller.LoadFrom(tasksFilePath);
+                this.TasksList.Items.Refresh();
             }
         }
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
@@ -105,7 +105,8 @@ namespace TTS.UI.Forms
             if (saveTasksDialog.ShowDialog() == true)
             {
                 tasksFilePath = saveTasksDialog.FileName;
-                controller.WriteTo(tasksFilePath);
+                this.controller.WriteTo(tasksFilePath);
+                this.TasksList.Items.Refresh();
             }
         }
         #endregion
@@ -120,7 +121,7 @@ namespace TTS.UI.Forms
             if (task != null)
             {
                 controller.Tasks.Add(task);
-                TasksList.Items.Refresh();
+                this.TasksList.Items.Refresh();
                 this.TasksList.SelectedItem = task;
             }
         }

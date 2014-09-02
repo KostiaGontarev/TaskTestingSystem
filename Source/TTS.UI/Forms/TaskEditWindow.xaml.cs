@@ -33,7 +33,6 @@ namespace TTS.UI.Forms
         public TaskEditWindow()
         {
             this.InitializeComponent();
-            this.task = CoreAccessor.CreateTask();
             this.ioPanel = new IOPanel();
             this.ContentIOBorder.Child = this.ioPanel;
         }
@@ -53,8 +52,14 @@ namespace TTS.UI.Forms
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.errorsList.Clear();
-            this.SaveTask();
-            this.CheckErrors();
+            this.CheckTask();
+            if (this.errorsList.Count > 0)
+                this.CheckErrors();
+            else
+            {
+                this.SaveTask();
+                this.Close();
+            }
         }
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -69,7 +74,6 @@ namespace TTS.UI.Forms
         }
         private void MinusButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //Надо делать выделяемый элемент и удалять выделенный, но пока и так сойдёт.
             if (this.RequirementsStackPanel.Children.Count != 0)
             {
                 this.RequirementsStackPanel.Children.RemoveAt(this.RequirementsStackPanel.Children.Count - 1);
@@ -83,35 +87,75 @@ namespace TTS.UI.Forms
         #endregion
 
         #region Assistance
+        private void CheckTask()
+        {
+            this.CheckName();
+            this.CheckDescription();
+            this.CheckRequirements();
+            this.CheckIO();
+        }
+        private void CheckName()
+        {
+            if (String.IsNullOrWhiteSpace(this.NameTextBox.Text))
+                this.errorsList.Add("Название");
+        }
+        private void CheckDescription()
+        {
+            TextRange textRange = new TextRange(DescriptionTextBox.Document.ContentStart, DescriptionTextBox.Document.ContentEnd);
+            string str = textRange.Text.Replace("\r\n", "");
+            if (String.IsNullOrWhiteSpace(str))
+                this.errorsList.Add("Условие");
+        }
+        private void CheckRequirements()
+        {
+            if (this.RequirementsStackPanel.Children.Count != 0)
+            {
+                foreach (UIElement element in this.RequirementsStackPanel.Children)
+                {
+                    if (element is RequirementSetupControl)
+                    {
+                        this.CheckRequirement(element as RequirementSetupControl);
+                    }
+                }
+            }
+        }
+        private void CheckRequirement(RequirementSetupControl requirementSetupControl)
+        {
+            if (String.IsNullOrWhiteSpace(requirementSetupControl.RequirementValueTextBox.Text))
+                this.errorsList.Add("Значение требования " + requirementSetupControl.RequirementTypeComboBox.Text);
+        }
+        private void CheckIO()
+        {
+            List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
+            foreach (ITestInfo testInfo in testsInfo)
+            {
+                if (String.IsNullOrWhiteSpace(testInfo.Input) || String.IsNullOrWhiteSpace(testInfo.Output))
+                {
+                    this.errorsList.Add("Тесты");
+                }
+            }
+        }
+
         private void SaveTask()
         {
+            if (this.task == null)
+                this.task = CoreAccessor.CreateTask();
             this.SaveName();
             this.SaveDescription();
             this.SaveRequirements();
             this.SaveIO();
+
+            MessageBox.Show("Сохранение прошло успешно!", "Сохранение задачи");
         }
         private void SaveName()
         {
-            if (!String.IsNullOrWhiteSpace(this.NameTextBox.Text))
-                this.Task.Name = this.NameTextBox.Text;
-            else
-                this.errorsList.Add("Название");
+            this.task.Name = NameTextBox.Text;
         }
         private void SaveDescription()
         {
-            TextRange textRange = new TextRange(DescriptionTask.Document.ContentStart,
-                DescriptionTask.Document.ContentEnd);
-
+            TextRange textRange = new TextRange(DescriptionTextBox.Document.ContentStart, DescriptionTextBox.Document.ContentEnd);
             string str = textRange.Text.Replace("\r\n", "");
-
-            if (!String.IsNullOrWhiteSpace(str))
-            {
-                this.Task.Description = str;
-            }
-            else
-            {
-                this.errorsList.Add("Условие");
-            }
+            this.task.Description = str;
         }
         private void SaveRequirements()
         {
@@ -129,58 +173,28 @@ namespace TTS.UI.Forms
         }
         private void SaveRequirement(RequirementSetupControl requirementSetupControl)
         {
-            if (!String.IsNullOrWhiteSpace(requirementSetupControl.RequirementValueTextBox.Text))
+            ICharacteristic characterictic = null;
+            bool converted = this.SetupCharacterictic(requirementSetupControl, out characterictic);
+            if (converted)
+                this.task.Requirements.Add(characterictic);
+        }
+        private void SaveIO()
+        {
+            this.task.Tests.Clear();
+            List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
+            foreach (ITestInfo testInfo in testsInfo)
             {
-                ICharacteristic characterictic = null;
-                bool converted = this.SetupCharacterictic(requirementSetupControl, out characterictic);
-
-                if (converted)
-                {
-                    this.task.Requirements.Add(characterictic);
-                    return;
-                }
+                this.task.Tests.Add(testInfo);
             }
-
-            this.errorsList.Add("Значение требования " + requirementSetupControl.RequirementTypeComboBox.Text);
         }
         private bool SetupCharacterictic(RequirementSetupControl requirementSetupControl, out ICharacteristic characterictic)
         {
             characterictic = CoreAccessor.CreateCharacteristic();
-            characterictic.Type = (CharacteristicType) requirementSetupControl.RequirementTypeComboBox.SelectedItem;
+            characterictic.Type = (CharacteristicType)requirementSetupControl.RequirementTypeComboBox.SelectedItem;
             double value = 0.0;
             bool converted = double.TryParse(requirementSetupControl.RequirementValueTextBox.Text, out value);
             characterictic.Value = value;
             return converted;
-        }
-
-        private void SaveIO()
-        {
-            List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
-            this.task.Tests.Clear();
-            foreach (ITestInfo testInfo in testsInfo)
-            {
-                if (!String.IsNullOrWhiteSpace(testInfo.Input) || !String.IsNullOrWhiteSpace(testInfo.Output))
-                {
-                    this.task.Tests.Add(testInfo);
-                }
-            }
-        }
-        private void CheckErrors()
-        {
-            string result = String.Empty;
-            if (this.errorsList.Count > 0)
-            {
-                result += "Во время сохранения возникли ошибки. Обратите внимание на следующие пункты: " +
-                          Environment.NewLine;
-                result = this.errorsList.Aggregate(result,
-                    (current, error) => current + ("* " + error + ";" + Environment.NewLine));
-                MessageBox.Show(result, "Внимание!");
-            }
-            else
-            {
-                MessageBox.Show("Сохранение прошло успешно!", "Успех!");
-                this.Close();
-            }
         }
 
         private void DisplayCurrentTask()
@@ -192,7 +206,7 @@ namespace TTS.UI.Forms
         private void DisplayNameAndDescription()
         {
             this.NameTextBox.Text = this.Task.Name ?? String.Empty;
-            this.DescriptionTask.AppendText(this.Task.Description ?? String.Empty);
+            this.DescriptionTextBox.AppendText(this.Task.Description ?? String.Empty);
         }
         private void DisplayRequirements()
         {
@@ -213,7 +227,16 @@ namespace TTS.UI.Forms
                 this.ioPanel.AddItem(testInfo);
             }
         }
-        #endregion
 
+        private void CheckErrors()
+        {
+            string result = String.Empty;
+            result += "Во время сохранения возникли ошибки. Обратите внимание на следующие пункты: " +
+                      Environment.NewLine;
+            result = this.errorsList.Aggregate(result,
+                (current, error) => current + ("* " + error + ";" + Environment.NewLine));
+            MessageBox.Show(result, "Внимание!");
+        }
+        #endregion
     }
 }

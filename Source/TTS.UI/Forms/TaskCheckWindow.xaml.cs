@@ -17,9 +17,10 @@ namespace TTS.UI.Forms
     {
         #region Data Members
         private readonly ITask task;
-        private ITestController testController;
+        private readonly ITestController testController;
         private IList<string> filesInfo;
         private IList<ITestInfo> currentTests;
+
         private TestingFilesPanel testingFilesPanel;
         #endregion
 

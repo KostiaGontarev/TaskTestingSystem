@@ -25,7 +25,9 @@ namespace TTS.UI.UserControls
         {
             get
             {
-                return testInfo;
+                this.testInfo.Input = this.InputTextBox.Text;
+                this.testInfo.Output = this.OutputTextBox.Text;
+                return this.testInfo;
             }
         } 
         #endregion
@@ -54,15 +56,13 @@ namespace TTS.UI.UserControls
         {
             this.ioEditDialog = new TextEditDialog(this.InputTextBox.Text);
             this.ioEditDialog.ShowDialog();
-            this.testInfo.Input = this.ioEditDialog.Text;
-            this.InputTextBox.Text = this.testInfo.Input;
+            this.InputTextBox.Text = this.ioEditDialog.Text;
         }
         private void OutputTextBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             this.ioEditDialog = new TextEditDialog(this.OutputTextBox.Text);
             this.ioEditDialog.ShowDialog();
-            this.testInfo.Output = this.ioEditDialog.Text;
-            this.OutputTextBox.Text = this.testInfo.Output;
+            this.OutputTextBox.Text = this.ioEditDialog.Text;
         }
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
