@@ -12,26 +12,25 @@
 
         <Grid x:Name="LayoutRoot" Background="White">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="20"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="22"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ProgressBar Name="TestProgressProgressBar" Grid.Row="1"/>
 
             <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="22"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="TestNameLabel" Grid.Column="0" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left"/>
-                <ProgressBar Grid.Row="1"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" x:Name="TestNameLabel" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left"/>
+
+                <Ellipse Grid.Column="2" Margin="2,3,2,3" Fill="White" Stroke="Black"/>
+
+                <CheckBox Name="TestCheckBox" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
-
-
-            <Ellipse Grid.Column="1" Margin="2,6,2,6" Fill="White" Stroke="Black"/>
-
-            <CheckBox Name="TestCheckBox" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
         </Grid>
     </Border>
 </UserControl>
