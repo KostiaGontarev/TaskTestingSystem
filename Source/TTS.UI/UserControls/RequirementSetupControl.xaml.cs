@@ -3,10 +3,12 @@
 namespace TTS.UI.UserControls
 {
 	public partial class RequirementSetupControl : UserControl
-	{
-		public RequirementSetupControl()
+    {
+        #region Constructors
+        public RequirementSetupControl()
 		{
 			this.InitializeComponent();
-		}
-	}
+        }
+        #endregion
+    }
 }

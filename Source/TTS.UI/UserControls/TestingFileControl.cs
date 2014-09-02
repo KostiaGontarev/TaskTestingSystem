@@ -18,10 +18,6 @@ namespace TTS.UI.UserControls
 	/// </summary>
 	public partial class TestingFileControl : UserControl
     {
-        #region Events
-        public event EventHandler DeleteButtonClick;
-        #endregion
-
         #region Members
         private string filePath;
         #endregion
@@ -34,6 +30,10 @@ namespace TTS.UI.UserControls
                 return filePath;
             }
         }
+        #endregion
+
+        #region Events
+        public event EventHandler DeleteButtonClick;
         #endregion
 
         #region Constructors
@@ -51,10 +51,12 @@ namespace TTS.UI.UserControls
         }
         #endregion
 
+        #region EventHandlers
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.OnDeleteButtonClick();
         }
+        #endregion
 
         #region Event Invokers
         private void OnDeleteButtonClick()

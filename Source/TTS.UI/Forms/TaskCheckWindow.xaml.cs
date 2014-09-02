@@ -64,18 +64,24 @@ namespace TTS.UI.Forms
             }
             if (currentTests.Count != 0)
             {
-                this.testController.Run(currentTests);
+                RunTests(currentTests);
             }
             currentTests.Clear();
         }
+
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
         {
             currentTests = task.Tests;
-            this.testController.Run(currentTests);
+            RunTests(currentTests);
+        }
+
+        private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
 
-        #region Assistants
+        #region Assistance
         private void SetupTests()
         {
             const string title = "Тест №";
@@ -86,7 +92,32 @@ namespace TTS.UI.Forms
                 this.TestsStackPanel.Children.Add(testIndicator);
                 index++;
             }
-        } 
+        }
+
+        private void DisableFunctionality()
+        {
+            CheckAllButton.Visibility = System.Windows.Visibility.Hidden;
+            CheckCurrentButton.Visibility = System.Windows.Visibility.Hidden;
+            TestsStackPanel.IsEnabled = false;
+            AddButton.IsEnabled = false;
+            testingFilesPanel.IsEnabled = false;
+        }
+
+        private void EnableFunctionality()
+        {
+            CheckAllButton.Visibility = System.Windows.Visibility.Visible;
+            CheckCurrentButton.Visibility = System.Windows.Visibility.Visible;
+            TestsStackPanel.IsEnabled = true;
+            AddButton.IsEnabled = true;
+            testingFilesPanel.IsEnabled = true;
+        }
+
+        private void RunTests(IList<ITestInfo> tests)
+        {
+            DisableFunctionality();
+            this.testController.Run(tests);
+            EnableFunctionality();
+        }
         #endregion
     }
 }

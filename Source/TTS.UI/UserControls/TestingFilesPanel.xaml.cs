@@ -27,13 +27,7 @@ namespace TTS.UI.UserControls
         }
         #endregion
 
-        public void AddItem(string filePath)
-        {
-            TestingFileControl testingFileControl = new TestingFileControl(filePath);
-            testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
-            this.TestingFilesStackPanel.Children.Add(testingFileControl);
-        }
-
+        #region EventHandlers
         private void TestingFileControl_DeleteButtonClick(object sender, System.EventArgs e)
         {
             TestingFileControl control = sender as TestingFileControl;
@@ -43,5 +37,15 @@ namespace TTS.UI.UserControls
                 this.TestingFilesStackPanel.Children.Remove(control);
             }
         }
+        #endregion
+
+        #region Assistance
+        public void AddItem(string filePath)
+        {
+            TestingFileControl testingFileControl = new TestingFileControl(filePath);
+            testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
+            this.TestingFilesStackPanel.Children.Add(testingFileControl);
+        }
+        #endregion
     }
 }
