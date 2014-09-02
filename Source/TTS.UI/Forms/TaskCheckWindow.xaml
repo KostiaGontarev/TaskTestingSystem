@@ -4,11 +4,11 @@
 	x:Class="TTS.UI.Forms.TaskCheckWindow"
 	x:Name="Window"
 	Title="Проверка задачи"
-	Width="400" Height="350" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
+	Width="500" Height="400" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.45*"/>
+            <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.55*" />
         </Grid.ColumnDefinitions>
 
@@ -20,22 +20,30 @@
                 <RowDefinition Height="0.10*"/>
             </Grid.RowDefinitions>
 
-            <Button Name="StopCheckButton" Margin="4,0,4,4" Content="Остановить проверку" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="StopCheckButton_OnClick"/>
+            <Button Name="StopCheckButton" Margin="4,0,4,4" Content="Остановить проверку" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="StopCheckButton_OnClick" FontStyle="Italic"/>
             <Button Name="CheckSelectedButton"  Margin="4,4,4,0" Content="Проверить выделенные" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckSelectedButton_OnClick"/>
             <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick"/>
 
             <Grid Grid.Row="0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="29*"/>
-                    <RowDefinition Height="225*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="269*"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Список тестов" Margin="0"/>
+                <Label Grid.Row="0" Content="Список тестов" Margin="0" FontStyle="Italic"/>
 
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="4,0,4,4">
+                <Border Grid.Row="1" BorderThickness="1" Margin="4,0,4,4">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="#FFD9E3EC" Offset="1"/>
+                            <GradientStop Color="#FF9FA6AD"/>
+                            <GradientStop Color="#FFACB4BB" Offset="0.091"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="TestsPanel" VerticalAlignment="Stretch" Focusable="False" Background="White"/>
+                        <StackPanel Margin="4,4,4,4" x:Name="TestsPanel" VerticalAlignment="Stretch" Focusable="False" Background="White"/>
                     </ScrollViewer>
                 </Border>
             </Grid>
@@ -45,16 +53,24 @@
         <Grid Grid.Column="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="29*"/>
-                <RowDefinition Height="260*"/>
-                <RowDefinition Height="33*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="309*"/>
+                <RowDefinition Height="38*"/>
             </Grid.RowDefinitions>
 
 
-            <Label Grid.Row="0" Content="Исполняемые файлы" Height="26" VerticalAlignment="Top"/>
+            <Label Grid.Row="0" Content="Исполняемые файлы" Height="26" VerticalAlignment="Top" Grid.RowSpan="2" FontStyle="Italic"/>
 
 
-            <Border Grid.Row="1" Margin="4,0,4,4" BorderBrush="Black" BorderThickness="1">
+            <Border Grid.Row="1" Margin="4,0,4,4" BorderThickness="1">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="#FFD7E1EA" Offset="1"/>
+                        <GradientStop Color="#FFA3ABB2"/>
+                        <GradientStop Color="#FFAFB7BF" Offset="0.083"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel Name="TestingFilesStackPanel" Margin="3" />
                 </ScrollViewer>

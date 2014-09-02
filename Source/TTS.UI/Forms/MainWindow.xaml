@@ -5,8 +5,25 @@
 	x:Class="TTS.UI.Forms.MainWindow"
 	x:Name="Window"
 	Title="Автоматизированная проверка задач"
-	Width="640" Height="480" MinHeight="300" Icon="../Pictures/Check.png">
+	MinWidth="640" MinHeight="480" Width="640" Height="480" Icon="../Pictures/Check.png">
 	<Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Background="White" Margin="7,0,0,0" >
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть" Click="OpenButton_OnClick"/>
+                <MenuItem Header="Сохранить" Click="SaveButton_OnClick"/>
+                <MenuItem Header="Выход" Click="ExitButton_OnClick"/>
+            </MenuItem>
+            
+            <MenuItem Header="Настройки" Click="SettingsButton_OnClick"/>
+            <MenuItem Header="Помощь" Click="HelpButton_OnClick"/>
+        </Menu>
+
+        <Grid Grid.Row="1">
 		<Grid.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 				<GradientStop Color="White" Offset="0"/>
@@ -17,7 +34,7 @@
             <ColumnDefinition Width="230"/>
             <ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<DockPanel x:Name="LeftPanel" Grid.Column="0" HorizontalAlignment="Left"  Margin="8,8,0,8" Width="222">
+		<DockPanel x:Name="LeftPanel" Grid.Column="0" HorizontalAlignment="Left"  Margin="8,1,0,8" Width="222">
 			<StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" Height="100" VerticalAlignment="Bottom" Width="222">
 				<Button x:Name="CheckButton" Content="Проверить" Margin="0,0,0,4" Height="22" BorderBrush="Black" FontFamily="Segoe UI" FontWeight="Bold" Click="CheckButton_OnClick"/>
 				<Button x:Name="AddButton" Content="Добавить" Margin="0,0,0,4" Height="22" FontWeight="Bold" BorderBrush="Black" Click="AddButton_OnClick"/>
@@ -26,7 +43,16 @@
 			</StackPanel>	
 			<DockPanel LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Stretch">
                 <ListBox x:Name="TasksList"  Width="222" VerticalAlignment="Stretch" Focusable="False">
-                    <ListBox.ItemTemplate>
+                        <ListBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="#FFD3E0EA" Offset="1"/>
+                                <GradientStop Color="#FF8D969C"/>
+                                <GradientStop Color="#FFA0AAB1"/>
+                                <GradientStop Color="#FFA9B4BB" Offset="0.083"/>
+                            </LinearGradientBrush>
+                        </ListBox.BorderBrush>
+                        <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"/>
                         </DataTemplate>
@@ -34,24 +60,17 @@
                 </ListBox>
 			</DockPanel>	 
 		</DockPanel>
-		<Grid Grid.Column="1" Margin="8" >
+		<Grid Grid.Column="1" Margin="8,1,8,8" >
 			<Grid.RowDefinitions>
                 <RowDefinition Height="0.30*"/>
                 <RowDefinition/>
                 <RowDefinition Height="0.07*"/>
 			</Grid.RowDefinitions>
-            <RichTextBox x:Name="ContentTasks" Grid.Row="0" VerticalScrollBarVisibility="Visible"/>
-            
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.4*"/>
-                    <ColumnDefinition Width="0.43*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0" Content="Сохранить" BorderBrush="Black" Name="SaveButton" FontWeight="Bold" Click="SaveButton_OnClick"/>
-                <Button Grid.Column="1" Margin="5,0,0,0" Content="Открыть" Name="OpenButton"  BorderBrush="Black" FontWeight="Bold" Click="OpenButton_OnClick"/>
+
+                <ScrollViewer Grid.Row="0" x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" >
+                    <RichTextBox x:Name="ContentTasks" Grid.Row="0"/>
+                </ScrollViewer>
             </Grid>
-        </Grid>		
-	</Grid>
+        </Grid>
+    </Grid>
 </Window>

@@ -6,14 +6,14 @@
 	mc:Ignorable="d"
 	x:Class="TTS.UI.UserControls.IOSetupControl"
 	x:Name="UserControl"
-	d:DesignWidth="180" d:DesignHeight="22" Height="Auto" MinHeight="25" MaxHeight="25">
+	d:DesignWidth="230" d:DesignHeight="22" Height="Auto" MinHeight="25" MaxHeight="25">
 
 	<Grid x:Name="LayoutRoot">
 		
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>
 			<ColumnDefinition/>
-			<ColumnDefinition Width="0.30*"/>
+			<ColumnDefinition Width="0.25*"/>
 		</Grid.ColumnDefinitions>
 
         <TextBox Grid.Column="0" Margin="2" x:Name="InputTextBox" PreviewMouseDown="InputTextBox_OnPreviewMouseDown" />

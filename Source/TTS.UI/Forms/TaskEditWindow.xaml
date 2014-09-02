@@ -4,7 +4,7 @@
 	x:Class="TTS.UI.Forms.TaskEditWindow"
 	x:Name="Window"
     Title="Редактирование задачи"
-	Width="400" Height="350" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
+	Width="500" Height="450" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
 
     <Grid x:Name="LayoutRoot">
 
@@ -15,28 +15,32 @@
 
         <Grid Grid.Column="0" Margin="8,8,8,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.35*"/>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition/>
-                <RowDefinition Height="0.27*"/>
+                <RowDefinition Height="46*"/>
+                <RowDefinition Height="103*"/>
+                <RowDefinition Height="223*"/>
+                <RowDefinition Height="42*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" VerticalAlignment="Top" Content="Название"/>
-            <TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <Label Grid.Row="0" VerticalAlignment="Top" Content="Название" Height="26" FontStyle="Italic"/>
+            <TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom" Height="22"/>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.35*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"/>
-                <RichTextBox Name="DescriptionTextBox" Grid.Row="1"/>
+                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие" FontStyle="Italic"/>
+
+                <ScrollViewer Grid.Row="1" x:Name="DescriptionScrollViewer"  VerticalScrollBarVisibility="Auto" >
+                    <RichTextBox Name="DescriptionTextBox"/>
+                </ScrollViewer>
+                
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.32*"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="179*"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -47,7 +51,7 @@
                         <ColumnDefinition Width="0.35*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"/>
+                    <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center" FontStyle="Italic"/>
 
                     <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButton_OnClick">
                         <Button.Background>
@@ -64,28 +68,43 @@
                 </Grid>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <Border BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="#FFD9E4EC" Offset="1"/>
+                                <GradientStop Color="#FFB9C1C7" Offset="0.091"/>
+                                <GradientStop Color="#FFC4CED4"/>
+                                <GradientStop Color="#FFA8AFB5"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
                         <StackPanel x:Name="RequirementsStackPanel" Height="96"/>
                     </Border>
                 </ScrollViewer>
 
             </Grid>
 
-            <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"/>
-            <Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="SaveButton" Grid.Column="0" Content="Сохранить" VerticalAlignment="Center" Height="22" HorizontalAlignment="Stretch" Click="SaveButton_OnClick"  Margin="0,0,2,0"/>
+                <Button x:Name="CancelButton" Grid.Column="1" Content="Отмена" VerticalAlignment="Center" Height="22" HorizontalAlignment="Stretch" Click="CancelButton_OnClick" Margin="2,0,0,0"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Column="1" Margin="8,8,8,0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="23*"/>
-                <RowDefinition Height="116*"/>
-                <RowDefinition Height="18*"/>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="299*"/>
+                <RowDefinition Height="42*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Label Width="200" HorizontalAlignment="Left">
-                    <TextBlock TextWrapping="WrapWithOverflow" Width="190" FontSize="9" Height="37">
+                <Label HorizontalAlignment="Stretch">
+                    <TextBlock TextWrapping="WrapWithOverflow" Width="246" FontSize="13" Height="51" FontStyle="Italic">
                         Нажмите 'Добавить' и перетащите данные, либо исправьте содержимое с помощью клика по 
                         элементу
                     </TextBlock>
@@ -94,10 +113,19 @@
             </Grid>
 
             <ScrollViewer Grid.Row="1" x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" >
-                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1"/>
+                <Border x:Name="ContentIOBorder" BorderThickness="1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="#FFDBE5EC" Offset="1"/>
+                            <GradientStop Color="#FFBFC4C8" Offset="0.078"/>
+                            <GradientStop Color="#FFB5B9BD"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                </Border>
             </ScrollViewer>
 
-            <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" Height="24" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>
+            <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="124" Height="22" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>
 
         </Grid>
     </Grid>

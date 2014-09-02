@@ -147,5 +147,20 @@ namespace TTS.UI.Forms
             }
         }
         #endregion
+
+        private void ExitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HelpButton_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

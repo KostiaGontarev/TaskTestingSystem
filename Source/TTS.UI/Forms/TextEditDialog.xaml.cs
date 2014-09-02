@@ -24,6 +24,7 @@ namespace TTS.UI.Forms
 			this.InitializeComponent();
             this.text = text;
             this.TextRichTextBox.AppendText(this.Text);
+            this.TextRichTextBox.Focus();
         }
         #endregion
 
