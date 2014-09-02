@@ -17,17 +17,24 @@ namespace TTS.Core.Concrete.Model
         {
             get { return this.test; }
         }
-        public IReadOnlyList<ICharacteristic> Requirements
+        IReadOnlyList<ICharacteristic> ITestResult.Requirements
         {
             get { return this.requirements.AsReadOnly(); }
+        }
+        public List<ICharacteristic> Requirements
+        {
+            get { return this.requirements; }
         }
         #endregion
 
         #region Constructors
-        public TestResult(ITestInfo test, IEnumerable<ICharacteristic> results)
+        public TestResult(ITestInfo test)
         {
             this.test = test;
             this.requirements = new List<ICharacteristic>();
+        }
+        public TestResult(ITestInfo testInfo, IEnumerable<ICharacteristic> results) : this(testInfo)
+        {
             foreach (ICharacteristic item in results)
             {
                 this.requirements.Add(item);

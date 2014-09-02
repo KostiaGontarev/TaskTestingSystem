@@ -7,38 +7,53 @@ using TTS.Core.Concrete.Model;
 
 namespace TTS.Core.Concrete.Processing
 {
-    internal class IOCTestPerformer
+    internal class IOTestController
     {
         #region Data Members
-        private ICharacteristic result;
         private ITestInfo testInfo;
         private string inputPath;
         private string outputPath;
+        private bool? result;
         #endregion
 
         #region Properties
+        public bool? Result
+        {
+            get { return this.result; }
+        }
         public Process Process { get; private set; }
-        public ICharacteristic Result
-        {
-            get
-            {
-                if (!this.IsSettedUp)
-                    return null;
+        #endregion
 
-                return this.result;
-            }
-        }
-        public bool IsPassed
+        #region Constructors
+        private IOTestController() { }
+        #endregion
+
+        #region Events
+        public event EventHandler InputInjected;
+        public event EventHandler ProcessExecuted;
+        public event EventHandler OutputChecked;
+        #endregion
+
+        #region Event Invokators
+        protected virtual void OnInputInjected()
         {
-            get { return (bool)this.result.Value; }
+            EventHandler handler = InputInjected;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
-        public bool IsSettedUp
+        protected virtual void OnProcessExecuted()
         {
-            get
-            {
-                return (this.testInfo != null) && (this.Process != null);
-            }
+            EventHandler handler = ProcessExecuted;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
+        protected virtual void OnOutputChecked()
+        {
+            EventHandler handler = OutputChecked;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+        #endregion
+
+        #region Static Members
+        public static readonly IOTestController Instance = new IOTestController();
         #endregion
 
         #region Members
@@ -51,15 +66,25 @@ namespace TTS.Core.Concrete.Processing
         {
             try
             {
+                if (this.Process != null && this.testInfo != null) 
+                    throw new InvalidOperationException("The controller is not ready!");
                 this.PrepareInput();
-                this.Process.Start();
-                this.Process.WaitForExit();
+                this.PerformProcess();
                 this.CheckOutput();
+
             }
             catch (Exception exc)
             {
                 throw new Exception("The test was interrupted by error!", exc);
             }
+        }
+        public void Reset()
+        {
+            this.testInfo = null;
+            this.inputPath = null;
+            this.outputPath = null;
+            this.result = null;
+            this.Process = null;
         }
         #endregion
 
@@ -67,24 +92,24 @@ namespace TTS.Core.Concrete.Processing
         private void PrepareInput()
         {
             File.WriteAllText(this.inputPath, this.testInfo.Input);
+            this.OnInputInjected();
+        }
+        private void PerformProcess()
+        {
+            this.Process.Start();
+            this.Process.WaitForExit();
+            this.OnProcessExecuted();
         }
         private void CheckOutput()
         {
             string output = File.ReadAllText(this.outputPath);
-            if (output.Equals(this.testInfo.Output))
-            {
-                this.result.Value = true;
-            }
+            this.result = output.Equals(this.testInfo.Output);
+            this.OnOutputChecked();
         }
 
         private void SetupRequirement(ITestInfo testInfo)
         {
             this.testInfo = testInfo;
-            this.result = new Characteristic
-            {
-                Type = CharacteristicType.InputOutputCompliance,
-                Value = false
-            };
         }
         private void SetupProcess(Process process)
         {

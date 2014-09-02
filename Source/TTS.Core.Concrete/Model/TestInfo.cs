@@ -39,15 +39,6 @@ namespace TTS.Core.Concrete.Model
                     this.output = value;
             }
         }
-
-        public bool IsEmpty
-        {
-            get
-            {
-                return String.IsNullOrWhiteSpace(this.Input) ||
-                       String.IsNullOrWhiteSpace(this.Output);
-            }
-        }
         #endregion
     }
 }

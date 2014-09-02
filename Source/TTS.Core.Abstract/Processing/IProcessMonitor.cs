@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 
 namespace TTS.Core.Abstract.Processing
@@ -11,9 +12,8 @@ namespace TTS.Core.Abstract.Processing
     public interface IProcessMonitor
     {
         Process Process { get; }
+        CharacteristicType Type { get; }
         ICharacteristic Result { get; }
-        bool IsPassed { get; }
-        bool IsSettedUp { get; }
 
         void Start();
         void Stop();

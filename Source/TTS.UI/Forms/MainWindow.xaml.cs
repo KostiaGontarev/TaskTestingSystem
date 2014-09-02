@@ -88,7 +88,7 @@ namespace TTS.UI.Forms
             this.taskEditWindow.ShowDialog();
 
             ITask task = this.taskEditWindow.Task;
-            if (!task.IsEmpty)
+            if (task != null)
             {
                 controller.Tasks.Add(task);
                 TasksList.Items.Refresh();

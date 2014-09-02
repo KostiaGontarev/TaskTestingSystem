@@ -64,16 +64,6 @@ namespace TTS.Core.Concrete.Model
         {
             get { return this.results; }
         }
-
-        public bool IsEmpty
-        {
-            get
-            {
-                return String.IsNullOrWhiteSpace(this.Name) ||
-                       String.IsNullOrWhiteSpace(this.Description) ||
-                       this.Tests.Count == 0;
-            }
-        }
         #endregion
 
         #region Constructors

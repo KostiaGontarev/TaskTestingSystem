@@ -40,7 +40,7 @@ namespace TTS.UI.Forms
         public TaskEditWindow(ITask task)
             : this()
         {
-            if (task != null && !task.IsEmpty)
+            if (task != null)
                 this.task = task;
             else
                 throw new ArgumentNullException("task");
