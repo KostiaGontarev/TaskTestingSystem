@@ -16,7 +16,7 @@ namespace TTS.Core.Concrete
         #endregion
 
         #region Editable Models
-        public static ITestInfo CreateTest()
+        public static ITestInfo CreateTestInfo()
         {
             return new TestInfo();
         }

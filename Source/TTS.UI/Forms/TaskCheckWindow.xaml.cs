@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Collections.Generic;
 
 using Microsoft.Win32;
@@ -6,6 +7,7 @@ using Microsoft.Win32;
 using TTS.Core.Abstract.Model;
 
 using TTS.Core.Abstract.Controllers;
+using TTS.Core.Abstract.Processing;
 using TTS.Core.Concrete;
 
 using TTS.UI.UserControls;
@@ -16,12 +18,8 @@ namespace TTS.UI.Forms
     public partial class TaskCheckWindow : Window
     {
         #region Data Members
-        private readonly ITask task;
-        private readonly ITestController testController;
-        private IList<string> filesInfo;
-        private IList<ITestInfo> currentTests;
-
-        private TestingFilesPanel testingFilesPanel;
+        private readonly ITestController controller;
+        private readonly TestingFilesPanel testingFilesPanel;
         #endregion
 
         #region Constructors
@@ -30,13 +28,12 @@ namespace TTS.UI.Forms
             this.InitializeComponent();
             this.testingFilesPanel = new TestingFilesPanel();
             this.TestingFilesStackPanel.Children.Add(testingFilesPanel);
-            this.currentTests = new List<ITestInfo>();
-            this.testController = CoreAccessor.GetTestController();
+            this.controller = CoreAccessor.GetTestController();
         }
         public TaskCheckWindow(ITask task)
             : this()
         {
-            this.task = task;
+            this.controller.Task = task;
             this.SetupTests();
         }
         #endregion
@@ -44,37 +41,34 @@ namespace TTS.UI.Forms
         #region Event Handlers
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "executable files (*.exe)|*.exe";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "executable files (*.exe)|*.exe"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 testingFilesPanel.AddItem(openFileDialog.FileName);
             }
         }
 
-        private void CheckCurrentButton_OnClick(object sender, RoutedEventArgs e)
+        private void CheckSelectedButton_OnClick(object sender, RoutedEventArgs e)
         {
-
-            TestIndicator testIndicator;
-            foreach (UIElement test in TestsStackPanel.Children)
-            {
-                testIndicator = (TestIndicator)test;
-                if (testIndicator.TestCheckBox.IsChecked == true)
-                {
-                    this.currentTests.Add(testIndicator.TestInfo);
-                }
-            }
-            if (currentTests.Count != 0)
-            {
-                RunTests(currentTests);
-            }
-            currentTests.Clear();
+            List<ITest> selected =
+                    this.TestsPanel.Children.OfType<TestIndicator>()
+                    .Where(element => element.TestCheckBox.IsChecked == true)
+                    .Select(element => element.Test)
+                    .ToList();
+            if (selected.Count != 0)
+                this.Run(selected);
         }
 
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
         {
-            currentTests = task.Tests;
-            RunTests(currentTests);
+            List<ITest> selected =
+                    this.TestsPanel.Children.OfType<TestIndicator>()
+                    .Select(element => element.Test)
+                    .ToList();
+            Run(selected);
         }
 
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
@@ -88,37 +82,36 @@ namespace TTS.UI.Forms
         {
             const string title = "Тест №";
             int index = 1;
-            foreach (ITestInfo testInfo in this.task.Tests)
+            foreach (ITest test in this.controller.Tests)
             {
-                TestIndicator testIndicator = new TestIndicator(testInfo, title + index);
-                this.TestsStackPanel.Children.Add(testIndicator);
+                TestIndicator testIndicator = new TestIndicator(test, title + index);
+                this.TestsPanel.Children.Add(testIndicator);
                 index++;
             }
         }
 
         private void DisableFunctionality()
         {
-            CheckAllButton.Visibility = System.Windows.Visibility.Hidden;
-            CheckCurrentButton.Visibility = System.Windows.Visibility.Hidden;
-            TestsStackPanel.IsEnabled = false;
+            CheckAllButton.Visibility = Visibility.Hidden;
+            CheckSelectedButton.Visibility = Visibility.Hidden;
+            TestsPanel.IsEnabled = false;
             AddButton.IsEnabled = false;
             testingFilesPanel.IsEnabled = false;
         }
-
         private void EnableFunctionality()
         {
-            CheckAllButton.Visibility = System.Windows.Visibility.Visible;
-            CheckCurrentButton.Visibility = System.Windows.Visibility.Visible;
-            TestsStackPanel.IsEnabled = true;
+            CheckAllButton.Visibility = Visibility.Visible;
+            CheckSelectedButton.Visibility = Visibility.Visible;
+            TestsPanel.IsEnabled = true;
             AddButton.IsEnabled = true;
             testingFilesPanel.IsEnabled = true;
         }
 
-        private void RunTests(IList<ITestInfo> tests)
+        private void Run(IList<ITest> tests)
         {
-            DisableFunctionality();
-            this.testController.Run(tests);
-            EnableFunctionality();
+            this.DisableFunctionality();
+            this.controller.Run(tests);
+            this.EnableFunctionality();
         }
         #endregion
     }

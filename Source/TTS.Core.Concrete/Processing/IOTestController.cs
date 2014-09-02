@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using TTS.Core.Abstract.Declarations;
+
 using TTS.Core.Abstract.Model;
-using TTS.Core.Concrete.Model;
 
 namespace TTS.Core.Concrete.Processing
 {
     internal class IOTestController
     {
         #region Data Members
+        private Process process;
         private ITestInfo testInfo;
+
         private string inputPath;
         private string outputPath;
         private bool? result;
@@ -21,7 +22,19 @@ namespace TTS.Core.Concrete.Processing
         {
             get { return this.result; }
         }
-        public Process Process { get; private set; }
+        public Process Process
+        {
+            get { return this.process; }
+            set
+            {
+                this.SetupProcess(value);
+            }
+        }
+        public ITestInfo TestInfo { get; set; }
+        public bool IsReady
+        {
+            get { return this.Process != null && this.TestInfo != null; }
+        }
         #endregion
 
         #region Constructors
@@ -57,21 +70,15 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Members
-        public void Setup(Process process, ITestInfo testInfo)
-        {
-            this.SetupRequirement(testInfo);
-            this.SetupProcess(process);
-        }
         public void Start()
         {
             try
             {
-                if (this.Process != null && this.testInfo != null) 
+                if (!this.IsReady)
                     throw new InvalidOperationException("The controller is not ready!");
                 this.PrepareInput();
                 this.PerformProcess();
                 this.CheckOutput();
-
             }
             catch (Exception exc)
             {
@@ -80,18 +87,18 @@ namespace TTS.Core.Concrete.Processing
         }
         public void Reset()
         {
+            this.process = null;
             this.testInfo = null;
             this.inputPath = null;
             this.outputPath = null;
             this.result = null;
-            this.Process = null;
         }
         #endregion
 
         #region Assistants
         private void PrepareInput()
         {
-            File.WriteAllText(this.inputPath, this.testInfo.Input);
+            File.WriteAllText(this.inputPath, this.TestInfo.Input);
             this.OnInputInjected();
         }
         private void PerformProcess()
@@ -107,10 +114,6 @@ namespace TTS.Core.Concrete.Processing
             this.OnOutputChecked();
         }
 
-        private void SetupRequirement(ITestInfo testInfo)
-        {
-            this.testInfo = testInfo;
-        }
         private void SetupProcess(Process process)
         {
             try

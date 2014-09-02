@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using TTS.Core.Abstract.Controllers;
 using TTS.Core.Abstract.Model;
+using TTS.Core.Abstract.Processing;
+using TTS.Core.Concrete.Processing;
 
 
 namespace TTS.Core.Concrete.Controllers
@@ -11,6 +13,8 @@ namespace TTS.Core.Concrete.Controllers
     {
         #region Data Members
         private ITask task;
+        private readonly List<IProcessMonitor> monitors = new List<IProcessMonitor>();
+        private readonly List<ITest> tests = new List<ITest>();
         #endregion
 
         #region Properties
@@ -21,18 +25,26 @@ namespace TTS.Core.Concrete.Controllers
             {
                 if (value != null)
                     this.task = value;
+
+                foreach (ITestInfo testInfo in this.Task.Tests)
+                {
+                    this.tests.Add(new Test(testInfo, this.monitors));
+                }
+                //Здесь добавление мониторов
             }
+        }
+
+        public IReadOnlyList<ITest> Tests
+        {
+            get { return this.tests; }
         }
         #endregion
 
         #region Members
-        public void Run(IList<ITestInfo> tests)
+        public void Run(IList<ITest> tests)
         {
-            foreach (ITestInfo test in tests)
-            {
-                Console.WriteLine("{0}:{1}", test.Input, test.Output);
-            }
-        } 
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

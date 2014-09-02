@@ -47,7 +47,7 @@ namespace TTS.ConsoleTesting
         }
         private static ITestInfo CreateTest(string input, string output)
         {
-            ITestInfo test = CoreAccessor.CreateTest();
+            ITestInfo test = CoreAccessor.CreateTestInfo();
             test.Input = input;
             test.Output = output;
             return test;

@@ -14,8 +14,8 @@ namespace TTS.Core.Concrete.Processing
         #region Data Members
         private readonly IOTestController ioTestController = IOTestController.Instance;
         private readonly List<IProcessMonitor> monitors;
-        private readonly List<ICharacteristic> requirements;
         private readonly TestResult result;
+        private Process process;
         #endregion
 
         #region Properties
@@ -27,14 +27,31 @@ namespace TTS.Core.Concrete.Processing
         {
             get { return this.result; }
         }
+
+        public Process Process 
+        { 
+            get { return this.process; }
+            set
+            {
+                if (value != null)
+                {
+                    this.process = value;
+                    this.ioTestController.Process = this.Process;
+                }
+            } 
+        }
+        public bool IsReady
+        {
+            get { return this.Process != null; }
+        }
         #endregion
 
         #region Constructors
-        public Test(ITestInfo testInfo, Process process, List<IProcessMonitor> monitors, List<ICharacteristic> requirements)
+
+        public Test(ITestInfo testInfo, List<IProcessMonitor> monitors)
         {
-            this.ioTestController.Setup(process, testInfo);
             this.monitors = monitors;
-            this.requirements = requirements;
+            this.ioTestController.TestInfo = testInfo;
             this.ioTestController.InputInjected += (sender, args) => this.OnInputInjected();
             this.ioTestController.ProcessExecuted += (sender, args) => this.OnProcessExecuted();
             this.ioTestController.OutputChecked += (sender, args) => this.OnOutputChecked();
@@ -57,6 +74,7 @@ namespace TTS.Core.Concrete.Processing
             this.PerformIOTest();
             this.StopMonitors();
             this.SaveMonitorsValues();
+            this.SetupResult();
         }
         #endregion
 
@@ -116,6 +134,21 @@ namespace TTS.Core.Concrete.Processing
                     Type = monitor.Result.Type,
                     Value = monitor.Result.Value
                 });
+            }
+        }
+
+        private void SetupResult()
+        {
+            ICharacteristic iocTest = new Characteristic
+            {
+                Type = CharacteristicType.InputOutputCompliance,
+                Value = this.ioTestController.Result
+            };
+            this.result.Requirements.Add(iocTest);
+
+            foreach (IProcessMonitor monitor in this.Monitors)
+            {
+                this.result.Requirements.Add(monitor.Result);
             }
         }
         #endregion

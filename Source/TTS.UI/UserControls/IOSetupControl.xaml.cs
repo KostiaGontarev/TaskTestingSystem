@@ -40,7 +40,7 @@ namespace TTS.UI.UserControls
         public IOSetupControl()
         {
             this.InitializeComponent();
-            this.testInfo = CoreAccessor.CreateTest();
+            this.testInfo = CoreAccessor.CreateTestInfo();
         }
         public IOSetupControl(ITestInfo testInfo)
             : this()
