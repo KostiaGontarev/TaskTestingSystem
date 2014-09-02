@@ -19,12 +19,11 @@
                 <ColumnDefinition Width="22"/>
             </Grid.ColumnDefinitions>
 
-            <Label ToolTip="{Binding filePath}" Name="FilePathLabel" Grid.Column="0" Margin="2" FontSize="12" Padding="0" AllowDrop="True">                
-            </Label>
+            <Label ToolTip="{Binding filePath}" Name="FilePathLabel" Margin="2" FontSize="12" Padding="0" AllowDrop="True" Grid.Row="0"/>
 
             <Ellipse Name="ResultFileEllipse" Grid.Column="1" Margin="4" Fill="White" Stroke="Black"/>
             
-            <Button Name="DeLeteButton" Grid.Column="2" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick">
+            <Button Name="DeLeteButton" Grid.Column="2" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick" Margin="0">
                 <Button.Background>
                     <ImageBrush ImageSource="/TTS.UI;component/Pictures/Delete.png"/>
                 </Button.Background>

@@ -43,7 +43,7 @@ namespace TTS.UI.Forms
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "exe files (*.exe)|*.exe";
+            openFileDialog.Filter = "executable files (*.exe)|*.exe";
             if (openFileDialog.ShowDialog() == true)
             {
                 testingFilesPanel.AddItem(openFileDialog.FileName);

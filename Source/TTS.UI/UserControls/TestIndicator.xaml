@@ -7,23 +7,30 @@
 	mc:Ignorable="d"
 	x:Class="TTS.UI.UserControls.TestIndicator"
 	x:Name="UserControl"
-	MinHeight="22" Width="Auto" HorizontalAlignment="Stretch" MaxWidth="170" MinWidth="100">
-
+	MinHeight="30" Width="Auto" HorizontalAlignment="Stretch" MaxWidth="170" MinWidth="100">
     <Border BorderBrush="Black" BorderThickness="1">
 
         <Grid x:Name="LayoutRoot" Background="White">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="TestNameLabel" Grid.Column="0" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left"></Label>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="TestNameLabel" Grid.Column="0" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left"/>
+                <ProgressBar Grid.Row="1"/>
+            </Grid>
 
-            <Ellipse Grid.Column="1" Margin="2" Fill="White" Stroke="Black"/>
-            
-            <CheckBox Name="TestCheckBox" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+
+            <Ellipse Grid.Column="1" Margin="2,6,2,6" Fill="White" Stroke="Black"/>
+
+            <CheckBox Name="TestCheckBox" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         </Grid>
     </Border>

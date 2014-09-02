@@ -9,45 +9,45 @@
     <Grid x:Name="LayoutRoot">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.45*"></ColumnDefinition>
-            <ColumnDefinition Width="0.55*"></ColumnDefinition>
+            <ColumnDefinition Width="0.45*"/>
+            <ColumnDefinition Width="0.55*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Margin="8,8,8,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.35*"></RowDefinition>
-                <RowDefinition Height="0.7*"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="0.27*"></RowDefinition>
+                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.27*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" VerticalAlignment="Top" Content="Название"></Label>
+            <Label Grid.Row="0" VerticalAlignment="Top" Content="Название"/>
             <TextBox x:Name="NameTextBox" Grid.Row="0" VerticalAlignment="Bottom"/>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.35*"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.35*"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"></Label>
-                <RichTextBox Name="DescriptionTask" Grid.Row="1"></RichTextBox>
+                <Label Grid.Row="0" VerticalAlignment="Top" Content="Условие"/>
+                <RichTextBox Name="DescriptionTask" Grid.Row="1"/>
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.32*"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.32*"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="0.35*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.35*" ></ColumnDefinition>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.35*"/>
+                        <ColumnDefinition Width="0.35*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"></Label>
+                    <Label Grid.Column="0" Content="Требования" VerticalAlignment="Center"/>
 
                     <Button x:Name="PlusButton" Grid.Column="1" Width="21" HorizontalAlignment="Center" Margin="6" Click="PlusButton_OnClick">
                         <Button.Background>
@@ -65,23 +65,22 @@
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <StackPanel x:Name="RequirementsStackPanel" Height="96">
-                        </StackPanel>
+                        <StackPanel x:Name="RequirementsStackPanel" Height="96"/>
                     </Border>
                 </ScrollViewer>
 
             </Grid>
 
-            <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"></Button>
-            <Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"></Button>
+            <Button x:Name="SaveButton" Grid.Row="3" Content="Сохранить" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Left" Click="SaveButton_OnClick"/>
+            <Button x:Name="CancelButton" Grid.Row="3" Content="Отмена" VerticalAlignment="Center" Height="25" Width="76" HorizontalAlignment="Right" Click="CancelButton_OnClick"/>
         </Grid>
 
         <Grid Grid.Column="1" Margin="8,8,8,0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="23*"></RowDefinition>
-                <RowDefinition Height="116*"></RowDefinition>
-                <RowDefinition Height="18*"></RowDefinition>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="116*"/>
+                <RowDefinition Height="18*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -95,8 +94,7 @@
             </Grid>
 
             <ScrollViewer Grid.Row="1" x:Name="ContentIOScrollViewer"  VerticalScrollBarVisibility="Auto" >
-                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1">
-                </Border>
+                <Border x:Name="ContentIOBorder" BorderBrush="Black" BorderThickness="1"/>
             </ScrollViewer>
 
             <Button x:Name="AddButton" Grid.Row="2" Content="Добавить" Width="79" Height="24" HorizontalAlignment="Left" Click="AddButton_OnClick" VerticalAlignment="Center"/>

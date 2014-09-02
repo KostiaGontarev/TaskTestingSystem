@@ -14,8 +14,8 @@
 			</LinearGradientBrush>
 		</Grid.Background>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="230"></ColumnDefinition>
-			<ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 		<DockPanel x:Name="LeftPanel" Grid.Column="0" HorizontalAlignment="Left"  Margin="8,8,0,8" Width="222">
 			<StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" Height="100" VerticalAlignment="Bottom" Width="222">
@@ -36,12 +36,10 @@
 		</DockPanel>
 		<Grid Grid.Column="1" Margin="8" >
 			<Grid.RowDefinitions>
-				<RowDefinition Height="0.15*"></RowDefinition>
-				<RowDefinition></RowDefinition>
+                <RowDefinition Height="0.15*"/>
+                <RowDefinition/>
 			</Grid.RowDefinitions>
-			<RichTextBox x:Name="ContentTasks" Grid.Row="0" VerticalScrollBarVisibility="Visible">
-			</RichTextBox>
-		</Grid>
-		
+            <RichTextBox x:Name="ContentTasks" Grid.Row="0" VerticalScrollBarVisibility="Visible"/>
+        </Grid>		
 	</Grid>
 </Window>

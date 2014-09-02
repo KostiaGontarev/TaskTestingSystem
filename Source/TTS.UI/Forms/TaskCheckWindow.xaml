@@ -8,33 +8,33 @@
 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.45*"></ColumnDefinition>
-            <ColumnDefinition Width="0.55*"></ColumnDefinition>
+            <ColumnDefinition Width="0.45*"/>
+            <ColumnDefinition Width="0.55*" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.75*"></RowDefinition>
-                <RowDefinition Height="0.10*"></RowDefinition>
-                <RowDefinition Height="0.10*"></RowDefinition>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="0.10*"/>
+                <RowDefinition Height="0.10*"/>
             </Grid.RowDefinitions>
 
-            <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенные" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"></Button>
-            <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick" ></Button>
+            <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенные" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"/>
+            <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick"/>
 
             <Grid Grid.Row="0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="29*"></RowDefinition>
-                    <RowDefinition Height="225*"></RowDefinition>
+                    <RowDefinition Height="29*"/>
+                    <RowDefinition Height="225*"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Content="Список тестов" Margin="0"/>
 
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="4,0,4,4">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel Margin="4,0,4,4" x:Name="TestsStackPanel" VerticalAlignment="Stretch" Focusable="False" Background="White"/>
+                        <StackPanel x:Name="TestsStackPanel" VerticalAlignment="Stretch" Focusable="False" Background="White"/>
                     </ScrollViewer>
                 </Border>
             </Grid>
@@ -44,9 +44,9 @@
         <Grid Grid.Column="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="29*"></RowDefinition>
-                <RowDefinition Height="260*"></RowDefinition>
-                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="29*"/>
+                <RowDefinition Height="260*"/>
+                <RowDefinition Height="33*"/>
             </Grid.RowDefinitions>
 
 
@@ -61,8 +61,8 @@
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Button Name="AddButton" Grid.Column="0" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="AddButton_OnClick"/>
