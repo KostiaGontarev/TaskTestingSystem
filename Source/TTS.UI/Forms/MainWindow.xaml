@@ -36,10 +36,22 @@
 		</DockPanel>
 		<Grid Grid.Column="1" Margin="8" >
 			<Grid.RowDefinitions>
-                <RowDefinition Height="0.15*"/>
+                <RowDefinition Height="0.30*"/>
                 <RowDefinition/>
+                <RowDefinition Height="0.07*"/>
 			</Grid.RowDefinitions>
             <RichTextBox x:Name="ContentTasks" Grid.Row="0" VerticalScrollBarVisibility="Visible"/>
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.43*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" Content="Сохранить" BorderBrush="Black" Name="SaveButton" FontWeight="Bold" Click="SaveButton_OnClick"/>
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Открыть" Name="OpenButton"  BorderBrush="Black" FontWeight="Bold" Click="OpenButton_OnClick"/>
+            </Grid>
         </Grid>		
 	</Grid>
 </Window>

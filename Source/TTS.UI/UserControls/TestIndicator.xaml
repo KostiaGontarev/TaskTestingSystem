@@ -17,7 +17,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ProgressBar Name="TestProgressProgressBar" Grid.Row="1"/>
+            <ProgressBar Name="TestProgressBar" Grid.Row="1"/>
 
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>

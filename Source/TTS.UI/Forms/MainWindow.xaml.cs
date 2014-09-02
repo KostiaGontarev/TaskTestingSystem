@@ -1,5 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Collections.Generic;
+
+using Microsoft.Win32;
 
 using TTS.Core.Abstract.Controllers;
 using TTS.Core.Abstract.Model;
@@ -15,6 +18,7 @@ namespace TTS.UI.Forms
 	    private readonly ITaskController controller;
         private TaskEditWindow taskEditWindow;
         private TaskCheckWindow taskCheckWindow;
+        private string tasksFilePath;
         #endregion
 
         #region Constructors
@@ -76,7 +80,32 @@ namespace TTS.UI.Forms
                 ITask task = this.TasksList.SelectedItem as ITask;
                 this.controller.Tasks.Remove(task);
                 this.TasksList.Items.Remove(this.TasksList.SelectedItem);
-                //this.TasksList.Items.Refresh();
+            }
+        }
+        private void OpenButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openTasksDialog = new OpenFileDialog();
+            openTasksDialog.DefaultExt = ".json";
+            openTasksDialog.Filter = "Documents (.json)|*.json";
+
+            if (openTasksDialog.ShowDialog() == true)
+            {
+                tasksFilePath = openTasksDialog.FileName;
+                controller.LoadFrom(tasksFilePath);
+                TasksList.Items.Refresh();
+            }
+        }
+        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveTasksDialog = new SaveFileDialog();
+            saveTasksDialog.FileName = "Document";
+            saveTasksDialog.DefaultExt = ".json";
+            saveTasksDialog.Filter = "Documents (.json)|*.json";
+
+            if (saveTasksDialog.ShowDialog() == true)
+            {
+                tasksFilePath = saveTasksDialog.FileName;
+                controller.WriteTo(tasksFilePath);
             }
         }
         #endregion

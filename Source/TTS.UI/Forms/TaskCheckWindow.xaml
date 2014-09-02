@@ -20,6 +20,7 @@
                 <RowDefinition Height="0.10*"/>
             </Grid.RowDefinitions>
 
+            <Button Name="StopCheckButton" Margin="4,0,4,4" Content="Остановить проверку" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="StopCheckButton_OnClick"/>
             <Button Name="CheckCurrentButton"  Margin="4,4,4,0" Content="Проверить выделенные" Grid.Row="1" VerticalAlignment="Center" MinHeight="20" Click="CheckCurrentButton_OnClick"/>
             <Button Name="CheckAllButton" Margin="4,0,4,4" Content="Проверить все" Grid.Row="2" VerticalAlignment="Center" MinHeight="20" Click="CheckAllButton_OnClick"/>
 
