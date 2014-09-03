@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace TTS.UI.UserControls
 {
@@ -34,7 +23,7 @@ namespace TTS.UI.UserControls
             if (control != null)
             {
                 control.DeleteButtonClick -= TestingFileControl_DeleteButtonClick;
-                this.TestingFilesStackPanel.Children.Remove(control);
+                this.FilesPanel.Children.Remove(control);
             }
         }
         #endregion
@@ -44,8 +33,17 @@ namespace TTS.UI.UserControls
         {
             TestingFileControl testingFileControl = new TestingFileControl(filePath);
             testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
-            this.TestingFilesStackPanel.Children.Add(testingFileControl);
+            this.FilesPanel.Children.Add(testingFileControl);
         }
+        public List<string> GetSelectedFiles()
+        {
+            List<string> files = new List<string>();
+            foreach (TestingFileControl control in this.FilesPanel.Children)
+            {
+                files.Add(control.FilePath);
+            }
+            return files;
+        } 
         #endregion
     }
 }

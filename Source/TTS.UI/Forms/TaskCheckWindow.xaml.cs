@@ -27,7 +27,7 @@ namespace TTS.UI.Forms
         {
             this.InitializeComponent();
             this.testingFilesPanel = new TestingFilesPanel();
-            this.TestingFilesStackPanel.Children.Add(testingFilesPanel);
+            this.TestingFilesPanel.Children.Add(testingFilesPanel);
             this.controller = CoreAccessor.GetTestController();
         }
         public TaskCheckWindow(ITask task)
@@ -47,7 +47,7 @@ namespace TTS.UI.Forms
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                testingFilesPanel.AddItem(openFileDialog.FileName);
+                this.testingFilesPanel.AddItem(openFileDialog.FileName);
             }
         }
 
@@ -58,8 +58,9 @@ namespace TTS.UI.Forms
                     .Where(element => element.TestCheckBox.IsChecked == true)
                     .Select(element => element.Test)
                     .ToList();
-            if (selected.Count != 0)
-                this.Run(selected);
+            List<string> files = this.testingFilesPanel.GetSelectedFiles();
+            if (selected.Count != 0 && files.Count != 0)
+                this.Run(selected, files);
         }
 
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
@@ -68,7 +69,9 @@ namespace TTS.UI.Forms
                     this.TestsPanel.Children.OfType<TestIndicator>()
                     .Select(element => element.Test)
                     .ToList();
-            Run(selected);
+            List<string> files = this.testingFilesPanel.GetSelectedFiles();
+            if (files.Count != 0)
+                this.Run(selected, files);
         }
 
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
@@ -107,10 +110,10 @@ namespace TTS.UI.Forms
             testingFilesPanel.IsEnabled = true;
         }
 
-        private void Run(IList<ITest> tests)
+        private void Run(IList<ITest> tests, IList<string> files)
         {
             this.DisableFunctionality();
-            this.controller.Run(tests);
+            this.controller.Run(tests, files);
             this.EnableFunctionality();
         }
         #endregion

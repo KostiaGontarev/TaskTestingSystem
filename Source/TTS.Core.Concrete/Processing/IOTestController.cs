@@ -118,9 +118,9 @@ namespace TTS.Core.Concrete.Processing
         {
             try
             {
-                if (File.Exists(this.Process.StartInfo.FileName))
+                if (File.Exists(process.StartInfo.FileName))
                 {
-                    this.Process = process;
+                    this.process = process;
                     this.ConstructIOFilePath();
                 }
             }
@@ -138,8 +138,8 @@ namespace TTS.Core.Concrete.Processing
         {
             string execPath = this.Process.StartInfo.FileName;
             string path = execPath.Substring(execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
-            this.inputPath = path + "input.txt";
-            this.outputPath = path + "output.txt";
+            this.inputPath = path + "\\input.txt";
+            this.outputPath = path + "\\output.txt";
         }
         #endregion
     }

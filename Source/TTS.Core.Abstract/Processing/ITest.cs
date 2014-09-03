@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace TTS.Core.Abstract.Processing
         event EventHandler RequirementsChecked;
 
         ITestResult Result { get; }
+        Process Process { get; set; }
         IReadOnlyList<IProcessMonitor> Monitors { get; }
 
         void Run();

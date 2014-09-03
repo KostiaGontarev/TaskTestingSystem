@@ -71,8 +71,8 @@
                         <GradientStop Color="#FFAFB7BF" Offset="0.083"/>
                     </LinearGradientBrush>
                 </Border.BorderBrush>
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Name="TestingFilesStackPanel" Margin="3" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Name="TestingFilesPanel" Margin="3" />
                 </ScrollViewer>
             </Border>
 

@@ -10,6 +10,6 @@ namespace TTS.Core.Abstract.Controllers
     {
         ITask Task { get; set; }
         IReadOnlyList<ITest> Tests { get; }
-        void Run(IList<ITest> tests);
+        void Run(IList<ITest> tests, IList<string> files);
     }
 }

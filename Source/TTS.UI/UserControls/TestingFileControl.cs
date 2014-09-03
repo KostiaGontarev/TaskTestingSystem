@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace TTS.UI.UserControls
 {
@@ -18,17 +10,14 @@ namespace TTS.UI.UserControls
 	/// </summary>
 	public partial class TestingFileControl : UserControl
     {
-        #region Members
-        private string filePath;
+        #region Data Members
+        private readonly string filePath;
         #endregion
 
         #region Properties
         public string FilePath
         {
-            get
-            {
-                return filePath;
-            }
+            get{ return this.filePath;}
         }
         #endregion
 
@@ -37,17 +26,16 @@ namespace TTS.UI.UserControls
         #endregion
 
         #region Constructors
-        public TestingFileControl()
+        private TestingFileControl()
 		{
 			this.InitializeComponent();
         }
-
         public TestingFileControl(string filePath)
             :this()
         {
             this.filePath = filePath;
-            FilePathLabel.Content = this.filePath;
-            FilePathLabel.ToolTip = this.filePath;
+            this.FilePathLabel.Content = this.FilePath;
+            this.FilePathLabel.ToolTip = this.FilePath;
         }
         #endregion
 

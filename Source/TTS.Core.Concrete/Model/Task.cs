@@ -84,7 +84,7 @@ namespace TTS.Core.Concrete.Model
         #endregion
 
         #region Internal Members
-        public void AddTestingResult(ITaskTestResult result)
+        internal void AddTestingResult(ITaskTestResult result)
         {
             this.results.Add(result);
         }

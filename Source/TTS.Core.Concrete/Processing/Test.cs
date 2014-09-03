@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 using TTS.Core.Abstract.Processing;
@@ -13,7 +12,7 @@ namespace TTS.Core.Concrete.Processing
     {
         #region Data Members
         private readonly IOTestController ioTestController = IOTestController.Instance;
-        private readonly List<IProcessMonitor> monitors;
+        private readonly List<IProcessMonitor> monitors = new List<IProcessMonitor>();
         private readonly TestResult result;
         private Process process;
         #endregion
@@ -47,10 +46,9 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Constructors
-
-        public Test(ITestInfo testInfo, List<IProcessMonitor> monitors)
+        public Test(ITestInfo testInfo, IEnumerable<IProcessMonitor> monitors)
         {
-            this.monitors = monitors;
+            this.monitors.AddRange(monitors);
             this.ioTestController.TestInfo = testInfo;
             this.ioTestController.InputInjected += (sender, args) => this.OnInputInjected();
             this.ioTestController.ProcessExecuted += (sender, args) => this.OnProcessExecuted();

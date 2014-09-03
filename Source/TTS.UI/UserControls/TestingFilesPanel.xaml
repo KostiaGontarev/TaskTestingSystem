@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignWidth ="150"  MinHeight="150">
     <Grid x:Name="LayoutRoot">
-        <StackPanel Name ="TestingFilesStackPanel"/>
+        <StackPanel Name ="FilesPanel"/>
     </Grid>
 </UserControl>
