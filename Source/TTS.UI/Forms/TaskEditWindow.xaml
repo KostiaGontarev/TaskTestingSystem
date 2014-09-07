@@ -16,8 +16,8 @@
         <Grid Grid.Column="0" Margin="8,8,8,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="46*"/>
-                <RowDefinition Height="103*"/>
-                <RowDefinition Height="223*"/>
+                <RowDefinition Height="175*"/>
+                <RowDefinition Height="151*"/>
                 <RowDefinition Height="42*"/>
             </Grid.RowDefinitions>
 
@@ -39,8 +39,8 @@
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="33*"/>
-                    <RowDefinition Height="179*"/>
+                    <RowDefinition Height="34*"/>
+                    <RowDefinition Height="117*"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -78,7 +78,7 @@
                                 <GradientStop Color="#FFA8AFB5"/>
                             </LinearGradientBrush>
                         </Border.BorderBrush>
-                        <StackPanel x:Name="RequirementsStackPanel" Height="96"/>
+                        <StackPanel x:Name="RequirementsStackPanel"/>
                     </Border>
                 </ScrollViewer>
 
