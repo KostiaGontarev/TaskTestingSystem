@@ -7,17 +7,15 @@
 	mc:Ignorable="d"
 	x:Class="TTS.UI.UserControls.TestIndicator"
 	x:Name="UserControl"
-	MinHeight="30" Width="Auto" HorizontalAlignment="Stretch" MaxWidth="170" MinWidth="100">
+	MinHeight="25" Width="Auto" HorizontalAlignment="Stretch" MaxWidth="170" MinWidth="100">
     <Border BorderBrush="Black" BorderThickness="1">
 
         <Grid x:Name="LayoutRoot" Background="White">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="22"/>
-                <RowDefinition/>
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <ProgressBar Name="TestProgressBar" Grid.Row="1"/>
 
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>

@@ -58,7 +58,7 @@ namespace TTS.UI.Forms
                     .Where(element => element.TestCheckBox.IsChecked == true)
                     .Select(element => element.Test)
                     .ToList();
-            List<string> files = this.testingFilesPanel.GetSelectedFiles();
+            List<string> files = this.testingFilesPanel.GetCheckedFiles();
             if (selected.Count != 0 && files.Count != 0)
                 this.Run(selected, files);
         }
@@ -69,7 +69,7 @@ namespace TTS.UI.Forms
                     this.TestsPanel.Children.OfType<TestIndicator>()
                     .Select(element => element.Test)
                     .ToList();
-            List<string> files = this.testingFilesPanel.GetSelectedFiles();
+            List<string> files = this.testingFilesPanel.GetCheckedFiles();
             if (files.Count != 0)
                 this.Run(selected, files);
         }
@@ -77,6 +77,11 @@ namespace TTS.UI.Forms
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SelectAllButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.testingFilesPanel.SelectAllFiles();
         }
         #endregion
 
@@ -117,5 +122,8 @@ namespace TTS.UI.Forms
             this.EnableFunctionality();
         }
         #endregion
+
+
+
     }
 }

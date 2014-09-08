@@ -26,10 +26,11 @@ namespace TTS.UI.UserControls
         #endregion
 
         #region Constructors
-        private TestingFileControl()
+        public TestingFileControl()
 		{
 			this.InitializeComponent();
         }
+
         public TestingFileControl(string filePath)
             :this()
         {

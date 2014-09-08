@@ -83,6 +83,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Name="AddButton" Grid.Column="0" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="AddButton_OnClick"/>
+                <Button Name="SelectAllButton" Grid.Column="1" Content="Выделить все" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="SelectAllButton_OnClick"/>
             </Grid>
             
         </Grid>

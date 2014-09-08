@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
+using System.Windows;
+
 
 namespace TTS.UI.UserControls
 {
@@ -35,6 +37,7 @@ namespace TTS.UI.UserControls
             testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
             this.FilesPanel.Children.Add(testingFileControl);
         }
+
         public List<string> GetSelectedFiles()
         {
             List<string> files = new List<string>();
@@ -43,7 +46,26 @@ namespace TTS.UI.UserControls
                 files.Add(control.FilePath);
             }
             return files;
-        } 
+        }
+
+        public List<string> GetCheckedFiles()
+        {
+            List<string> files = new List<string>();
+            foreach (TestingFileControl control in this.FilesPanel.Children)
+            {
+                if(control.FileCheckBox.IsChecked == true)
+                    files.Add(control.FilePath);
+            }
+            return files;
+        }
+
+        public void SelectAllFiles()
+        {
+            foreach (TestingFileControl control in this.FilesPanel.Children)
+            {
+                control.FileCheckBox.IsChecked = true;
+            }
+        }
         #endregion
     }
 }
