@@ -109,9 +109,20 @@ namespace TTS.Core.Concrete.Processing
         }
         private void CheckOutput()
         {
-            string output = File.ReadAllText(this.outputPath);
-            this.result = output.Equals(this.testInfo.Output);
-            this.OnOutputChecked();
+            try
+            {
+                string output = File.ReadAllText(this.outputPath);
+                this.result = output.Equals(this.testInfo.Output);
+            }
+            catch (Exception exc)
+            {
+                if (!this.result.HasValue)
+                    this.result = false;
+            }
+            finally
+            {
+                this.OnOutputChecked();
+            }
         }
 
         private void SetupProcess(Process process)
@@ -137,7 +148,7 @@ namespace TTS.Core.Concrete.Processing
         private void ConstructIOFilePath()
         {
             string execPath = this.Process.StartInfo.FileName;
-            string path = execPath.Substring(execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
+            string path = execPath.Substring(0, execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
             this.inputPath = path + "\\input.txt";
             this.outputPath = path + "\\output.txt";
         }

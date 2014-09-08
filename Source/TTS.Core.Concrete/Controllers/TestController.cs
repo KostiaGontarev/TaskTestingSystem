@@ -67,7 +67,7 @@ namespace TTS.Core.Concrete.Controllers
             {
                 Process process = new Process
                 {
-                    StartInfo = new ProcessStartInfo(file)
+                    StartInfo = new ProcessStartInfo(file){WindowStyle = ProcessWindowStyle.Hidden},
                 };
                 test.Process = process;
             }
