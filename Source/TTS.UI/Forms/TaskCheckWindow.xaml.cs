@@ -50,7 +50,6 @@ namespace TTS.UI.Forms
                 this.testingFilesPanel.AddItem(openFileDialog.FileName);
             }
         }
-
         private void CheckSelectedButton_OnClick(object sender, RoutedEventArgs e)
         {
             List<ITest> selected =
@@ -62,7 +61,6 @@ namespace TTS.UI.Forms
             if (selected.Count != 0 && files.Count != 0)
                 this.Run(selected, files);
         }
-
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
         {
             List<ITest> selected =
@@ -73,12 +71,10 @@ namespace TTS.UI.Forms
             if (files.Count != 0)
                 this.Run(selected, files);
         }
-
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void SelectAllButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.testingFilesPanel.SelectAllFiles();
@@ -97,7 +93,6 @@ namespace TTS.UI.Forms
                 index++;
             }
         }
-
         private void DisableFunctionality()
         {
             CheckAllButton.Visibility = Visibility.Hidden;
@@ -114,7 +109,6 @@ namespace TTS.UI.Forms
             AddButton.IsEnabled = true;
             testingFilesPanel.IsEnabled = true;
         }
-
         private void Run(IList<ITest> tests, IList<string> files)
         {
             this.DisableFunctionality();
