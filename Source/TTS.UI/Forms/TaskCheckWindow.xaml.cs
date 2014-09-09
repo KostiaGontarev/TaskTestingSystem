@@ -57,7 +57,7 @@ namespace TTS.UI.Forms
                     .Where(element => element.TestCheckBox.IsChecked == true)
                     .Select(element => element.Test)
                     .ToList();
-            List<string> files = this.testingFilesPanel.GetCheckedFiles();
+            List<string> files = this.testingFilesPanel.GetSelectedFiles();
             if (selected.Count != 0 && files.Count != 0)
                 this.Run(selected, files);
         }
@@ -67,7 +67,7 @@ namespace TTS.UI.Forms
                     this.TestsPanel.Children.OfType<TestIndicator>()
                     .Select(element => element.Test)
                     .ToList();
-            List<string> files = this.testingFilesPanel.GetCheckedFiles();
+            List<string> files = this.testingFilesPanel.GetSelectedFiles();
             if (files.Count != 0)
                 this.Run(selected, files);
         }

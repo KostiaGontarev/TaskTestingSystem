@@ -25,7 +25,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="1" x:Name="TestNameLabel" Margin="2,2,0,2" FontSize="12" Padding="0" HorizontalAlignment="Left"/>
 
-                <Ellipse Grid.Column="2" Margin="2,3,2,3" Fill="White" Stroke="Black"/>
+                <Ellipse Name="Indicator"  Grid.Column="2" Margin="2,3,2,3" Fill="White" Stroke="Black"/>
 
                 <CheckBox Name="TestCheckBox" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>

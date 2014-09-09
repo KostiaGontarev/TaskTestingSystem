@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 
 using System.Windows;
@@ -40,23 +41,10 @@ namespace TTS.UI.UserControls
 
         public List<string> GetSelectedFiles()
         {
-            List<string> files = new List<string>();
-            foreach (TestingFileControl control in this.FilesPanel.Children)
-            {
-                files.Add(control.FilePath);
-            }
-            return files;
-        }
-
-        public List<string> GetCheckedFiles()
-        {
-            List<string> files = new List<string>();
-            foreach (TestingFileControl control in this.FilesPanel.Children)
-            {
-                if(control.FileCheckBox.IsChecked == true)
-                    files.Add(control.FilePath);
-            }
-            return files;
+            return this.FilesPanel.Children.OfType<TestingFileControl>()
+                                           .Where(element => element.FileCheckBox.IsChecked == true)
+                                           .Select(element => element.FilePath)
+                                           .ToList();
         }
 
         public void SelectAllFiles()

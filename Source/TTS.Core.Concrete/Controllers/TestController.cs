@@ -17,7 +17,6 @@ namespace TTS.Core.Concrete.Controllers
     {
         #region Data Members
         private Task task;
-        private readonly List<IProcessMonitor> monitors = new List<IProcessMonitor>();
         private readonly List<ITest> tests = new List<ITest>();
         #endregion
 
@@ -32,9 +31,8 @@ namespace TTS.Core.Concrete.Controllers
                 this.tests.Clear();
                 foreach (ITestInfo testInfo in this.Task.Tests)
                 {
-                    this.tests.Add(new Test(testInfo, this.monitors));
+                    this.tests.Add(new Test(testInfo));
                 }
-                //Здесь добавление мониторов
             }
         }
 
@@ -61,13 +59,13 @@ namespace TTS.Core.Concrete.Controllers
             this.PerformTests();
             this.SaveResult(file);
         }
-       private void SetTestProcess(string file)
+        private void SetTestProcess(string file)
         {
             foreach (ITest test in this.tests)
             {
                 Process process = new Process
                 {
-                    StartInfo = new ProcessStartInfo(file){WindowStyle = ProcessWindowStyle.Hidden},
+                    StartInfo = new ProcessStartInfo(file) { WindowStyle = ProcessWindowStyle.Hidden },
                 };
                 test.Process = process;
             }
@@ -81,8 +79,7 @@ namespace TTS.Core.Concrete.Controllers
         }
         private IEnumerable<ITestResult> CollectResults()
         {
-            return this.Tests.Select(test => test.Result)
-                .ToList();
+            return this.Tests.Select(test => test.Result).ToList();
         }
         private void SaveResult(string file)
         {

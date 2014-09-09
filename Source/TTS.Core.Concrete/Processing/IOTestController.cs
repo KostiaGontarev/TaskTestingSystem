@@ -42,25 +42,13 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Events
-        public event EventHandler InputInjected;
-        public event EventHandler ProcessExecuted;
-        public event EventHandler OutputChecked;
+        public event EventHandler TestingFinished;
         #endregion
 
         #region Event Invokators
-        protected virtual void OnInputInjected()
+        protected virtual void OnTestingFinished()
         {
-            EventHandler handler = InputInjected;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-        protected virtual void OnProcessExecuted()
-        {
-            EventHandler handler = ProcessExecuted;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-        protected virtual void OnOutputChecked()
-        {
-            EventHandler handler = OutputChecked;
+            EventHandler handler = TestingFinished;
             if (handler != null) handler(this, EventArgs.Empty);
         }
         #endregion
@@ -99,13 +87,11 @@ namespace TTS.Core.Concrete.Processing
         private void PrepareInput()
         {
             File.WriteAllText(this.inputPath, this.TestInfo.Input);
-            this.OnInputInjected();
         }
         private void PerformProcess()
         {
             this.Process.Start();
             this.Process.WaitForExit();
-            this.OnProcessExecuted();
         }
         private void CheckOutput()
         {
@@ -118,10 +104,6 @@ namespace TTS.Core.Concrete.Processing
             {
                 if (!this.result.HasValue)
                     this.result = false;
-            }
-            finally
-            {
-                this.OnOutputChecked();
             }
         }
 

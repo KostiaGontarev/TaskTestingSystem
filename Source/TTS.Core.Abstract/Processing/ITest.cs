@@ -10,14 +10,10 @@ namespace TTS.Core.Abstract.Processing
 {
     public interface ITest
     {
-        event EventHandler InputInjected;
-        event EventHandler ProcessExecuted;
-        event EventHandler OutputChecked;
-        event EventHandler RequirementsChecked;
+        event EventHandler TestingFinished;
 
         ITestResult Result { get; }
         Process Process { get; set; }
-        IReadOnlyList<IProcessMonitor> Monitors { get; }
 
         void Run();
     }

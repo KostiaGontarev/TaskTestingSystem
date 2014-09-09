@@ -12,21 +12,15 @@ namespace TTS.Core.Concrete.Processing
     {
         #region Data Members
         private readonly IOTestController ioTestController = IOTestController.Instance;
-        private readonly List<IProcessMonitor> monitors = new List<IProcessMonitor>();
         private readonly TestResult result;
         private Process process;
         #endregion
 
         #region Properties
-        public IReadOnlyList<IProcessMonitor> Monitors
-        {
-            get { return this.monitors; }
-        }
         public ITestResult Result
         {
             get { return this.result; }
         }
-
         public Process Process 
         { 
             get { return this.process; }
@@ -46,67 +40,36 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Constructors
-        public Test(ITestInfo testInfo, IEnumerable<IProcessMonitor> monitors)
+        public Test(ITestInfo testInfo)
         {
-            this.monitors.AddRange(monitors);
             this.ioTestController.TestInfo = testInfo;
-            this.ioTestController.InputInjected += (sender, args) => this.OnInputInjected();
-            this.ioTestController.ProcessExecuted += (sender, args) => this.OnProcessExecuted();
-            this.ioTestController.OutputChecked += (sender, args) => this.OnOutputChecked();
 
             this.result = new TestResult(testInfo);
         }
         #endregion
 
         #region Events
-        public event EventHandler InputInjected;
-        public event EventHandler ProcessExecuted;
-        public event EventHandler OutputChecked;
-        public event EventHandler RequirementsChecked;
+        public event EventHandler TestingFinished;
         #endregion
 
         #region Members
         public void Run()
         {
-            this.StartMonitors();
             this.PerformIOTest();
-            this.StopMonitors();
-            this.SaveMonitorsValues();
             this.SetupResult();
+            this.OnTestingFinished();
         }
         #endregion
 
         #region Event Invokators
-        protected virtual void OnInputInjected()
+        protected virtual void OnTestingFinished()
         {
-            EventHandler handler = InputInjected;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-        protected virtual void OnProcessExecuted()
-        {
-            EventHandler handler = ProcessExecuted;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-        protected virtual void OnOutputChecked()
-        {
-            EventHandler handler = OutputChecked;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-        protected virtual void OnRequirementsChecked()
-        {
-            EventHandler handler = RequirementsChecked;
+            EventHandler handler = TestingFinished;
             if (handler != null) handler(this, EventArgs.Empty);
         }
         #endregion
 
         #region Assistants
-        private void StartMonitors()
-        {
-            foreach (IProcessMonitor monitor in this.Monitors)
-            {
-                monitor.Start();
-            }
-        }
         private void PerformIOTest()
         {
             this.ioTestController.Start();
@@ -115,24 +78,6 @@ namespace TTS.Core.Concrete.Processing
                 Type = CharacteristicType.InputOutputCompliance,
                 Value = this.ioTestController.Result
             });
-        }
-        private void StopMonitors()
-        {
-            foreach (IProcessMonitor monitor in this.Monitors)
-            {
-                monitor.Stop();
-            }
-        }
-        private void SaveMonitorsValues()
-        {
-            foreach (IProcessMonitor monitor in this.Monitors)
-            {
-                this.result.Requirements.Add(new Characteristic
-                {
-                    Type = monitor.Result.Type,
-                    Value = monitor.Result.Value
-                });
-            }
         }
 
         private void SetupResult()
@@ -143,11 +88,6 @@ namespace TTS.Core.Concrete.Processing
                 Value = this.ioTestController.Result
             };
             this.result.Requirements.Add(iocTest);
-
-            foreach (IProcessMonitor monitor in this.Monitors)
-            {
-                this.result.Requirements.Add(monitor.Result);
-            }
         }
         #endregion
     }
