@@ -1,6 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Media;
-using TTS.Core.Abstract.Processing;
+using TTS.Core.Abstract.Controllers;
+using TTS.Core.Abstract.Model;
 
 
 namespace TTS.UI.UserControls
@@ -8,13 +11,13 @@ namespace TTS.UI.UserControls
     public partial class TestIndicator : UserControl
     {
         #region Data Members
-        private readonly ITest test;
+        private ITestInfo testInfo;
         #endregion
 
         #region Properties
-        public ITest Test
+        public ITestInfo TestInfo
         {
-            get { return this.test; }
+            get { return this.testInfo; }
         }
         #endregion
 
@@ -23,27 +26,47 @@ namespace TTS.UI.UserControls
         {
             this.InitializeComponent();
         }
-        public TestIndicator(ITest test, string title)
+        public TestIndicator(ITestInfo testInfo, string title)
             : this()
         {
-            this.test = test;
-            this.Test.TestingFinished += Test_TestingFinished;
+            this.testInfo = testInfo;
             this.TestNameLabel.Content = title;
         }
         #endregion
 
-        #region Event Handlers
-        private void Test_TestingFinished(object sender, System.EventArgs e)
+        #region Members
+        public void SubscribeTo(ITestController controller)
         {
-            this.Indicator.Fill = new SolidColorBrush(new Color{R = 0, G = 0, B = 0});
+            controller.TestStarted += controller_TestStarted;
+            controller.TestFinished += controller_TestFinished;
+            controller.ProgressChanged += controller_ProgressChanged;
         }
         #endregion
 
-        #region Members
-
-        public void TestStarted()
+        #region Event Handlers
+        private void controller_TestStarted(object sender, EventArgs e)
         {
-            this.Indicator.Fill = new SolidColorBrush(new Color { R = 50, G = 100, B = 100 });            
+            this.Indicator.Fill = new SolidColorBrush(new Color
+            {
+                A = 255,
+                R = 255,
+                G = 215,
+                B = 0
+            });
+        }
+        private void controller_TestFinished(object sender, EventArgs e)
+        {
+            this.Indicator.Fill = new SolidColorBrush(new Color
+            {
+                A = 255,
+                R = 173,
+                G = 255,
+                B = 47
+            });
+        }
+        private void controller_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.TestProgressBar.Value = e.ProgressPercentage;
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -6,7 +7,7 @@ using TTS.Core.Abstract.Model;
 
 namespace TTS.Core.Concrete.Processing
 {
-    internal class IOTestController
+    internal class IOTest
     {
         #region Data Members
         private Process process;
@@ -38,35 +39,26 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Constructors
-        private IOTestController() { }
-        #endregion
-
-        #region Events
-        public event EventHandler TestingFinished;
-        #endregion
-
-        #region Event Invokators
-        protected virtual void OnTestingFinished()
-        {
-            EventHandler handler = TestingFinished;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        private IOTest() { }
         #endregion
 
         #region Static Members
-        public static readonly IOTestController Instance = new IOTestController();
+        public static readonly IOTest Instance = new IOTest();
         #endregion
 
         #region Members
-        public void Start()
+        public void Start(BackgroundWorker worker)
         {
             try
             {
                 if (!this.IsReady)
                     throw new InvalidOperationException("The controller is not ready!");
                 this.PrepareInput();
+                worker.ReportProgress(30);
                 this.PerformProcess();
+                worker.ReportProgress(60);
                 this.CheckOutput();
+                worker.ReportProgress(90);
             }
             catch (Exception exc)
             {

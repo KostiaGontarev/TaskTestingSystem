@@ -28,13 +28,10 @@ namespace TTS.Core.Concrete.Model
         #endregion
 
         #region Constructors
-        public TestResult(ITestInfo test)
+        public TestResult(ITestInfo testInfo, IEnumerable<ICharacteristic> results)
         {
-            this.test = test;
+            this.test = testInfo;
             this.requirements = new List<ICharacteristic>();
-        }
-        public TestResult(ITestInfo testInfo, IEnumerable<ICharacteristic> results) : this(testInfo)
-        {
             foreach (ICharacteristic item in results)
             {
                 this.requirements.Add(item);

@@ -71,7 +71,6 @@
     <Compile Include="UserControls\TestingFileControl.cs" />
     <Compile Include="UserControls\IOPanel.xaml.cs" />
     <Compile Include="UserControls\TestIndicator.xaml.cs" />
-    <Compile Include="UserControls\RequirementSetupControl.xaml.cs" />
     <Compile Include="UserControls\TestingFilesPanel.xaml.cs">
       <DependentUpon>TestingFilesPanel.xaml</DependentUpon>
     </Compile>
@@ -136,10 +135,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\IOPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\RequirementSetupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

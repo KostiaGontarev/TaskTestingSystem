@@ -24,10 +24,9 @@ namespace TTS.Core.Abstract
         {
             switch (type)
             {
-                case CharacteristicType.MaxExecutionTime:
-                case CharacteristicType.MaxMemoryUsage:
-                case CharacteristicType.MaxCPUUsage:
-                    return true;
+                case CharacteristicType.Uknown:
+                case CharacteristicType.InputOutputCompliance:
+                    return false;
                 default:
                     return false;
             }

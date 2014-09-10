@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 using TTS.Core.Abstract.Controllers;
 using TTS.Core.Abstract.Model;
-using TTS.Core.Abstract.Processing;
 
 using TTS.Core.Concrete.Model;
 using TTS.Core.Concrete.Processing;
@@ -16,8 +16,13 @@ namespace TTS.Core.Concrete.Controllers
     internal class TestController : ITestController
     {
         #region Data Members
+        private readonly TestPerformer performer = TestPerformer.Instance;
+        private readonly Queue<ITestInfo> testInfoQueue = new Queue<ITestInfo>();
+        private readonly Queue<string> filesQueue = new Queue<string>();
+        private readonly List<ITestResult> results = new List<ITestResult>();
+
+        private IList<ITestInfo> testsToPerform; 
         private Task task;
-        private readonly List<ITest> tests = new List<ITest>();
         #endregion
 
         #region Properties
@@ -28,65 +33,135 @@ namespace TTS.Core.Concrete.Controllers
             {
                 if (value is Task)
                     this.task = value as Task;
-                this.tests.Clear();
-                foreach (ITestInfo testInfo in this.Task.Tests)
-                {
-                    this.tests.Add(new Test(testInfo));
-                }
             }
         }
 
-        public IReadOnlyList<ITest> Tests
+        public int TestCount
         {
-            get { return this.tests; }
+            get { return this.task.Tests.Count; }
+        }
+        #endregion
+
+        #region Constructors
+        public TestController()
+        {
+            this.performer.ProgressChanged += performer_ProgressChanged;
+            this.performer.TestStarted += performer_TestStarted;
+            this.performer.TestFinished += performer_TestFinished;
         }
         #endregion
 
         #region Members
-        public void Run(IList<ITest> tests, IList<string> files)
+        public void Run(IList<ITestInfo> tests, IList<string> files)
         {
-            foreach (string file in files)
-            {
-                this.TestFile(file);
-            }
+            this.testsToPerform = tests;
+            this.SetupFilesQueue(files);
+            this.ProceedNextFile();
+        }
+        #endregion
+
+        #region Events
+        public event ProgressChangedEventHandler ProgressChanged;
+        public event EventHandler TestStarted;
+        public event EventHandler TestFinished;
+
+        public event EventHandler AllTestsFinished;
+        #endregion
+
+        #region Event Invokators
+        protected virtual void OnProgressChanged(ProgressChangedEventArgs args)
+        {
+            ProgressChangedEventHandler handler = ProgressChanged;
+            if (handler != null) handler(this, args);
+        }
+        protected virtual void OnTestStarted()
+        {
+            EventHandler handler = TestStarted;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+        protected virtual void OnTestFinished()
+        {
+            EventHandler handler = TestFinished;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+        protected virtual void OnAllTestsFinished()
+        {
+            EventHandler handler = AllTestsFinished;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+        #endregion
+
+        #region Event Handlers
+        private void performer_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.OnProgressChanged(e);
+        }
+        private void performer_TestStarted(object sender, EventArgs e)
+        {
+            this.OnTestStarted();
+        }
+        private void performer_TestFinished(object sender, EventArgs e)
+        {
+            this.results.Add(this.performer.Result);
+            this.OnTestFinished();
+            this.PerformNextTest();
         }
         #endregion
 
         #region Assistants
-        private void TestFile(string file)
+        private void SetupFilesQueue(IEnumerable<string> files)
         {
-            this.SetTestProcess(file);
-            this.PerformTests();
-            this.SaveResult(file);
-        }
-        private void SetTestProcess(string file)
-        {
-            foreach (ITest test in this.tests)
+            foreach (string file in files)
             {
-                Process process = new Process
-                {
-                    StartInfo = new ProcessStartInfo(file) { WindowStyle = ProcessWindowStyle.Hidden },
-                };
-                test.Process = process;
+                this.filesQueue.Enqueue(file);
             }
         }
-        private void PerformTests()
+        private void ProceedNextFile()
         {
-            foreach (ITest test in this.Tests)
+            if (this.filesQueue.Count != 0)
+                this.TestFile(this.filesQueue.Dequeue(), this.testsToPerform);
+            else
+                this.OnAllTestsFinished();
+        }
+        private void TestFile(string file, IEnumerable<ITestInfo> tests)
+        {
+            this.SetupProcess(file);
+            this.SetupTestsQueue(tests);
+            this.PerformNextTest();
+        }
+        private void SetupProcess(string file)
+        {
+            Process process = new Process
             {
-                test.Run();
+                StartInfo = new ProcessStartInfo(file) { WindowStyle = ProcessWindowStyle.Hidden },
+            };
+            this.performer.Process = process;
+        }
+        private void SetupTestsQueue(IEnumerable<ITestInfo> tests)
+        {
+            foreach (ITestInfo test in tests)
+            {
+                this.testInfoQueue.Enqueue(test);
             }
         }
-        private IEnumerable<ITestResult> CollectResults()
+        private void PerformNextTest()
         {
-            return this.Tests.Select(test => test.Result).ToList();
+            if (this.testInfoQueue.Count != 0)
+            {
+                this.performer.TestInfo = this.testInfoQueue.Dequeue();
+                this.performer.Run();
+            }
+            else
+            {
+                this.SaveResults();
+                this.ProceedNextFile();
+            }
         }
-        private void SaveResult(string file)
+        private void SaveResults()
         {
-            IEnumerable<ITestResult> results = this.CollectResults();
-            string author = Path.GetDirectoryName(file);
-            ITaskTestResult result = new TaskTestsResult(author, file, results);
+            TaskTestsResult result = new TaskTestsResult(this.performer.Process.StartInfo.FileName, results);
             this.task.AddTestingResult(result);
+            this.results.Clear();
         }
         #endregion
     }

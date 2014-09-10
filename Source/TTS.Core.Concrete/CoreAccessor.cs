@@ -30,17 +30,6 @@ namespace TTS.Core.Concrete
         } 
         #endregion
 
-        #region ReadOnly Models
-        public static ITestResult CreateTestResult(ITestInfo test, IList<ICharacteristic> requirements)
-        {
-            return new TestResult(test, requirements);
-        }
-        public static ITaskTestResult CreateTaskTestResult(string author, string path, IEnumerable<ITestResult> results)
-        {
-            return new TaskTestsResult(author, path, results);
-        }
-        #endregion
-
         #region Controllers
         public static ITaskController GetTaskController()
         {

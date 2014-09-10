@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using TTS.Core.Abstract.Model;
-using TTS.Core.Abstract.Processing;
 
 
 namespace TTS.Core.Abstract.Controllers
 {
     public interface ITestController
     {
+        event ProgressChangedEventHandler ProgressChanged;
+        event EventHandler TestStarted;
+        event EventHandler TestFinished;
+
+        event EventHandler AllTestsFinished;
+
         ITask Task { get; set; }
-        IReadOnlyList<ITest> Tests { get; }
-        void Run(IList<ITest> tests, IList<string> files);
+        int TestCount { get; }
+        void Run(IList<ITestInfo> tests, IList<string> files);
     }
 }

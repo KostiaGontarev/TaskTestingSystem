@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -19,7 +20,34 @@ namespace TTS.UI.UserControls
         }
         #endregion
 
-        #region EventHandlers
+        #region Propeties
+        public string CurrentFile
+        {
+            get
+            {
+                TestingFileControl control = this.FilesPanel.Children.OfType<TestingFileControl>()
+                    .SingleOrDefault(element => element.Selected);
+                if (control != null)
+                    return control.FilePath;
+
+                return String.Empty;
+            }
+        }
+        #endregion
+        
+        #region Events
+        public event EventHandler SelectionChanged;
+        #endregion
+
+        #region Event Invokators
+        protected virtual void OnSelectionChanged()
+        {
+            EventHandler handler = SelectionChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+        #endregion
+
+        #region Event Handlers
         private void TestingFileControl_DeleteButtonClick(object sender, System.EventArgs e)
         {
             TestingFileControl control = sender as TestingFileControl;
@@ -29,6 +57,20 @@ namespace TTS.UI.UserControls
                 this.FilesPanel.Children.Remove(control);
             }
         }
+        private void testingFileControl_ElementSelected(object sender, System.EventArgs e)
+        {
+            TestingFileControl selectedControl = sender as TestingFileControl;
+            List<TestingFileControl> resetSelectionList =
+                this.FilesPanel.Children.OfType<TestingFileControl>()
+                .Where(element => element.Selected)
+                .ToList();
+            foreach (TestingFileControl control in resetSelectionList)
+            {
+                if (!Equals(control, selectedControl))
+                    control.Selected = false;
+            }
+            this.OnSelectionChanged();
+        }
         #endregion
 
         #region Assistance
@@ -36,9 +78,10 @@ namespace TTS.UI.UserControls
         {
             TestingFileControl testingFileControl = new TestingFileControl(filePath);
             testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
+            testingFileControl.ElementSelected += testingFileControl_ElementSelected;
             this.FilesPanel.Children.Add(testingFileControl);
+            testingFileControl.Selected = true;
         }
-
         public List<string> GetSelectedFiles()
         {
             return this.FilesPanel.Children.OfType<TestingFileControl>()
@@ -46,13 +89,11 @@ namespace TTS.UI.UserControls
                                            .Select(element => element.FilePath)
                                            .ToList();
         }
-
-        public void SelectAllFiles()
+        public List<string> GetFiles()
         {
-            foreach (TestingFileControl control in this.FilesPanel.Children)
-            {
-                control.FileCheckBox.IsChecked = true;
-            }
+            return this.FilesPanel.Children.OfType<TestingFileControl>()
+                                           .Select(element => element.FilePath)
+                                           .ToList();
         }
         #endregion
     }

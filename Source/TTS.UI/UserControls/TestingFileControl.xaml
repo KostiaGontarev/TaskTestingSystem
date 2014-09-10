@@ -9,7 +9,7 @@
 	x:Name="UserControl"
 	d:DesignWidth="150" d:DesignHeight="22" MinHeight="22" Width="Auto" MinWidth="150">
 
-    <Border BorderBrush="Black" BorderThickness="1">
+    <Border BorderBrush="Black" BorderThickness="1" MouseDown="UIElement_OnMouseDown">
 
         <Grid x:Name="LayoutRoot" Background="White">
 

@@ -160,7 +160,7 @@ namespace TTS.Core.Concrete.Storage
             string author = (string)resultJson["Author"];
             string filePath = (string) resultJson["FilePath"];
             IEnumerable<ITestResult> results = this.ParseTestResults(resultJson);
-            TaskTestsResult taskResult = new TaskTestsResult(author, filePath, results);
+            TaskTestsResult taskResult = new TaskTestsResult(filePath, results);
             return taskResult;
         }
         private IEnumerable<ITestResult> ParseTestResults(JToken resultsJson)

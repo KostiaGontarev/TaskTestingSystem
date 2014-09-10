@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
-
 using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 
@@ -66,20 +65,6 @@ namespace TTS.UI.Forms
             this.Close();
         }
 
-        private void PlusButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            //Здесь будет не совсем это - здесь будет проверка по типам требований. Потом уточню
-            RequirementSetupControl requirementSetupControl = new RequirementSetupControl();
-            this.RequirementsStackPanel.Children.Add(requirementSetupControl);
-        }
-        private void MinusButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (this.RequirementsStackPanel.Children.Count != 0)
-            {
-                this.RequirementsStackPanel.Children.RemoveAt(this.RequirementsStackPanel.Children.Count - 1);
-            }
-        }
-
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.ioPanel.AddItem();
@@ -91,7 +76,6 @@ namespace TTS.UI.Forms
         {
             this.CheckName();
             this.CheckDescription();
-            this.CheckRequirements();
             this.CheckIO();
         }
         private void CheckName()
@@ -105,24 +89,6 @@ namespace TTS.UI.Forms
             string str = textRange.Text.Replace("\r\n", "");
             if (String.IsNullOrWhiteSpace(str))
                 this.errorsList.Add("Условие");
-        }
-        private void CheckRequirements()
-        {
-            if (this.RequirementsStackPanel.Children.Count != 0)
-            {
-                foreach (UIElement element in this.RequirementsStackPanel.Children)
-                {
-                    if (element is RequirementSetupControl)
-                    {
-                        this.CheckRequirement(element as RequirementSetupControl);
-                    }
-                }
-            }
-        }
-        private void CheckRequirement(RequirementSetupControl requirementSetupControl)
-        {
-            if (String.IsNullOrWhiteSpace(requirementSetupControl.RequirementValueTextBox.Text))
-                this.errorsList.Add("Значение требования " + requirementSetupControl.RequirementTypeComboBox.Text);
         }
         private void CheckIO()
         {
@@ -142,11 +108,12 @@ namespace TTS.UI.Forms
                 this.task = CoreAccessor.CreateTask();
             this.SaveName();
             this.SaveDescription();
-            this.SaveRequirements();
             this.SaveIO();
+            this.SaveRequirements();
 
             MessageBox.Show("Сохранение прошло успешно!", "Сохранение задачи");
         }
+
         private void SaveName()
         {
             this.task.Name = NameTextBox.Text;
@@ -157,27 +124,6 @@ namespace TTS.UI.Forms
             string str = textRange.Text.Replace("\r\n", "");
             this.task.Description = str;
         }
-        private void SaveRequirements()
-        {
-            this.task.Requirements.Clear();
-            if (this.RequirementsStackPanel.Children.Count != 0)
-            {
-                foreach (UIElement element in this.RequirementsStackPanel.Children)
-                {
-                    if (element is RequirementSetupControl)
-                    {
-                        this.SaveRequirement(element as RequirementSetupControl);
-                    }
-                }
-            }
-        }
-        private void SaveRequirement(RequirementSetupControl requirementSetupControl)
-        {
-            ICharacteristic characterictic = null;
-            bool converted = this.SetupCharacterictic(requirementSetupControl, out characterictic);
-            if (converted)
-                this.task.Requirements.Add(characterictic);
-        }
         private void SaveIO()
         {
             this.task.Tests.Clear();
@@ -187,38 +133,24 @@ namespace TTS.UI.Forms
                 this.task.Tests.Add(testInfo);
             }
         }
-        private bool SetupCharacterictic(RequirementSetupControl requirementSetupControl, out ICharacteristic characterictic)
+        private void SaveRequirements()
         {
-            characterictic = CoreAccessor.CreateCharacteristic();
-            characterictic.Type = (CharacteristicType)requirementSetupControl.RequirementTypeComboBox.SelectedItem;
-            double value = 0.0;
-            bool converted = double.TryParse(requirementSetupControl.RequirementValueTextBox.Text, out value);
-            characterictic.Value = value;
-            return converted;
+            this.task.Requirements.Clear();
+            ICharacteristic characteristic = CoreAccessor.CreateCharacteristic();
+            characteristic.Type = CharacteristicType.InputOutputCompliance;
+            characteristic.Value = true;
+            this.task.Requirements.Add(characteristic);
         }
 
         private void DisplayCurrentTask()
         {
             this.DisplayNameAndDescription();
-            this.DisplayRequirements();
             this.DisplayIO();
         }
         private void DisplayNameAndDescription()
         {
             this.NameTextBox.Text = this.Task.Name ?? String.Empty;
             this.DescriptionTextBox.AppendText(this.Task.Description ?? String.Empty);
-        }
-        private void DisplayRequirements()
-        {
-            foreach (ICharacteristic characteristic in this.Task.Requirements)
-            {
-                RequirementSetupControl requirementSetupControl = new RequirementSetupControl
-                {
-                    RequirementTypeComboBox = { SelectedItem = characteristic.Type },
-                    RequirementValueTextBox = { Text = characteristic.Value.ToString() }
-                };
-                this.RequirementsStackPanel.Children.Add(requirementSetupControl);
-            }
         }
         private void DisplayIO()
         {

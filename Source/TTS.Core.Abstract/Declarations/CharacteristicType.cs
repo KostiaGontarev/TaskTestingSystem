@@ -4,8 +4,5 @@
     {
         Uknown,
         InputOutputCompliance,
-        MaxExecutionTime,
-        MaxMemoryUsage,
-        MaxCPUUsage
     }
 }
