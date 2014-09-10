@@ -31,7 +31,16 @@ namespace TTS.Core.Concrete.Processing
                 this.SetupProcess(value);
             }
         }
-        public ITestInfo TestInfo { get; set; }
+        public ITestInfo TestInfo
+        {
+            get { return this.testInfo; }
+            set
+            {
+                if (value != null)
+                    this.testInfo = value;
+            }
+        }
+
         public bool IsReady
         {
             get { return this.Process != null && this.TestInfo != null; }
@@ -59,6 +68,8 @@ namespace TTS.Core.Concrete.Processing
                 worker.ReportProgress(60);
                 this.CheckOutput();
                 worker.ReportProgress(90);
+                this.DeleteFiles();
+                worker.ReportProgress(95);
             }
             catch (Exception exc)
             {
@@ -90,7 +101,7 @@ namespace TTS.Core.Concrete.Processing
             try
             {
                 string output = File.ReadAllText(this.outputPath);
-                this.result = output.Equals(this.testInfo.Output);
+                this.result = output.Equals(this.TestInfo.Output);
             }
             catch (Exception exc)
             {
@@ -125,6 +136,11 @@ namespace TTS.Core.Concrete.Processing
             string path = execPath.Substring(0, execPath.LastIndexOf("\\", System.StringComparison.Ordinal));
             this.inputPath = path + "\\input.txt";
             this.outputPath = path + "\\output.txt";
+        }
+        private void DeleteFiles()
+        {
+            File.Delete(this.inputPath);
+            File.Delete(this.outputPath);
         }
         #endregion
     }

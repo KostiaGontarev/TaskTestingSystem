@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Processing\BoolResultEventHandler.cs" />
+    <Compile Include="Processing\TestEventHandler.cs" />
     <Compile Include="Processing\IOTest.cs" />
     <Compile Include="Processing\TestPerformer.cs" />
     <Compile Include="Storage\JsonModelSerializer.cs" />

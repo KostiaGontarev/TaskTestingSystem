@@ -28,7 +28,7 @@ namespace TTS.Core.Concrete.Processing
             {
                 lock (this.locker)
                 {
-                    return this.result;                    
+                    return this.result;
                 }
             }
         }
@@ -128,16 +128,11 @@ namespace TTS.Core.Concrete.Processing
             this.worker.ReportProgress(100);
         }
         #endregion
-        
+
         #region Assistants
         private void PerformIOTest()
         {
             this.ioTest.Start(this.worker);
-            this.result.Requirements.Add(new Characteristic
-            {
-                Type = CharacteristicType.InputOutputCompliance,
-                Value = this.ioTest.Result
-            });
         }
         private void SetupResult()
         {

@@ -12,6 +12,11 @@ namespace TTS.UI.UserControls
     /// </summary>
     public partial class TestingFileControl : UserControl
     {
+        #region ReadOnly Members
+        private static readonly SolidColorBrush SelectedFile = new SolidColorBrush(new Color { A = 255, R = 95, G = 158, B = 160, });
+        private static readonly SolidColorBrush DefaultFile = new SolidColorBrush(new Color { A = 255, R = 255, G = 255, B = 255 });
+        #endregion
+        
         #region Data Members
         private readonly string filePath;
         private bool selected;
@@ -32,24 +37,11 @@ namespace TTS.UI.UserControls
 
                 if (this.Selected)
                 {
-                    this.LayoutRoot.Background = new SolidColorBrush(new Color
-                    {
-                        A = 255,
-                        R = 95,
-                        G = 158,
-                        B = 160,
-                    });
+                    this.LayoutRoot.Background = TestingFileControl.SelectedFile;
+                    this.OnElementSelected();
                 }
                 else
-                {
-                    this.LayoutRoot.Background = new SolidColorBrush(new Color
-                    {
-                        A = 255,
-                        R = 255,
-                        G = 255,
-                        B = 255,
-                    });
-                }
+                    this.LayoutRoot.Background = TestingFileControl.DefaultFile;
             }
         }
         #endregion
@@ -74,7 +66,7 @@ namespace TTS.UI.UserControls
         }
         #endregion
 
-        #region EventHandlers
+        #region Event Handlers
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.OnDeleteButtonClick();
@@ -83,7 +75,6 @@ namespace TTS.UI.UserControls
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Selected = true;
-            this.OnElementSelected();
         }
         #endregion
 

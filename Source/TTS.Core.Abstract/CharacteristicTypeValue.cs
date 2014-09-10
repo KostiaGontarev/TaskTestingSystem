@@ -1,4 +1,6 @@
-﻿using TTS.Core.Abstract.Declarations;
+﻿using System;
+using TTS.Core.Abstract.Declarations;
+using TTS.Core.Abstract.Model;
 
 namespace TTS.Core.Abstract
 {
@@ -27,6 +29,17 @@ namespace TTS.Core.Abstract
                 case CharacteristicType.Uknown:
                 case CharacteristicType.InputOutputCompliance:
                     return false;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool CheckForSuccess(ICharacteristic requirement, ICharacteristic result)
+        {
+            switch (requirement.Type)
+            {
+                case CharacteristicType.InputOutputCompliance:
+                    return (bool)requirement.Value == (bool)result.Value;
                 default:
                     return false;
             }

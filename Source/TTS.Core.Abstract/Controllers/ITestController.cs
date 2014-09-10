@@ -12,10 +12,13 @@ namespace TTS.Core.Abstract.Controllers
         event EventHandler TestStarted;
         event EventHandler TestFinished;
 
+        event EventHandler TestChanged;
         event EventHandler AllTestsFinished;
-
+        
         ITask Task { get; set; }
         int TestCount { get; }
         void Run(IList<ITestInfo> tests, IList<string> files);
+
+        bool IsTestPassed(IList<ICharacteristic> requirements, IReadOnlyList<ICharacteristic> results);
     }
 }

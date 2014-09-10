@@ -66,7 +66,7 @@ namespace TTS.UI.UserControls
                 .ToList();
             foreach (TestingFileControl control in resetSelectionList)
             {
-                if (!Equals(control, selectedControl))
+                if (control != selectedControl)
                     control.Selected = false;
             }
             this.OnSelectionChanged();
@@ -79,8 +79,9 @@ namespace TTS.UI.UserControls
             TestingFileControl testingFileControl = new TestingFileControl(filePath);
             testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
             testingFileControl.ElementSelected += testingFileControl_ElementSelected;
-            this.FilesPanel.Children.Add(testingFileControl);
             testingFileControl.Selected = true;
+
+            this.FilesPanel.Children.Add(testingFileControl);
         }
         public List<string> GetSelectedFiles()
         {

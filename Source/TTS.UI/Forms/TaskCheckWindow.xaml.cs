@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -8,7 +9,7 @@ using TTS.Core.Abstract.Model;
 
 using TTS.Core.Abstract.Controllers;
 using TTS.Core.Concrete;
-
+using TTS.Core.Concrete.Processing;
 using TTS.UI.UserControls;
 
 
@@ -19,6 +20,7 @@ namespace TTS.UI.Forms
         #region Data Members
         private readonly ITestController controller;
         private readonly TestingFilesPanel filesPanel;
+        private readonly List<TestIndicator> indicators = new List<TestIndicator>();
         #endregion
 
         #region Constructors
@@ -31,7 +33,9 @@ namespace TTS.UI.Forms
             this.TestingFilesPanel.Children.Add(filesPanel);
 
             this.controller = CoreAccessor.GetTestController();
+            this.controller.TestChanged += controller_TestChanged;
         }
+
         public TaskCheckWindow(ITask task)
             : this()
         {
@@ -55,8 +59,7 @@ namespace TTS.UI.Forms
         private void CheckSelectedButton_OnClick(object sender, RoutedEventArgs e)
         {
             List<ITestInfo> selected =
-                    this.TestsPanel.Children.OfType<TestIndicator>()
-                    .Where(element => element.TestCheckBox.IsChecked == true)
+                    this.indicators.Where(element => element.TestCheckBox.IsChecked == true)
                     .Select(element => element.TestInfo)
                     .ToList();
             List<string> files = this.filesPanel.GetSelectedFiles();
@@ -64,10 +67,7 @@ namespace TTS.UI.Forms
         }
         private void CheckAllButton_OnClick(object sender, RoutedEventArgs e)
         {
-            List<ITestInfo> selected =
-                    this.TestsPanel.Children.OfType<TestIndicator>()
-                    .Select(element => element.TestInfo)
-                    .ToList();
+            List<ITestInfo> selected = this.indicators.Select(element => element.TestInfo).ToList();
             List<string> files = this.filesPanel.GetFiles();
             this.Run(selected, files);
         }
@@ -75,9 +75,34 @@ namespace TTS.UI.Forms
         {
 
         }
-        private void FilesPanel_OnSelectionChanged(object sender, System.EventArgs e)
+        private void FilesPanel_OnSelectionChanged(object sender, EventArgs e)
         {
+            string current = this.filesPanel.CurrentFile;
+            ITaskTestResult result = this.controller.Task.Results.SingleOrDefault(element => element.FilePath == current);
+            if (result == null)
+                this.ResetIndicators();
+            else
+                this.SetupIndicators(result);
+        }
+        private void controller_TestChanged(object sender, EventArgs e)
+        {
+            TestEventArgs args = e as TestEventArgs;
+            if (args == null)
+                return;
 
+            if (this.filesPanel.CurrentFile == args.FileName)
+            {
+                TestIndicator current = this.indicators.SingleOrDefault(element => element.TestInfo == args.TestInfo);
+                if (current != null)
+                {
+                    current.SubscribeToController();
+                    foreach (TestIndicator indicator in this.indicators)
+                    {
+                        if (indicator != current)
+                            indicator.UnsubscribeFromController();
+                    }
+                }
+            }
         }
         #endregion
 
@@ -89,6 +114,7 @@ namespace TTS.UI.Forms
             foreach (ITestInfo testInfo in this.controller.Task.Tests)
             {
                 TestIndicator testIndicator = new TestIndicator(testInfo, title + number);
+                this.indicators.Add(testIndicator);
                 this.TestsPanel.Children.Add(testIndicator);
                 number++;
             }
@@ -120,7 +146,25 @@ namespace TTS.UI.Forms
             else
                 MessageBox.Show("Выберите тесты и файлы!", "Ошибка!");
         }
-
+        private void ResetIndicators()
+        {
+            foreach (TestIndicator indicator in this.indicators)
+            {
+                indicator.Reset();
+            }
+        }
+        private void SetupIndicators(ITaskTestResult result)
+        {
+            foreach (TestIndicator indicator in this.indicators)
+            {
+                ITestResult testResult = result.Results.SingleOrDefault(element => element.Test == indicator.TestInfo);
+                if (testResult != null)
+                {
+                    bool success = this.controller.IsTestPassed(this.controller.Task.Requirements, testResult.Requirements);
+                    indicator.IndicatorState = success;
+                }
+            }
+        }
         #endregion
     }
 }

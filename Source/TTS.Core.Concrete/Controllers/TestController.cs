@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-
+using System.Linq;
+using TTS.Core.Abstract;
 using TTS.Core.Abstract.Controllers;
 using TTS.Core.Abstract.Model;
 
@@ -65,6 +66,7 @@ namespace TTS.Core.Concrete.Controllers
         public event EventHandler TestStarted;
         public event EventHandler TestFinished;
 
+        public event EventHandler TestChanged;
         public event EventHandler AllTestsFinished;
         #endregion
 
@@ -79,10 +81,15 @@ namespace TTS.Core.Concrete.Controllers
             EventHandler handler = TestStarted;
             if (handler != null) handler(this, EventArgs.Empty);
         }
-        protected virtual void OnTestFinished()
+        protected virtual void OnTestFinished(BoolResultEventArgs args)
         {
             EventHandler handler = TestFinished;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null) handler(this, args);
+        }
+        protected virtual void OnTestChanged(TestEventArgs args)
+        {
+            EventHandler handler = TestChanged;
+            if (handler != null) handler(this, args);
         }
         protected virtual void OnAllTestsFinished()
         {
@@ -102,8 +109,12 @@ namespace TTS.Core.Concrete.Controllers
         }
         private void performer_TestFinished(object sender, EventArgs e)
         {
-            this.results.Add(this.performer.Result);
-            this.OnTestFinished();
+            ITestResult result = this.performer.Result;
+            this.results.Add(result);
+
+            bool success = this.IsTestPassed(this.Task.Requirements, result.Requirements);
+            this.OnTestFinished(new BoolResultEventArgs(success));
+            
             this.PerformNextTest();
         }
         #endregion
@@ -149,6 +160,8 @@ namespace TTS.Core.Concrete.Controllers
             if (this.testInfoQueue.Count != 0)
             {
                 this.performer.TestInfo = this.testInfoQueue.Dequeue();
+                TestEventArgs args = new TestEventArgs(this.performer.TestInfo, this.performer.Process.StartInfo.FileName);
+                this.OnTestChanged(args);
                 this.performer.Run();
             }
             else
@@ -163,6 +176,25 @@ namespace TTS.Core.Concrete.Controllers
             this.task.AddTestingResult(result);
             this.results.Clear();
         }
+        #endregion
+
+        #region Static Members
+        public bool IsTestPassed(IList<ICharacteristic> requirements, IReadOnlyList<ICharacteristic> results)
+        {
+            foreach (ICharacteristic requirement in requirements)
+            {
+                ICharacteristic result = results.SingleOrDefault(element => element.Type == requirement.Type);
+                if (result != null)
+                {
+                    bool success = CharacteristicTypeValue.CheckForSuccess(requirement, result);
+                    if (!success)
+                        return false;
+                }
+                else
+                    return false;
+            }
+            return true;
+        } 
         #endregion
     }
 }
