@@ -56,18 +56,38 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Members
-        public void Start(BackgroundWorker worker)
+        public void Start(BackgroundWorker worker, DoWorkEventArgs args)
         {
             try
             {
                 if (!this.IsReady)
                     throw new InvalidOperationException("The controller is not ready!");
+                if (worker.CancellationPending)
+                {
+                    args.Cancel = true;
+                    return;
+                }
                 this.PrepareInput();
                 worker.ReportProgress(30);
+                if (worker.CancellationPending)
+                {
+                    args.Cancel = true;
+                    return;
+                }
                 this.PerformProcess();
                 worker.ReportProgress(60);
+                if (worker.CancellationPending)
+                {
+                    args.Cancel = true;
+                    return;
+                }
                 this.CheckOutput();
                 worker.ReportProgress(90);
+                if (worker.CancellationPending)
+                {
+                    args.Cancel = true;
+                    return;
+                }
                 this.DeleteFiles();
                 worker.ReportProgress(95);
             }

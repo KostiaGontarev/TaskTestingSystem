@@ -18,6 +18,7 @@ namespace TTS.Core.Abstract.Controllers
         ITask Task { get; set; }
         int TestCount { get; }
         void Run(IList<ITestInfo> tests, IList<string> files);
+        void Stop();
 
         bool IsTestPassed(IList<ICharacteristic> requirements, IReadOnlyList<ICharacteristic> results);
     }

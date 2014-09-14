@@ -86,6 +86,10 @@ namespace TTS.Core.Concrete.Processing
             this.OnTestStarted();
             this.worker.RunWorkerAsync();
         }
+        public void Stop()
+        {
+            this.worker.CancelAsync();
+        }
         #endregion
 
         #region Events
@@ -123,17 +127,13 @@ namespace TTS.Core.Concrete.Processing
         }
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.PerformIOTest();
-            this.SetupResult();
-            this.worker.ReportProgress(100);
+                this.ioTest.Start(this.worker, e);
+                this.SetupResult();
+                this.worker.ReportProgress(100);
         }
         #endregion
 
         #region Assistants
-        private void PerformIOTest()
-        {
-            this.ioTest.Start(this.worker);
-        }
         private void SetupResult()
         {
             List<ICharacteristic> results = new List<ICharacteristic>();

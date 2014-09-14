@@ -59,6 +59,11 @@ namespace TTS.Core.Concrete.Controllers
             this.SetupFilesQueue(files);
             this.ProceedNextFile();
         }
+        public void Stop()
+        {
+            this.performer.Stop();
+            this.OnAllTestsFinished();
+        }
         #endregion
 
         #region Events

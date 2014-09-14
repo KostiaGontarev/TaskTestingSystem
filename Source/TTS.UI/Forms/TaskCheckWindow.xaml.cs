@@ -34,8 +34,8 @@ namespace TTS.UI.Forms
 
             this.controller = CoreAccessor.GetTestController();
             this.controller.TestChanged += controller_TestChanged;
+            this.controller.AllTestsFinished += controller_AllTestsFinished;
         }
-
         public TaskCheckWindow(ITask task)
             : this()
         {
@@ -77,7 +77,7 @@ namespace TTS.UI.Forms
         }
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            this.controller.Stop();
         }
         private void FilesPanel_OnSelectionChanged(object sender, EventArgs e)
         {
@@ -108,6 +108,15 @@ namespace TTS.UI.Forms
                 }
             }
         }
+
+        private void controller_AllTestsFinished(object sender, EventArgs e)
+        {
+            this.EnableFunctionality();
+            foreach (TestIndicator indicator in this.indicators)
+            {
+                indicator.UnsubscribeFromController();
+            }
+        }
         #endregion
 
         #region Assistance
@@ -125,8 +134,8 @@ namespace TTS.UI.Forms
         }
         private void DisableFunctionality()
         {
-            CheckAllButton.Visibility = Visibility.Hidden;
-            CheckSelectedButton.Visibility = Visibility.Hidden;
+            CheckAllButton.Visibility = Visibility.Collapsed;
+            CheckSelectedButton.Visibility = Visibility.Collapsed;
             CheckAllButton.IsEnabled = false;
             CheckAllButton.IsEnabled = false;
             TestsPanel.IsEnabled = false;
@@ -139,7 +148,7 @@ namespace TTS.UI.Forms
         private void EnableFunctionality()
         {
             StopCheckButton.IsEnabled = false;
-            StopCheckButton.Visibility = Visibility.Hidden;
+            StopCheckButton.Visibility = Visibility.Collapsed;
 
             CheckAllButton.Visibility = Visibility.Visible;
             CheckSelectedButton.Visibility = Visibility.Visible;
@@ -155,7 +164,6 @@ namespace TTS.UI.Forms
             {
                 this.DisableFunctionality();
                 this.controller.Run(tests, files);
-                this.EnableFunctionality();
             }
             else
                 MessageBox.Show("Выберите тесты и файлы!", "Ошибка!");
