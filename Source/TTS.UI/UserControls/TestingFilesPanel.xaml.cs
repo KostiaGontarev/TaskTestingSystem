@@ -73,7 +73,7 @@ namespace TTS.UI.UserControls
         }
         #endregion
 
-        #region Assistance
+        #region Members
         public void AddItem(string filePath)
         {
             TestingFileControl testingFileControl = new TestingFileControl(filePath);
@@ -95,6 +95,18 @@ namespace TTS.UI.UserControls
             return this.FilesPanel.Children.OfType<TestingFileControl>()
                                            .Select(element => element.FilePath)
                                            .ToList();
+        }
+
+        public void SelectNextFile()
+        {
+            List<TestingFileControl> controls = this.FilesPanel.Children.OfType<TestingFileControl>().ToList();
+            for (int index = 0; index < controls.Count - 1; index++)
+            {
+                if (controls[index].Selected)
+                {
+                    controls[index + 1].Selected = true;
+                }
+            }
         }
         #endregion
     }

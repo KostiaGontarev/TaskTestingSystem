@@ -53,7 +53,11 @@ namespace TTS.UI.Forms
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                this.filesPanel.AddItem(openFileDialog.FileName);
+                List<string> files = this.filesPanel.GetFiles();
+                if (!files.Contains(openFileDialog.FileName))
+                    this.filesPanel.AddItem(openFileDialog.FileName);
+                else
+                    MessageBox.Show("Такой файл уже есть в списке!", "Ошибка!");
             }
         }
         private void CheckSelectedButton_OnClick(object sender, RoutedEventArgs e)
@@ -90,17 +94,17 @@ namespace TTS.UI.Forms
             if (args == null)
                 return;
 
-            if (this.filesPanel.CurrentFile == args.FileName)
+            if (this.filesPanel.CurrentFile != args.FileName)
+                this.filesPanel.SelectNextFile();
+
+            TestIndicator current = this.indicators.SingleOrDefault(element => element.TestInfo == args.TestInfo);
+            if (current != null)
             {
-                TestIndicator current = this.indicators.SingleOrDefault(element => element.TestInfo == args.TestInfo);
-                if (current != null)
+                current.SubscribeToController();
+                foreach (TestIndicator indicator in this.indicators)
                 {
-                    current.SubscribeToController();
-                    foreach (TestIndicator indicator in this.indicators)
-                    {
-                        if (indicator != current)
-                            indicator.UnsubscribeFromController();
-                    }
+                    if (indicator != current)
+                        indicator.UnsubscribeFromController();
                 }
             }
         }
@@ -123,14 +127,24 @@ namespace TTS.UI.Forms
         {
             CheckAllButton.Visibility = Visibility.Hidden;
             CheckSelectedButton.Visibility = Visibility.Hidden;
+            CheckAllButton.IsEnabled = false;
+            CheckAllButton.IsEnabled = false;
             TestsPanel.IsEnabled = false;
             AddButton.IsEnabled = false;
             filesPanel.IsEnabled = false;
+
+            StopCheckButton.IsEnabled = true;
+            StopCheckButton.Visibility = Visibility.Visible;
         }
         private void EnableFunctionality()
         {
+            StopCheckButton.IsEnabled = false;
+            StopCheckButton.Visibility = Visibility.Hidden;
+
             CheckAllButton.Visibility = Visibility.Visible;
             CheckSelectedButton.Visibility = Visibility.Visible;
+            CheckAllButton.IsEnabled = true;
+            CheckAllButton.IsEnabled = true;
             TestsPanel.IsEnabled = true;
             AddButton.IsEnabled = true;
             filesPanel.IsEnabled = true;
