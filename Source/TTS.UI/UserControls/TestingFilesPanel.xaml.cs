@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
-using System.Windows;
-
 
 namespace TTS.UI.UserControls
 {
@@ -60,13 +58,16 @@ namespace TTS.UI.UserControls
         private void testingFileControl_ElementSelected(object sender, System.EventArgs e)
         {
             TestingFileControl selectedControl = sender as TestingFileControl;
+            if (selectedControl == null)
+                return;
+
             List<TestingFileControl> resetSelectionList =
                 this.FilesPanel.Children.OfType<TestingFileControl>()
                 .Where(element => element.Selected)
                 .ToList();
             foreach (TestingFileControl control in resetSelectionList)
             {
-                if (control != selectedControl)
+                if (control.FilePath != selectedControl.FilePath)
                     control.Selected = false;
             }
             this.OnSelectionChanged();
@@ -96,17 +97,12 @@ namespace TTS.UI.UserControls
                                            .Select(element => element.FilePath)
                                            .ToList();
         }
-
-        public void SelectNextFile()
+        public void SelectFile(string fileName)
         {
-            List<TestingFileControl> controls = this.FilesPanel.Children.OfType<TestingFileControl>().ToList();
-            for (int index = 0; index < controls.Count - 1; index++)
-            {
-                if (controls[index].Selected)
-                {
-                    controls[index + 1].Selected = true;
-                }
-            }
+            TestingFileControl control = this.FilesPanel.Children.OfType<TestingFileControl>()
+                .SingleOrDefault(element => element.FilePath == fileName);
+            if (control != null)
+                control.Selected = true;
         }
         #endregion
     }

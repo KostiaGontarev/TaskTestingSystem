@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 using TTS.Core.Abstract.Controllers;
-using TTS.Core.Abstract.Model;
+
 using TTS.Core.Concrete;
 using TTS.Core.Concrete.Processing;
 
@@ -20,14 +21,14 @@ namespace TTS.UI.UserControls
         #endregion
 
         #region Data Members
-        private readonly ITestInfo testInfo;
+        private readonly Guid testId;
         private bool? indicatorState;
         #endregion
         
         #region Properties
-        public ITestInfo TestInfo
+        public Guid TestId
         {
-            get { return this.testInfo; }
+            get { return this.testId; }
         }
         public bool? IndicatorState
         {
@@ -47,10 +48,10 @@ namespace TTS.UI.UserControls
         {
             this.InitializeComponent();
         }
-        public TestIndicator(ITestInfo testInfo, string title)
+        public TestIndicator(Guid testId, string title)
             : this()
         {
-            this.testInfo = testInfo;
+            this.testId = testId;
             this.TestNameLabel.Content = title;
         }
         #endregion

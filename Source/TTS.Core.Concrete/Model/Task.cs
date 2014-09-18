@@ -1,23 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 
 
 namespace TTS.Core.Concrete.Model
 {
+    [Serializable]
     internal class Task : ITask
     {
         #region Data Members
+        private Guid id;
         private string name;
         private string description;
 
-        private readonly List<ICharacteristic> requirements;
-        private readonly List<ITestInfo> tests;
-        private readonly List<ITaskTestResult> results;
+        private readonly List<Characteristic> requirements;
+        private readonly List<Guid> tests;
         #endregion
 
         #region Properties
+        public Guid ID
+        {
+            get { return this.id; }
+            set
+            {
+                if (value != Guid.Empty)
+                    this.id = value;
+            }
+        }
         public string Name
         {
             get { return this.name; }
@@ -36,57 +48,40 @@ namespace TTS.Core.Concrete.Model
                     this.description = value;
             }
         }
-        public IList<ICharacteristic> Requirements
+        public IList<Characteristic> Requirements
         {
             get { return this.requirements; }
             set
             {
-                if (value == null || value.Count == 0)
+                if (value == null || !value.Any())
                     return;
 
                 this.requirements.Clear();
                 this.requirements.AddRange(value);
             }
         }
-        public IList<ITestInfo> Tests
+        public IList<Guid> Tests
         {
             get { return this.tests; }
             set
             {
-                if (value == null || value.Count == 0)
+                if (value == null || !value.Any())
                     return;
 
                 this.tests.Clear();
                 this.tests.AddRange(value);
             }
         }
-        public IReadOnlyList<ITaskTestResult> Results
-        {
-            get { return this.results; }
-        }
         #endregion
 
         #region Constructors
         public Task()
         {
+            this.id = Guid.NewGuid();
             this.name = String.Empty;
             this.description = String.Empty;
-            this.requirements = new List<ICharacteristic>();
-            this.tests = new List<ITestInfo>();
-            this.results = new List<ITaskTestResult>();
-        }
-        public Task(IEnumerable<ICharacteristic> requirements, IEnumerable<ITestInfo> tests)
-            :this()
-        {
-            this.requirements.AddRange(requirements);
-            this.tests.AddRange(tests);
-        } 
-        #endregion
-
-        #region Internal Members
-        internal void AddTestingResult(ITaskTestResult result)
-        {
-            this.results.Add(result);
+            this.requirements = new List<Characteristic>();
+            this.tests = new List<Guid>();
         }
         #endregion
     }

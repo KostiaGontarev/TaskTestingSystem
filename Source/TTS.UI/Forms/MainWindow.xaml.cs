@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Input;
-using System.Collections.Generic;
 
 using Microsoft.Win32;
 
@@ -84,9 +82,11 @@ namespace TTS.UI.Forms
         }
         private void OpenButton_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openTasksDialog = new OpenFileDialog();
-            openTasksDialog.DefaultExt = ".json";
-            openTasksDialog.Filter = "Documents (.json)|*.json";
+            OpenFileDialog openTasksDialog = new OpenFileDialog
+            {
+                DefaultExt = ".tts",
+                Filter = "StorageFile (.tts)|*.tts"
+            };
 
             if (openTasksDialog.ShowDialog() == true)
             {
@@ -97,10 +97,12 @@ namespace TTS.UI.Forms
         }
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveTasksDialog = new SaveFileDialog();
-            saveTasksDialog.FileName = "Document";
-            saveTasksDialog.DefaultExt = ".json";
-            saveTasksDialog.Filter = "Documents (.json)|*.json";
+            SaveFileDialog saveTasksDialog = new SaveFileDialog
+            {
+                FileName = "Storage",
+                DefaultExt = ".xml",
+                Filter = "StorageFile (.tts)|*.tts"
+            };
 
             if (saveTasksDialog.ShowDialog() == true)
             {
@@ -116,37 +118,29 @@ namespace TTS.UI.Forms
         {
             this.taskEditWindow = new TaskEditWindow();
             this.taskEditWindow.ShowDialog();
-
-            ITask task = this.taskEditWindow.Task;
-            if (task != null)
-            {
-                controller.Tasks.Add(task);
-                this.TasksList.Items.Refresh();
-                this.TasksList.SelectedItem = task;
-            }
+            this.TasksList.Items.Refresh();
         }
         private void OpenTaskEditWindow(ITask task)
         {
             this.taskEditWindow = new TaskEditWindow(task);
             this.taskEditWindow.ShowDialog();
-
-            this.TasksList.SelectedItem = this.taskEditWindow.Task;
             this.TasksList.Items.Refresh();
         }
         private void OpenTaskCheckWindow()
         {
             ITask task = this.TasksList.SelectedItem as ITask;
-            if (task.Tests.Count == 0)
-            {
-                MessageBox.Show("Пожалуйста, добавьте файлы для проверки", "Нет файлов для проверки");
-            }
-            else
+            if (task != null)
             {
                 this.taskCheckWindow = new TaskCheckWindow(task);
                 this.taskCheckWindow.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("Пожалуйста, добавьте файлы для проверки", "Нет файлов для проверки");
+            }
         }
-        #endregion
+
+	    #endregion
 
         private void ExitButton_OnClick(object sender, RoutedEventArgs e)
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using TTS.Core.Abstract.Declarations;
-using TTS.Core.Abstract.Model;
-
-namespace TTS.Core.Abstract
+﻿namespace TTS.Core.Abstract.Declarations
 {
     public static class CharacteristicTypeValue
     {
@@ -22,19 +18,8 @@ namespace TTS.Core.Abstract
                     return false;
             }
         }
-        public static bool IsDouble(CharacteristicType type)
-        {
-            switch (type)
-            {
-                case CharacteristicType.Uknown:
-                case CharacteristicType.InputOutputCompliance:
-                    return false;
-                default:
-                    return false;
-            }
-        }
 
-        public static bool CheckForSuccess(ICharacteristic requirement, ICharacteristic result)
+        public static bool CheckForSuccess(Characteristic requirement, Characteristic result)
         {
             switch (requirement.Type)
             {

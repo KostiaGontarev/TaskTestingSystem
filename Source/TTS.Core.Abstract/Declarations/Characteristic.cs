@@ -1,12 +1,10 @@
 ﻿using System;
-using TTS.Core.Abstract;
-using TTS.Core.Abstract.Declarations;
-using TTS.Core.Abstract.Model;
 
 
-namespace TTS.Core.Concrete.Model
+namespace TTS.Core.Abstract.Declarations
 {
-    internal class Characteristic : ICharacteristic
+    [Serializable]
+    public class Characteristic
     {
         #region Data Members
         private CharacteristicType type;
@@ -21,8 +19,6 @@ namespace TTS.Core.Concrete.Model
             {
                 if (CharacteristicTypeValue.IsBool(value))
                     this.value = CharacteristicTypeValue.DefaultBool;
-                else if (CharacteristicTypeValue.IsDouble(value))
-                    this.value = CharacteristicTypeValue.DefaultDouble;
                 else 
                     throw new ArgumentException("That type can not be applicable to a charachteristic!");
 
@@ -35,8 +31,7 @@ namespace TTS.Core.Concrete.Model
             set
             {
                 bool boolCompliant = CharacteristicTypeValue.IsBool(this.type) && value is bool;
-                bool doubleCompliant = CharacteristicTypeValue.IsDouble(this.type) && value is double;
-                if (boolCompliant || doubleCompliant)
+                if (boolCompliant)
                     this.value = value;
                 else
                     throw new ArgumentException("Value does not compliant to this charachteristic type!");

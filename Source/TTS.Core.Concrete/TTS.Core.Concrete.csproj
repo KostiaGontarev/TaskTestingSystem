@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\TaskController.cs" />
@@ -43,9 +44,7 @@
     <Compile Include="Processing\TestEventHandler.cs" />
     <Compile Include="Processing\IOTest.cs" />
     <Compile Include="Processing\TestPerformer.cs" />
-    <Compile Include="Storage\JsonModelSerializer.cs" />
-    <Compile Include="Model\Characteristic.cs" />
-    <Compile Include="Storage\ModelStorage.cs" />
+    <Compile Include="Storage\DataManager.cs" />
     <Compile Include="CoreAccessor.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\TaskTestsResult.cs" />

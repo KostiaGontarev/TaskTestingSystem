@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using TTS.Core.Abstract;
+
 using TTS.Core.Abstract.Controllers;
+using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
+using TTS.Core.Abstract.Storage;
 
 using TTS.Core.Concrete.Model;
 using TTS.Core.Concrete.Processing;
+using TTS.Core.Concrete.Storage;
 
 
 namespace TTS.Core.Concrete.Controllers
@@ -20,10 +22,10 @@ namespace TTS.Core.Concrete.Controllers
         private readonly TestPerformer performer = TestPerformer.Instance;
         private readonly Queue<ITestInfo> testInfoQueue = new Queue<ITestInfo>();
         private readonly Queue<string> filesQueue = new Queue<string>();
-        private readonly List<ITestResult> results = new List<ITestResult>();
 
-        private IList<ITestInfo> testsToPerform; 
         private Task task;
+        private IList<ITestInfo> testsToPerform;
+        private readonly List<ITestResult> results = new List<ITestResult>();
         #endregion
 
         #region Properties
@@ -36,11 +38,18 @@ namespace TTS.Core.Concrete.Controllers
                     this.task = value as Task;
             }
         }
-
-        public int TestCount
+        public IEnumerable<Guid> Tests
         {
-            get { return this.task.Tests.Count; }
+            get { return this.Task.Tests; }    
         }
+        public IReadOnlyCollection<ITaskTestResult> Results
+        {
+            get
+            {
+                IDataStorage storage = DataManager.Instance;
+                return storage.Results.Where(result => result.TaskID == this.Task.ID).ToList();
+            }    
+        } 
         #endregion
 
         #region Constructors
@@ -53,9 +62,10 @@ namespace TTS.Core.Concrete.Controllers
         #endregion
 
         #region Members
-        public void Run(IList<ITestInfo> tests, IList<string> files)
+        public void Run(IList<Guid> tests, IList<string> files)
         {
-            this.testsToPerform = tests;
+            DataManager storage = DataManager.Instance;
+            this.testsToPerform = storage.Tests.Where(test => tests.Contains(test.ID)).ToList();
             this.SetupFilesQueue(files);
             this.ProceedNextFile();
         }
@@ -114,10 +124,11 @@ namespace TTS.Core.Concrete.Controllers
         }
         private void performer_TestFinished(object sender, EventArgs e)
         {
-            ITestResult result = this.performer.Result;
+            TestResult result = this.performer.Result;
+            bool success = this.IsTestPassed(this.Task.Requirements, result.Requirements);
+            result.IsPassed = success;
             this.results.Add(result);
 
-            bool success = this.IsTestPassed(this.Task.Requirements, result.Requirements);
             this.OnTestFinished(new BoolResultEventArgs(success));
             
             this.PerformNextTest();
@@ -177,18 +188,19 @@ namespace TTS.Core.Concrete.Controllers
         }
         private void SaveResults()
         {
-            TaskTestsResult result = new TaskTestsResult(this.performer.Process.StartInfo.FileName, results);
-            this.task.AddTestingResult(result);
+            TaskTestsResult result = new TaskTestsResult(this.Task.ID, this.performer.Process.StartInfo.FileName, results);
+            DataManager storage = DataManager.Instance;
+            storage.Results.Add(result);
             this.results.Clear();
         }
         #endregion
 
         #region Static Members
-        public bool IsTestPassed(IList<ICharacteristic> requirements, IReadOnlyList<ICharacteristic> results)
+        public bool IsTestPassed(IEnumerable<Characteristic> requirements, IReadOnlyCollection<Characteristic> results)
         {
-            foreach (ICharacteristic requirement in requirements)
+            foreach (Characteristic requirement in requirements)
             {
-                ICharacteristic result = results.SingleOrDefault(element => element.Type == requirement.Type);
+                Characteristic result = results.SingleOrDefault(element => element.Type == requirement.Type);
                 if (result != null)
                 {
                     bool success = CharacteristicTypeValue.CheckForSuccess(requirement, result);

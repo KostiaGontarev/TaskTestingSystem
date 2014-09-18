@@ -5,6 +5,7 @@ using System.IO;
 
 using TTS.Core.Abstract.Model;
 
+
 namespace TTS.Core.Concrete.Processing
 {
     internal class IOTest
@@ -29,6 +30,7 @@ namespace TTS.Core.Concrete.Processing
             set
             {
                 this.SetupProcess(value);
+                this.result = null;
             }
         }
         public ITestInfo TestInfo
@@ -37,7 +39,10 @@ namespace TTS.Core.Concrete.Processing
             set
             {
                 if (value != null)
+                {
                     this.testInfo = value;
+                    this.result = null;
+                }
             }
         }
 
@@ -62,11 +67,7 @@ namespace TTS.Core.Concrete.Processing
             {
                 if (!this.IsReady)
                     throw new InvalidOperationException("The controller is not ready!");
-                if (worker.CancellationPending)
-                {
-                    args.Cancel = true;
-                    return;
-                }
+
                 this.PrepareInput();
                 worker.ReportProgress(30);
                 if (worker.CancellationPending)
@@ -123,7 +124,7 @@ namespace TTS.Core.Concrete.Processing
                 string output = File.ReadAllText(this.outputPath);
                 this.result = output.Equals(this.TestInfo.Output);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 if (!this.result.HasValue)
                     this.result = false;

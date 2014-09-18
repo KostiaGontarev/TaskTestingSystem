@@ -11,7 +11,7 @@ using TTS.Core.Concrete.Model;
 
 namespace TTS.Core.Concrete.Processing
 {
-    internal class TestPerformer
+    internal class TestPerformer : IDisposable
     {
         #region Data Members
         private readonly BackgroundWorker worker = new BackgroundWorker();
@@ -22,7 +22,7 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Properties
-        public ITestResult Result
+        public TestResult Result
         {
             get
             {
@@ -136,8 +136,8 @@ namespace TTS.Core.Concrete.Processing
         #region Assistants
         private void SetupResult()
         {
-            List<ICharacteristic> results = new List<ICharacteristic>();
-            ICharacteristic iocTest = new Characteristic
+            List<Characteristic> results = new List<Characteristic>();
+            Characteristic iocTest = new Characteristic
             {
                 Type = CharacteristicType.InputOutputCompliance,
                 Value = this.ioTest.Result
@@ -146,9 +146,16 @@ namespace TTS.Core.Concrete.Processing
 
             lock (this.locker)
             {
-                this.result = new TestResult(this.ioTest.TestInfo, results);
+                this.result = new TestResult(this.ioTest.TestInfo.ID, results);
             }
         }
+        #endregion
+
+        #region IDisposable Members
+        public void Dispose()
+        {
+            worker.Dispose();
+        } 
         #endregion
     }
 }

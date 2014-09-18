@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Windows;
 using System.Windows.Documents;
+
 using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
+using TTS.Core.Abstract.Storage;
 
 using TTS.Core.Concrete;
 
@@ -19,13 +22,6 @@ namespace TTS.UI.Forms
         private readonly List<string> errorsList = new List<string>();
         private readonly IOPanel ioPanel;
         private ITask task;
-        #endregion
-
-        #region Properties
-        public ITask Task
-        {
-            get { return this.task; }
-        }
         #endregion
 
         #region Constructors
@@ -93,6 +89,9 @@ namespace TTS.UI.Forms
         private void CheckIO()
         {
             List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
+            if (testsInfo.Count == 0)
+                this.errorsList.Add("Тесты");
+
             foreach (ITestInfo testInfo in testsInfo)
             {
                 if (String.IsNullOrWhiteSpace(testInfo.Input) || String.IsNullOrWhiteSpace(testInfo.Output))
@@ -111,6 +110,10 @@ namespace TTS.UI.Forms
             this.SaveIO();
             this.SaveRequirements();
 
+            IDataStorage storage = CoreAccessor.GetStorage();
+            ITask toDelete = storage.Tasks.SingleOrDefault(task => task.ID == this.task.ID);
+            if (toDelete == null)
+                storage.Tasks.Add(this.task);
             MessageBox.Show("Сохранение прошло успешно!", "Сохранение задачи");
         }
 
@@ -126,19 +129,61 @@ namespace TTS.UI.Forms
         }
         private void SaveIO()
         {
-            this.task.Tests.Clear();
             List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
+            this.UpdateIO(testsInfo);
+            this.task.Tests.Clear();
             foreach (ITestInfo testInfo in testsInfo)
             {
-                this.task.Tests.Add(testInfo);
+                this.task.Tests.Add(testInfo.ID);
             }
         }
+        private void UpdateIO(IList<ITestInfo> newTests)
+        {
+            IDataStorage storage = CoreAccessor.GetStorage();
+            List<ITestInfo> current = storage.Tests.Where(test => this.task.Tests.Contains(test.ID)).ToList();
+            this.AddTests(newTests, current);
+            this.DeleteTests(newTests, current);
+            this.UpdateTests(newTests, current);
+        }
+        private void AddTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            IDataStorage storage = CoreAccessor.GetStorage();
+            List<ITestInfo> toAdd = newTests.Where(newTest => currentTests.All(oldTest => oldTest.ID != newTest.ID)).ToList();
+            foreach (ITestInfo testInfo in toAdd)
+            {
+                storage.Tests.Add(testInfo);
+            }
+        }
+        private void DeleteTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            IDataStorage storage = CoreAccessor.GetStorage();
+            List<ITestInfo> toDelete = currentTests.Where(oldTest => newTests.All(newTest => newTest.ID != oldTest.ID)).ToList();
+            foreach (ITestInfo testInfo in toDelete)
+            {
+                storage.Tests.Remove(testInfo);
+            }
+        }
+        private void UpdateTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            List<ITestInfo> toUpdate = currentTests.Where(oldTest => newTests.Any(test => test.ID == oldTest.ID)).ToList();
+            foreach (ITestInfo testInfo in newTests)
+            {
+                ITestInfo newTestInfo = toUpdate.SingleOrDefault(test => test.ID == testInfo.ID);
+                if (newTestInfo == null)
+                    return;
+                newTestInfo.Input = testInfo.Input;
+                newTestInfo.Output = testInfo.Output;
+            }
+        }
+
         private void SaveRequirements()
         {
             this.task.Requirements.Clear();
-            ICharacteristic characteristic = CoreAccessor.CreateCharacteristic();
-            characteristic.Type = CharacteristicType.InputOutputCompliance;
-            characteristic.Value = true;
+            Characteristic characteristic = new Characteristic
+            {
+                Type = CharacteristicType.InputOutputCompliance,
+                Value = true
+            };
             this.task.Requirements.Add(characteristic);
         }
 
@@ -149,12 +194,14 @@ namespace TTS.UI.Forms
         }
         private void DisplayNameAndDescription()
         {
-            this.NameTextBox.Text = this.Task.Name ?? String.Empty;
-            this.DescriptionTextBox.AppendText(this.Task.Description ?? String.Empty);
+            this.NameTextBox.Text = this.task.Name ?? String.Empty;
+            this.DescriptionTextBox.AppendText(this.task.Description ?? String.Empty);
         }
         private void DisplayIO()
         {
-            foreach (ITestInfo testInfo in this.Task.Tests)
+            IDataStorage storage = CoreAccessor.GetStorage();
+            List<ITestInfo> tests = storage.Tests.Where(test => this.task.Tests.Contains(test.ID)).ToList();
+            foreach (ITestInfo testInfo in tests)
             {
                 this.ioPanel.AddItem(testInfo);
             }

@@ -1,38 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+using TTS.Core.Abstract.Declarations;
 using TTS.Core.Abstract.Model;
 
 
 namespace TTS.Core.Concrete.Model
 {
+    [Serializable]
     internal class TestResult : ITestResult
     {
         #region Data Members
-        private readonly ITestInfo test;
-        private readonly List<ICharacteristic> requirements;
+        private Guid testId;
+        private List<Characteristic> requirements;
         #endregion
 
         #region Properties
-        public ITestInfo Test
+        public Guid TestID
         {
-            get { return this.test; }
+            get { return this.testId; }
+            set
+            {
+                if (value != Guid.Empty)
+                    this.testId = value;
+            }
         }
-        IReadOnlyList<ICharacteristic> ITestResult.Requirements
+        public List<Characteristic> Requirements
+        {
+            get { return this.requirements; }
+            set
+            {
+                if (value != null && value.Count != 0)
+                    this.requirements = value;
+            }
+        }
+
+        IReadOnlyList<Characteristic> ITestResult.Requirements
         {
             get { return this.requirements.AsReadOnly(); }
         }
-        public List<ICharacteristic> Requirements
-        {
-            get { return this.requirements; }
-        }
+        public bool IsPassed { get; set; }
         #endregion
 
         #region Constructors
-        public TestResult(ITestInfo testInfo, IEnumerable<ICharacteristic> results)
+        public TestResult()
         {
-            this.test = testInfo;
-            this.requirements = new List<ICharacteristic>();
-            foreach (ICharacteristic item in results)
+            this.requirements = new List<Characteristic>();            
+        }
+        public TestResult(Guid testId, IEnumerable<Characteristic> results) : this()
+        {
+            this.testId = testId;
+            foreach (Characteristic item in results)
             {
                 this.requirements.Add(item);
             }

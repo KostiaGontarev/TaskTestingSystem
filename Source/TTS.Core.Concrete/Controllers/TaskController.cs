@@ -10,20 +10,13 @@ namespace TTS.Core.Concrete.Controllers
     internal class TaskController : ITaskController
     {
         #region Data Members
-        private readonly IModelStorage storage;
+        private readonly IDataStorage storage = CoreAccessor.GetStorage();
         #endregion
 
         #region Properties
         public IList<ITask> Tasks
         {
             get { return this.storage.Tasks; }
-        }
-        #endregion
-
-        #region Constructors
-        public TaskController(IModelStorage modelStorage)
-        {
-            this.storage = modelStorage;
         }
         #endregion
 

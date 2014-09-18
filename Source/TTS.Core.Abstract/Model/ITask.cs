@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+
+using System.Collections.Generic;
+
+using TTS.Core.Abstract.Declarations;
 
 
 namespace TTS.Core.Abstract.Model
 {
     public interface ITask
     {
+        Guid ID { get; }
         string Name { get; set; }
         string Description { get; set; }
-        IList<ITestInfo> Tests { get; }
-        IList<ICharacteristic> Requirements { get; }
-        IReadOnlyList<ITaskTestResult> Results { get; }
+        IList<Guid> Tests { get; }
+        IList<Characteristic> Requirements { get; }
     }
 }
