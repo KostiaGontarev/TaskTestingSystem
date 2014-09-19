@@ -68,35 +68,26 @@ namespace TTS.Core.Concrete.Processing
                 if (!this.IsReady)
                     throw new InvalidOperationException("The controller is not ready!");
 
-                this.PrepareInput();
-                worker.ReportProgress(30);
-                if (worker.CancellationPending)
-                {
-                    args.Cancel = true;
+                this.PrepareInput(worker);
+                if (worker.CancellationPending) 
                     return;
-                }
-                this.PerformProcess();
-                worker.ReportProgress(60);
+
+                this.PerformProcess(worker);
                 if (worker.CancellationPending)
-                {
-                    args.Cancel = true;
                     return;
-                }
-                this.CheckOutput();
-                worker.ReportProgress(90);
+
+                this.CheckOutput(worker);
                 if (worker.CancellationPending)
-                {
-                    args.Cancel = true;
                     return;
-                }
-                this.DeleteFiles();
-                worker.ReportProgress(95);
+
+                this.DeleteFiles(worker);
             }
             catch (Exception exc)
             {
                 throw new Exception("The test was interrupted by error!", exc);
             }
         }
+
         public void Reset()
         {
             this.process = null;
@@ -108,16 +99,18 @@ namespace TTS.Core.Concrete.Processing
         #endregion
 
         #region Assistants
-        private void PrepareInput()
+        private void PrepareInput(BackgroundWorker worker)
         {
             File.WriteAllText(this.inputPath, this.TestInfo.Input);
+            worker.ReportProgress(30);
         }
-        private void PerformProcess()
+        private void PerformProcess(BackgroundWorker worker)
         {
             this.Process.Start();
             this.Process.WaitForExit();
+            worker.ReportProgress(60);
         }
-        private void CheckOutput()
+        private void CheckOutput(BackgroundWorker worker)
         {
             try
             {
@@ -128,6 +121,10 @@ namespace TTS.Core.Concrete.Processing
             {
                 if (!this.result.HasValue)
                     this.result = false;
+            }
+            finally
+            {
+                worker.ReportProgress(90);                
             }
         }
 
@@ -158,10 +155,11 @@ namespace TTS.Core.Concrete.Processing
             this.inputPath = path + "\\input.txt";
             this.outputPath = path + "\\output.txt";
         }
-        private void DeleteFiles()
+        private void DeleteFiles(BackgroundWorker worker)
         {
             File.Delete(this.inputPath);
             File.Delete(this.outputPath);
+            worker.ReportProgress(95);
         }
         #endregion
     }

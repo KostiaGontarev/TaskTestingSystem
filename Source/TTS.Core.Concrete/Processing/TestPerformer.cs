@@ -76,7 +76,7 @@ namespace TTS.Core.Concrete.Processing
         private static readonly TestPerformer instance = new TestPerformer();
         public static TestPerformer Instance
         {
-            get { return TestPerformer.instance; }
+            get { return instance; }
         }
         #endregion
 
@@ -127,9 +127,13 @@ namespace TTS.Core.Concrete.Processing
         }
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-                this.ioTest.Start(this.worker, e);
-                this.SetupResult();
-                this.worker.ReportProgress(100);
+            this.ioTest.Start(this.worker, e);
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+            this.SetupResult();
         }
         #endregion
 
@@ -140,7 +144,7 @@ namespace TTS.Core.Concrete.Processing
             Characteristic iocTest = new Characteristic
             {
                 Type = CharacteristicType.InputOutputCompliance,
-                Value = this.ioTest.Result
+                Value = this.ioTest.Result ?? false
             };
             results.Add(iocTest);
 
@@ -148,6 +152,7 @@ namespace TTS.Core.Concrete.Processing
             {
                 this.result = new TestResult(this.ioTest.TestInfo.ID, results);
             }
+            this.worker.ReportProgress(100);
         }
         #endregion
 
@@ -155,7 +160,7 @@ namespace TTS.Core.Concrete.Processing
         public void Dispose()
         {
             worker.Dispose();
-        } 
+        }
         #endregion
     }
 }

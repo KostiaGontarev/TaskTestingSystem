@@ -116,6 +116,8 @@ namespace TTS.UI.Forms
             foreach (TestIndicator indicator in this.indicators)
             {
                 indicator.UnsubscribeFromController();
+                if (!indicator.IndicatorState.HasValue)
+                    indicator.Reset();
             }
         }
         #endregion
@@ -180,11 +182,11 @@ namespace TTS.UI.Forms
         {
             foreach (TestIndicator indicator in this.indicators)
             {
-                ITestResult testResult = result.Results.SingleOrDefault(element => element.TestID == indicator.TestId);
+                ITestResult testResult = result.Results.LastOrDefault(element => element.TestID == indicator.TestId);
                 if (testResult != null)
-                {
                     indicator.IndicatorState = testResult.IsPassed;
-                }
+                else
+                    indicator.Reset();
             }
         }
         #endregion

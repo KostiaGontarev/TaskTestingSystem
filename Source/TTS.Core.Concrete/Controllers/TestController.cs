@@ -71,6 +71,8 @@ namespace TTS.Core.Concrete.Controllers
         }
         public void Stop()
         {
+            this.testInfoQueue.Clear();
+            this.filesQueue.Clear();
             this.performer.Stop();
             this.OnAllTestsFinished();
         }
