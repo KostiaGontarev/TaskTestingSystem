@@ -3,7 +3,7 @@ using System.Linq;
 
 using System.Windows.Controls;
 
-using TTS.Core.Abstract.Model;
+using TTS.Core.Interfaces.Model;
 
 
 namespace TTS.UI.UserControls
@@ -21,13 +21,13 @@ namespace TTS.UI.UserControls
         public void AddItem()
         {
             IOSetupControl control = new IOSetupControl();
-            control.DeleteButtonClick += ioSetupControl_DeleteButtonClick;
+            control.DeleteButtonClick += this.ioSetupControl_DeleteButtonClick;
             this.IOControlsPanel.Children.Add(control);
         }
         public void AddItem(ITestInfo testInfo)
         {
             IOSetupControl control = new IOSetupControl(testInfo);
-            control.DeleteButtonClick += ioSetupControl_DeleteButtonClick;
+            control.DeleteButtonClick += this.ioSetupControl_DeleteButtonClick;
             this.IOControlsPanel.Children.Add(control);
         }
         public List<ITestInfo> GetTestsInfo()
@@ -44,7 +44,7 @@ namespace TTS.UI.UserControls
             IOSetupControl control = sender as IOSetupControl;
             if (control != null)
             {
-                control.DeleteButtonClick -= ioSetupControl_DeleteButtonClick;
+                control.DeleteButtonClick -= this.ioSetupControl_DeleteButtonClick;
                 this.IOControlsPanel.Children.Remove(control);
             }
         }

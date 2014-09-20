@@ -7,27 +7,27 @@
 	Title="Редактирование входных/выходных данных"
 	Width="400" Height="150" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/Check.png">
 
-	<Grid x:Name="LayoutRoot">
-		
-		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition Height="0.3*"/>
-		</Grid.RowDefinitions>
-		
-		<RichTextBox x:Name="TextRichTextBox" Grid.Row="0" Margin="3" VerticalScrollBarVisibility="Visible" />
-		
-		<Grid Grid.Row="1">
-					
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			
-			<Button x:Name="SaveButton" Margin="3" Content="ОК" Click="SaveButton_OnClick"/>
-			<Button x:Name="CancelButton" Grid.Column="1" Content="Отмена" Margin="3" Click="CancelButton_OnClick"/>
-			
-		</Grid>
+    <Grid x:Name="LayoutRoot">
 
-	</Grid>
-		
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <RichTextBox x:Name="TextRichTextBox" Grid.Row="0" Margin="3" VerticalScrollBarVisibility="Visible" />
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="SaveButton" Margin="3" Content="ОК" Click="SaveButton_OnClick"/>
+            <Button x:Name="CancelButton" Grid.Column="1" Content="Отмена" Margin="3" Click="CancelButton_OnClick"/>
+
+        </Grid>
+
+    </Grid>
+
 </Window>

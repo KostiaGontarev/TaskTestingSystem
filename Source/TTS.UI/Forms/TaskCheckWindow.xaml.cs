@@ -1,15 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Collections.Generic;
 
 using Microsoft.Win32;
 
-using TTS.Core.Abstract.Model;
-using TTS.Core.Abstract.Controllers;
-using TTS.Core.Concrete;
-
-using TTS.Core.Concrete.Processing;
+using TTS.Core;
+using TTS.Core.Arguments;
+using TTS.Core.Interfaces.Controllers;
+using TTS.Core.Interfaces.Model;
 
 using TTS.UI.UserControls;
 
@@ -21,7 +21,7 @@ namespace TTS.UI.Forms
         #region Data Members
         private readonly ITestController controller;
         private readonly TestingFilesPanel filesPanel;
-        private readonly List<TestIndicator> indicators = new List<TestIndicator>();
+        private readonly List<TestIndicator> indicators;
         #endregion
 
         #region Constructors
@@ -29,19 +29,22 @@ namespace TTS.UI.Forms
         {
             this.InitializeComponent();
 
+            this.indicators = new List<TestIndicator>();
+
             this.filesPanel = new TestingFilesPanel();
-            this.filesPanel.SelectionChanged += FilesPanel_OnSelectionChanged;
+            this.filesPanel.SelectionChanged += this.FilesPanel_OnSelectionChanged;
             this.TestingFilesPanel.Children.Add(filesPanel);
 
             this.controller = CoreAccessor.GetTestController();
-            this.controller.TestChanged += controller_TestChanged;
-            this.controller.AllTestsFinished += controller_AllTestsFinished;
+            this.controller.TestChanged += this.controller_TestChanged;
+            this.controller.AllTestsFinished += this.controller_AllTestsFinished;
         }
         public TaskCheckWindow(ITask task)
             : this()
         {
             this.controller.Task = task;
-            this.SetupTests();
+            this.SetupIndicators();
+            this.SetupResults();
         }
         #endregion
 
@@ -109,10 +112,9 @@ namespace TTS.UI.Forms
                 }
             }
         }
-
         private void controller_AllTestsFinished(object sender, EventArgs e)
         {
-            this.EnableFunctionality();
+            this.TurnOffTestingMode();
             foreach (TestIndicator indicator in this.indicators)
             {
                 indicator.UnsubscribeFromController();
@@ -123,7 +125,7 @@ namespace TTS.UI.Forms
         #endregion
 
         #region Assistance
-        private void SetupTests()
+        private void SetupIndicators()
         {
             const string title = "Тест №";
             int number = 1;
@@ -135,7 +137,20 @@ namespace TTS.UI.Forms
                 number++;
             }
         }
-        private void DisableFunctionality()
+        private void SetupResults()
+        {
+            foreach (ITaskTestResult result in this.controller.Results)
+            {
+                List<string> allFiles = this.filesPanel.GetFiles();
+                if (File.Exists(result.FilePath) && !allFiles.Contains(result.FilePath))
+                {
+                    this.filesPanel.AddItem(result.FilePath);
+                    this.filesPanel.SelectFile(result.FilePath);
+                }
+            }
+        }
+
+        private void TurnOnTestingMode()
         {
             CheckAllButton.Visibility = Visibility.Collapsed;
             CheckSelectedButton.Visibility = Visibility.Collapsed;
@@ -148,7 +163,7 @@ namespace TTS.UI.Forms
             StopCheckButton.IsEnabled = true;
             StopCheckButton.Visibility = Visibility.Visible;
         }
-        private void EnableFunctionality()
+        private void TurnOffTestingMode()
         {
             StopCheckButton.IsEnabled = false;
             StopCheckButton.Visibility = Visibility.Collapsed;
@@ -165,7 +180,7 @@ namespace TTS.UI.Forms
         {
             if (tests.Count != 0 && files.Count != 0)
             {
-                this.DisableFunctionality();
+                this.TurnOnTestingMode();
                 this.controller.Run(tests, files);
             }
             else

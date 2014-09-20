@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,9 +8,6 @@ using System.Windows.Media;
 
 namespace TTS.UI.UserControls
 {
-    /// <summary>
-    /// Interaction logic for Exec_file.xaml
-    /// </summary>
     public partial class TestingFileControl : UserControl
     {
         #region ReadOnly Members
@@ -27,7 +25,6 @@ namespace TTS.UI.UserControls
         {
             get { return this.filePath; }
         }
-
         public bool Selected
         {
             get { return this.selected; }
@@ -52,7 +49,7 @@ namespace TTS.UI.UserControls
         #endregion
 
         #region Constructors
-        public TestingFileControl()
+        private TestingFileControl()
         {
             this.InitializeComponent();
         }
@@ -70,7 +67,6 @@ namespace TTS.UI.UserControls
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.OnDeleteButtonClick();
-
         }
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -81,13 +77,12 @@ namespace TTS.UI.UserControls
         #region Event Invokers
         private void OnDeleteButtonClick()
         {
-            EventHandler handler = DeleteButtonClick;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            EventHandler handler = this.DeleteButtonClick;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
         protected virtual void OnElementSelected()
         {
-            EventHandler handler = ElementSelected;
+            EventHandler handler = this.ElementSelected;
             if (handler != null) handler(this, EventArgs.Empty);
         }
         #endregion

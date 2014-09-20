@@ -50,9 +50,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -82,7 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\MainWindow.xaml">
+    <Page Include="Forms\TaskIndexWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -96,7 +93,7 @@
     </Compile>
     <Compile Include="Forms\TaskEditWindow.xaml.cs" />
     <Compile Include="Forms\TextEditDialog.xaml.cs" />
-    <Compile Include="Forms\MainWindow.xaml.cs" />
+    <Compile Include="Forms\TaskIndexWindow.xaml.cs" />
     <Compile Include="Forms\TaskCheckWindow.xaml.cs" />
     <Page Include="Themes\BureauBlack.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -175,16 +172,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TTS.Core.Abstract\TTS.Core.Abstract.csproj">
-      <Project>{b3e21f4d-7c4b-4dbc-b8c6-18bbfc0aad0a}</Project>
-      <Name>TTS.Core.Abstract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TTS.Core.Concrete\TTS.Core.Concrete.csproj">
-      <Project>{9bfa4dcd-f84f-4847-8ef0-5a1310d72f89}</Project>
-      <Name>TTS.Core.Concrete</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Pictures\Check.png" />
     <Resource Include="Pictures\Delete.png" />
   </ItemGroup>
@@ -210,6 +197,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TTS.Core\TTS.Core.csproj">
+      <Project>{9bfa4dcd-f84f-4847-8ef0-5a1310d72f89}</Project>
+      <Name>TTS.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

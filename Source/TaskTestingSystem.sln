@@ -5,14 +5,12 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTS.UI", "TTS.UI\TTS.UI.csproj", "{8A4988CB-83DE-4D08-8828-3C7494F46B39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTS.Core.Abstract", "TTS.Core.Abstract\TTS.Core.Abstract.csproj", "{B3E21F4D-7C4B-4DBC-B8C6-18BBFC0AAD0A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTS.Core.Concrete", "TTS.Core.Concrete\TTS.Core.Concrete.csproj", "{9BFA4DCD-F84F-4847-8EF0-5A1310D72F89}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50F3A010-5833-46AD-9E4B-2DF5CB6742AF}"
 	ProjectSection(SolutionItems) = preProject
 		CodeMap.dgml = CodeMap.dgml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTS.Core", "TTS.Core\TTS.Core.csproj", "{9BFA4DCD-F84F-4847-8EF0-5A1310D72F89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +22,6 @@ Global
 		{8A4988CB-83DE-4D08-8828-3C7494F46B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A4988CB-83DE-4D08-8828-3C7494F46B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A4988CB-83DE-4D08-8828-3C7494F46B39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3E21F4D-7C4B-4DBC-B8C6-18BBFC0AAD0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3E21F4D-7C4B-4DBC-B8C6-18BBFC0AAD0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3E21F4D-7C4B-4DBC-B8C6-18BBFC0AAD0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3E21F4D-7C4B-4DBC-B8C6-18BBFC0AAD0A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9BFA4DCD-F84F-4847-8EF0-5A1310D72F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BFA4DCD-F84F-4847-8EF0-5A1310D72F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BFA4DCD-F84F-4847-8EF0-5A1310D72F89}.Release|Any CPU.ActiveCfg = Release|Any CPU

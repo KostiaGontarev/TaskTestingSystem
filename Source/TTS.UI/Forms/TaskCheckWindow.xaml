@@ -79,7 +79,7 @@
             <Grid Grid.Row="2">
                 <Button Name="AddButton" Grid.Column="0" Content="Добавить" Height="22" VerticalAlignment="Center" Margin="4,0,4,5" Click="AddButton_OnClick"/>
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Window>

@@ -4,9 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-using TTS.Core.Abstract.Model;
-
-using TTS.Core.Concrete;
+using TTS.Core;
+using TTS.Core.Interfaces.Model;
 
 using TTS.UI.Forms;
 
@@ -17,6 +16,7 @@ namespace TTS.UI.UserControls
     {
         #region Data Members
         private TextEditDialog ioEditDialog;
+
         private readonly ITestInfo testInfo;
         #endregion
 
@@ -29,7 +29,7 @@ namespace TTS.UI.UserControls
                 this.testInfo.Output = this.OutputTextBox.Text;
                 return this.testInfo;
             }
-        } 
+        }
         #endregion
 
         #region Events
@@ -73,9 +73,8 @@ namespace TTS.UI.UserControls
         #region Event Invokers
         private void OnDeleteButtonClick()
         {
-            EventHandler handler = DeleteButtonClick;
-            if (handler != null) 
-                handler(this, EventArgs.Empty);
+            EventHandler handler = this.DeleteButtonClick;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
         #endregion
     }

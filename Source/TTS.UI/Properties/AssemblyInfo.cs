@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TTS.UI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("TaskTestingSystem user interface")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TTS.UI")]

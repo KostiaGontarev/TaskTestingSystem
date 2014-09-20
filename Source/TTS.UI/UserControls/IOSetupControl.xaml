@@ -8,23 +8,23 @@
 	x:Name="UserControl"
 	d:DesignWidth="230" d:DesignHeight="22" Height="Auto" MinHeight="25" MaxHeight="25">
 
-	<Grid x:Name="LayoutRoot">
-		
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition Width="0.25*"/>
-		</Grid.ColumnDefinitions>
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
 
         <TextBox Grid.Column="0" Margin="2" x:Name="InputTextBox" PreviewMouseDown="InputTextBox_OnPreviewMouseDown" />
         <TextBox Grid.Column="1" Margin="2" AllowDrop="True" x:Name="OutputTextBox" PreviewMouseDown="OutputTextBox_OnPreviewMouseDown" />
-		
-		<Button x:Name="DeleteButton" Grid.Column="2" Margin="2" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick">
-			<Button.Background>
-				<ImageBrush ImageSource="/TTS.UI;component/Pictures/Delete.png" />
-			</Button.Background>
-		</Button>
-		
-	</Grid>	
-	
+
+        <Button x:Name="DeleteButton" Grid.Column="2" Margin="2" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick">
+            <Button.Background>
+                <ImageBrush ImageSource="/TTS.UI;component/Pictures/Delete.png" />
+            </Button.Background>
+        </Button>
+
+    </Grid>
+
 </UserControl>

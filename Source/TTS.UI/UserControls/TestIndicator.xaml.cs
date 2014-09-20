@@ -3,10 +3,9 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-using TTS.Core.Abstract.Controllers;
-
-using TTS.Core.Concrete;
-using TTS.Core.Concrete.Processing;
+using TTS.Core;
+using TTS.Core.Arguments;
+using TTS.Core.Interfaces.Controllers;
 
 
 namespace TTS.UI.UserControls
@@ -60,21 +59,21 @@ namespace TTS.UI.UserControls
         public void SubscribeToController()
         {
             ITestController controller = CoreAccessor.GetTestController();
-            controller.TestStarted += controller_TestStarted;
-            controller.TestFinished += controller_TestFinished;
-            controller.ProgressChanged += controller_ProgressChanged;
+            controller.TestStarted += this.controller_TestStarted;
+            controller.TestFinished += this.controller_TestFinished;
+            controller.ProgressChanged += this.controller_ProgressChanged;
         }
         public void UnsubscribeFromController()
         {
             ITestController controller = CoreAccessor.GetTestController();
-            controller.TestStarted -= controller_TestStarted;
-            controller.TestFinished -= controller_TestFinished;
-            controller.ProgressChanged -= controller_ProgressChanged;
+            controller.TestStarted -= this.controller_TestStarted;
+            controller.TestFinished -= this.controller_TestFinished;
+            controller.ProgressChanged -= this.controller_ProgressChanged;
         }
 
         public void Reset()
         {
-            this.Indicator.Fill = IndicatorDefaultColor;
+            this.Indicator.Fill = TestIndicator.IndicatorDefaultColor;
             this.TestProgressBar.Value = 0;
         }
         #endregion

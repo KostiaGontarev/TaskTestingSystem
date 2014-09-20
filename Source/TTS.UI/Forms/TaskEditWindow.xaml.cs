@@ -5,11 +5,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 
-using TTS.Core.Abstract.Declarations;
-using TTS.Core.Abstract.Model;
-using TTS.Core.Abstract.Storage;
-
-using TTS.Core.Concrete;
+using TTS.Core;
+using TTS.Core.Interfaces.Model;
+using TTS.Core.Interfaces.Storage;
+using TTS.Core.Declarations;
 
 using TTS.UI.UserControls;
 
@@ -19,7 +18,7 @@ namespace TTS.UI.Forms
     public partial class TaskEditWindow : Window
     {
         #region Data Members
-        private readonly List<string> errorsList = new List<string>();
+        private readonly List<string> errorsList;
         private readonly IOPanel ioPanel;
         private ITask task;
         #endregion
@@ -28,6 +27,7 @@ namespace TTS.UI.Forms
         public TaskEditWindow()
         {
             this.InitializeComponent();
+            this.errorsList = new List<string>();
             this.ioPanel = new IOPanel();
             this.ContentIOBorder.Child = this.ioPanel;
         }
@@ -81,7 +81,7 @@ namespace TTS.UI.Forms
         }
         private void CheckDescription()
         {
-            TextRange textRange = new TextRange(DescriptionTextBox.Document.ContentStart, DescriptionTextBox.Document.ContentEnd);
+            TextRange textRange = new TextRange(this.DescriptionTextBox.Document.ContentStart, this.DescriptionTextBox.Document.ContentEnd);
             string str = textRange.Text.Replace("\r\n", "");
             if (String.IsNullOrWhiteSpace(str))
                 this.errorsList.Add("Условие");
@@ -116,14 +116,13 @@ namespace TTS.UI.Forms
                 storage.Tasks.Add(this.task);
             MessageBox.Show("Сохранение прошло успешно!", "Сохранение задачи");
         }
-
         private void SaveName()
         {
-            this.task.Name = NameTextBox.Text;
+            this.task.Name = this.NameTextBox.Text;
         }
         private void SaveDescription()
         {
-            TextRange textRange = new TextRange(DescriptionTextBox.Document.ContentStart, DescriptionTextBox.Document.ContentEnd);
+            TextRange textRange = new TextRange(this.DescriptionTextBox.Document.ContentStart, this.DescriptionTextBox.Document.ContentEnd);
             string str = textRange.Text.Replace("\r\n", "");
             this.task.Description = str;
         }

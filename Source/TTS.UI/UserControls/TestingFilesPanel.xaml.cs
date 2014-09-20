@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
@@ -6,9 +7,6 @@ using System.Windows.Controls;
 
 namespace TTS.UI.UserControls
 {
-    /// <summary>
-    /// Interaction logic for TestingFilesPanel.xaml
-    /// </summary>
     public partial class TestingFilesPanel : UserControl
     {
         #region Constructors
@@ -40,7 +38,7 @@ namespace TTS.UI.UserControls
         #region Event Invokators
         protected virtual void OnSelectionChanged()
         {
-            EventHandler handler = SelectionChanged;
+            EventHandler handler = this.SelectionChanged;
             if (handler != null) handler(this, EventArgs.Empty);
         }
         #endregion
@@ -51,7 +49,7 @@ namespace TTS.UI.UserControls
             TestingFileControl control = sender as TestingFileControl;
             if (control != null)
             {
-                control.DeleteButtonClick -= TestingFileControl_DeleteButtonClick;
+                control.DeleteButtonClick -= this.TestingFileControl_DeleteButtonClick;
                 this.FilesPanel.Children.Remove(control);
             }
         }
@@ -78,8 +76,8 @@ namespace TTS.UI.UserControls
         public void AddItem(string filePath)
         {
             TestingFileControl testingFileControl = new TestingFileControl(filePath);
-            testingFileControl.DeleteButtonClick += TestingFileControl_DeleteButtonClick;
-            testingFileControl.ElementSelected += testingFileControl_ElementSelected;
+            testingFileControl.DeleteButtonClick += this.TestingFileControl_DeleteButtonClick;
+            testingFileControl.ElementSelected += this.testingFileControl_ElementSelected;
             testingFileControl.Selected = true;
 
             this.FilesPanel.Children.Add(testingFileControl);

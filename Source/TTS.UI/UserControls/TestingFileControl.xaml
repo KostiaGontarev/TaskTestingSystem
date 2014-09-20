@@ -19,15 +19,15 @@
                 <ColumnDefinition  Width="20"/>
                 <ColumnDefinition Width="22"/>
             </Grid.ColumnDefinitions>
-            
+
             <CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Name="FileCheckBox"></CheckBox>
 
             <Label ToolTip="{Binding filePath}" Name="FilePathLabel" Margin="2" FontSize="12" Padding="0" AllowDrop="True" Grid.Column="1"/>
 
-            <Ellipse Name="ResultFileEllipse" Grid.Column="2" Margin="4" Fill="White" Stroke="Black"/>
-            
+            <Ellipse Name="ResultFileEllipse" Grid.Column="2" Margin="4" Fill="White" Stroke="Black" Visibility="Collapsed"/>
+
             <Button Name="DeleteButton" Grid.Column="3" BorderBrush="White" Foreground="White" Click="DeleteButton_OnClick" Margin="0">
-                    <Image Source="/TTS.UI;component/Pictures/Delete.png"/>
+                <Image Source="/TTS.UI;component/Pictures/Delete.png"/>
             </Button>
 
         </Grid>

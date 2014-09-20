@@ -28,13 +28,13 @@
                     <RowDefinition Height="0.15*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                
+
                 <Label Grid.Row="0" VerticalAlignment="Center" Content="Условие" FontStyle="Italic" Margin="0,0,0,0"/>
 
                 <ScrollViewer Grid.Row="1" x:Name="DescriptionScrollViewer"  VerticalScrollBarVisibility="Auto" >
                     <RichTextBox Name="DescriptionTextBox"/>
                 </ScrollViewer>
-                
+
             </Grid>
 
             <Grid Grid.Row="2">
