@@ -152,15 +152,5 @@ namespace TTS.UI.Forms
             }
         }
 	    #endregion
-
-        private void ThemeButton_OnClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ChangeTheme(string name)
-        {
-
-        }
     }
 }
