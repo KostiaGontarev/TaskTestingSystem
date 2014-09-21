@@ -43,6 +43,9 @@ namespace TTS.UI.Forms
             : this()
         {
             this.controller.Task = task;
+
+            this.Title = this.Title + " '" +this.controller.Task.Name + "'";
+
             this.SetupIndicators();
             this.SetupResults();
         }
