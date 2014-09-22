@@ -69,17 +69,8 @@ namespace TTS.Core.Processing
                     throw new InvalidOperationException("The controller is not ready!");
 
                 this.PrepareInput(worker);
-                if (worker.CancellationPending) 
-                    return;
-
                 this.PerformProcess(worker);
-                if (worker.CancellationPending)
-                    return;
-
                 this.CheckOutput(worker);
-                if (worker.CancellationPending)
-                    return;
-
                 this.DeleteFiles(worker);
             }
             catch (Exception exc)

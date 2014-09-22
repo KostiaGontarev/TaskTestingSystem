@@ -22,8 +22,9 @@ namespace TTS.Core.Controllers
         private readonly TestPerformer performer = TestPerformer.Instance;
         private readonly Queue<ITestInfo> testInfoQueue = new Queue<ITestInfo>();
         private readonly Queue<string> filesQueue = new Queue<string>();
+        private bool cancelationPending = false;
 
-        private Task task;
+        private ITask task;
         private IList<ITestInfo> testsToPerform;
         private readonly List<ITestResult> results = new List<ITestResult>();
         #endregion
@@ -44,8 +45,8 @@ namespace TTS.Core.Controllers
             {
                 IDataStorage storage = DataManager.Instance;
                 return storage.Results.Where(result => result.TaskID == this.Task.ID).ToList();
-            }    
-        } 
+            }
+        }
         #endregion
 
         #region Constructors
@@ -69,8 +70,7 @@ namespace TTS.Core.Controllers
         {
             this.testInfoQueue.Clear();
             this.filesQueue.Clear();
-            this.performer.Stop();
-            this.OnAllTestsFinished();
+            this.cancelationPending = true;
         }
         #endregion
 
@@ -128,8 +128,14 @@ namespace TTS.Core.Controllers
             this.results.Add(result);
 
             this.OnTestFinished(new BoolResultEventArgs(success));
-            
-            this.PerformNextTest();
+
+            if (this.cancelationPending)
+            {
+                this.cancelationPending = false;
+                this.OnAllTestsFinished();
+            }
+            else
+                this.PerformNextTest();
         }
         #endregion
 
@@ -209,7 +215,7 @@ namespace TTS.Core.Controllers
                     return false;
             }
             return true;
-        } 
+        }
         #endregion
     }
 }

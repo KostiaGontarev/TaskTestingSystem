@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Collections.Generic;
 
 using Microsoft.Win32;
 
@@ -14,7 +14,7 @@ using TTS.Core.Interfaces.Model;
 using TTS.UI.UserControls;
 
 
-namespace TTS.UI.Forms
+namespace TTS.UI.Windows
 {
     public partial class TaskCheckWindow : Window
     {
@@ -84,6 +84,7 @@ namespace TTS.UI.Forms
         }
         private void StopCheckButton_OnClick(object sender, RoutedEventArgs e)
         {
+            this.StopCheckButton.IsEnabled = false;
             this.controller.Stop();
         }
         private void FilesPanel_OnSelectionChanged(object sender, EventArgs e)
@@ -102,7 +103,10 @@ namespace TTS.UI.Forms
                 return;
 
             if (this.filesPanel.CurrentFile != args.FileName)
+            {
                 this.filesPanel.SelectFile(args.FileName);
+                this.ResetIndicators();                
+            }
 
             TestIndicator current = this.indicators.SingleOrDefault(element => element.TestId == args.TestInfo.ID);
             if (current != null)
@@ -181,13 +185,21 @@ namespace TTS.UI.Forms
         }
         private void Run(IList<Guid> tests, IList<string> files)
         {
-            if (tests.Count != 0 && files.Count != 0)
+            try
             {
-                this.TurnOnTestingMode();
-                this.controller.Run(tests, files);
+                if (tests.Count != 0 && files.Count != 0)
+                {
+                    this.TurnOnTestingMode();
+                    this.ResetIndicators();
+                    this.controller.Run(tests, files);
+                }
+                else
+                    MessageBox.Show("Выберите тесты и файлы!", "Ошибка!");
             }
-            else
-                MessageBox.Show("Выберите тесты и файлы!", "Ошибка!");
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("Тестировщик ещё не завершил предыдущее задание! Попробуйте ещё раз!", "Занято!");
+            }
         }
         private void ResetIndicators()
         {

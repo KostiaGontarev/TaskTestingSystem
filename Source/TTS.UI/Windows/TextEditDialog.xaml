@@ -2,7 +2,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-	x:Class="TTS.UI.Forms.TextEditDialog"
+	x:Class="TTS.UI.Windows.TextEditDialog"
 	x:Name="Window"
 	Title="Редактирование входных/выходных данных"
 	Width="400" Height="150" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/Check.png">

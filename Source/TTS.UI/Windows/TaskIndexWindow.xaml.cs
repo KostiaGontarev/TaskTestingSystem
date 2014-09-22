@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Documents;
 
 using Microsoft.Win32;
 
@@ -7,10 +6,8 @@ using TTS.Core;
 using TTS.Core.Interfaces.Controllers;
 using TTS.Core.Interfaces.Model;
 
-using TTS.UI.Themes;
 
-
-namespace TTS.UI.Forms
+namespace TTS.UI.Windows
 {
 	public partial class TaskIndexWindow : Window
     {
@@ -115,11 +112,8 @@ namespace TTS.UI.Forms
         {
             this.Close();
         }
-        private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
-        {
 
-        }
-        private void AboutButton_OnClick(object sender, RoutedEventArgs e)
+	    private void AboutButton_OnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Автоматизарованная проверка задач\nАвторы:\n   Гонтарев Константин Витальевич, \n   Бойченко Анна Викторовна\nПолоцк, 2014","О программе");
         }

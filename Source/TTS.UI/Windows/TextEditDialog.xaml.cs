@@ -1,10 +1,9 @@
 ﻿using System;
-
 using System.Windows;
 using System.Windows.Documents;
 
 
-namespace TTS.UI.Forms
+namespace TTS.UI.Windows
 {
 	public partial class TextEditDialog : Window
     {

@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Windows;
 using System.Windows.Documents;
 
 using TTS.Core;
+using TTS.Core.Declarations;
 using TTS.Core.Interfaces.Model;
 using TTS.Core.Interfaces.Storage;
-using TTS.Core.Declarations;
 
 using TTS.UI.UserControls;
 
 
-namespace TTS.UI.Forms
+namespace TTS.UI.Windows
 {
     public partial class TaskEditWindow : Window
     {

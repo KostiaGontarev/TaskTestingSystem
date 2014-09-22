@@ -57,7 +57,7 @@ namespace TTS.Core.Processing
         }
         public bool IsReady
         {
-            get { return this.Process != null; }
+            get { return this.Process != null && this.TestInfo != null && !this.worker.CancellationPending; }
         }
         #endregion
 
@@ -80,12 +80,14 @@ namespace TTS.Core.Processing
         #region Members
         public void Run()
         {
-            this.OnTestStarted();
-            this.worker.RunWorkerAsync();
-        }
-        public void Stop()
-        {
-            this.worker.CancelAsync();
+            if (this.IsReady)
+            {
+                this.OnTestStarted();
+
+                this.worker.RunWorkerAsync();
+            }
+            else
+                throw new InvalidOperationException("The worker is busy. Try again later...");       
         }
         #endregion
 
@@ -125,11 +127,6 @@ namespace TTS.Core.Processing
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             this.ioTest.Start(this.worker, e);
-            if (this.worker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
             this.SetupResult();
         }
         #endregion

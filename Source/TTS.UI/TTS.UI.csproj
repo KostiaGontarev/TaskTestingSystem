@@ -71,19 +71,19 @@
     <Compile Include="UserControls\TestingFilesPanel.xaml.cs">
       <DependentUpon>TestingFilesPanel.xaml</DependentUpon>
     </Compile>
-    <Page Include="Forms\TaskEditWindow.xaml">
+    <Page Include="Windows\TaskEditWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\TextEditDialog.xaml">
+    <Page Include="Windows\TextEditDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\TaskIndexWindow.xaml">
+    <Page Include="Windows\TaskIndexWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\TaskCheckWindow.xaml">
+    <Page Include="Windows\TaskCheckWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -91,38 +91,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\TaskEditWindow.xaml.cs" />
-    <Compile Include="Forms\TextEditDialog.xaml.cs" />
-    <Compile Include="Forms\TaskIndexWindow.xaml.cs" />
-    <Compile Include="Forms\TaskCheckWindow.xaml.cs" />
-    <Page Include="Themes\BureauBlack.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\BureauBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\ExpressionDark.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\ExpressionLight.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\ShinyBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\ShinyRed.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\WhistlerBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Windows\TaskEditWindow.xaml.cs" />
+    <Compile Include="Windows\TextEditDialog.xaml.cs" />
+    <Compile Include="Windows\TaskIndexWindow.xaml.cs" />
+    <Compile Include="Windows\TaskCheckWindow.xaml.cs" />
     <Page Include="UserControls\IOSetupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
