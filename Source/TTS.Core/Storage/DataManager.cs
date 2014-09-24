@@ -82,6 +82,12 @@ namespace TTS.Core.Storage
                 throw new IOException("Storage saving error!", exc);
             }
         }
+        public void SubstituteIOSet(IList<ITestInfo> newTests, IList<ITestInfo> oldTests)
+        {
+            this.AddTests(newTests, oldTests);
+            this.DeleteTests(newTests, oldTests);
+            this.UpdateTests(newTests, oldTests);
+        }
         #endregion
 
         #region Assistants
@@ -131,6 +137,35 @@ namespace TTS.Core.Storage
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(writer, storage);
+            }
+        }
+
+        private void AddTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            List<ITestInfo> toAdd = newTests.Where(newTest => currentTests.All(oldTest => oldTest.ID != newTest.ID)).ToList();
+            foreach (ITestInfo testInfo in toAdd)
+            {
+                this.Tests.Add(testInfo);
+            }
+        }
+        private void DeleteTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            List<ITestInfo> toDelete = currentTests.Where(oldTest => newTests.All(newTest => newTest.ID != oldTest.ID)).ToList();
+            foreach (ITestInfo testInfo in toDelete)
+            {
+                this.Tests.Remove(testInfo);
+            }
+        }
+        private void UpdateTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
+        {
+            List<ITestInfo> toUpdate = currentTests.Where(oldTest => newTests.Any(test => test.ID == oldTest.ID)).ToList();
+            foreach (ITestInfo testInfo in newTests)
+            {
+                ITestInfo newTestInfo = toUpdate.SingleOrDefault(test => test.ID == testInfo.ID);
+                if (newTestInfo == null)
+                    return;
+                newTestInfo.Input = testInfo.Input;
+                newTestInfo.Output = testInfo.Output;
             }
         }
         #endregion

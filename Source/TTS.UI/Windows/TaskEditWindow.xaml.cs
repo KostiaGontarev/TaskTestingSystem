@@ -127,53 +127,17 @@ namespace TTS.UI.Windows
         }
         private void SaveIO()
         {
+            IDataStorage storage = CoreAccessor.GetStorage();
             List<ITestInfo> testsInfo = this.ioPanel.GetTestsInfo();
-            this.UpdateIO(testsInfo);
+            List<ITestInfo> current = storage.Tests.Where(test => this.task.Tests.Contains(test.ID)).ToList();
+            storage.SubstituteIOSet(testsInfo, current);
+
             this.task.Tests.Clear();
             foreach (ITestInfo testInfo in testsInfo)
             {
                 this.task.Tests.Add(testInfo.ID);
             }
         }
-        private void UpdateIO(IList<ITestInfo> newTests)
-        {
-            IDataStorage storage = CoreAccessor.GetStorage();
-            List<ITestInfo> current = storage.Tests.Where(test => this.task.Tests.Contains(test.ID)).ToList();
-            this.AddTests(newTests, current);
-            this.DeleteTests(newTests, current);
-            this.UpdateTests(newTests, current);
-        }
-        private void AddTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
-        {
-            IDataStorage storage = CoreAccessor.GetStorage();
-            List<ITestInfo> toAdd = newTests.Where(newTest => currentTests.All(oldTest => oldTest.ID != newTest.ID)).ToList();
-            foreach (ITestInfo testInfo in toAdd)
-            {
-                storage.Tests.Add(testInfo);
-            }
-        }
-        private void DeleteTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
-        {
-            IDataStorage storage = CoreAccessor.GetStorage();
-            List<ITestInfo> toDelete = currentTests.Where(oldTest => newTests.All(newTest => newTest.ID != oldTest.ID)).ToList();
-            foreach (ITestInfo testInfo in toDelete)
-            {
-                storage.Tests.Remove(testInfo);
-            }
-        }
-        private void UpdateTests(IEnumerable<ITestInfo> newTests, IEnumerable<ITestInfo> currentTests)
-        {
-            List<ITestInfo> toUpdate = currentTests.Where(oldTest => newTests.Any(test => test.ID == oldTest.ID)).ToList();
-            foreach (ITestInfo testInfo in newTests)
-            {
-                ITestInfo newTestInfo = toUpdate.SingleOrDefault(test => test.ID == testInfo.ID);
-                if (newTestInfo == null)
-                    return;
-                newTestInfo.Input = testInfo.Input;
-                newTestInfo.Output = testInfo.Output;
-            }
-        }
-
         private void SaveRequirements()
         {
             this.task.Requirements.Clear();

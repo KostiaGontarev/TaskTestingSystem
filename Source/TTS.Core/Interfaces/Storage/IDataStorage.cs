@@ -11,6 +11,8 @@ namespace TTS.Core.Interfaces.Storage
         IList<ITestInfo> Tests { get; }
         IReadOnlyCollection<ITaskTestResult> Results { get; }
 
+        void SubstituteIOSet(IList<ITestInfo> newTests, IList<ITestInfo> oldTests);
+
         void LoadFrom(string path);
         void WriteTo(string path);
     }
