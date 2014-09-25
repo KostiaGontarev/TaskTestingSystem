@@ -4,7 +4,10 @@
 	x:Class="TTS.UI.Windows.TaskCheckWindow"
 	x:Name="Window"
 	Title="Проверка задачи"
-	Width="500" Height="440" ResizeMode="NoResize" Icon="/TTS.UI;component/Pictures/check.png">
+	Width="500" Height="440" 
+    ResizeMode="NoResize" 
+    Icon="/TTS.UI;component/Pictures/check.png"
+    Closing="TaskCheckWindow_OnClosing">
 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>

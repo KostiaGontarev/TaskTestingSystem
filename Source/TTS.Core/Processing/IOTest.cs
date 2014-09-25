@@ -78,15 +78,6 @@ namespace TTS.Core.Processing
                 throw new Exception("The test was interrupted by error!", exc);
             }
         }
-
-        public void Reset()
-        {
-            this.process = null;
-            this.testInfo = null;
-            this.inputPath = null;
-            this.outputPath = null;
-            this.result = null;
-        }
         #endregion
 
         #region Assistants

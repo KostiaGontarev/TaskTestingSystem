@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -128,6 +129,11 @@ namespace TTS.UI.Windows
                 if (!indicator.IndicatorState.HasValue)
                     indicator.Reset();
             }
+        }
+
+        private void TaskCheckWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            this.controller.Stop();
         }
         #endregion
 
