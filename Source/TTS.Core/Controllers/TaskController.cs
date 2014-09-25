@@ -3,6 +3,7 @@
 using TTS.Core.Interfaces.Model;
 using TTS.Core.Interfaces.Storage;
 using TTS.Core.Interfaces.Controllers;
+using TTS.Core.Storage;
 
 
 namespace TTS.Core.Controllers
@@ -10,7 +11,7 @@ namespace TTS.Core.Controllers
     internal class TaskController : ITaskController
     {
         #region Data Members
-        private readonly IDataStorage storage = CoreAccessor.GetStorage();
+        private readonly IDataStorage storage = DataManager.Instance;
         #endregion
 
         #region Properties

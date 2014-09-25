@@ -197,10 +197,7 @@ namespace TTS.Core.Controllers
             storage.Results.Add(result);
             this.results.Clear();
         }
-        #endregion
-
-        #region Static Members
-        public bool IsTestPassed(IEnumerable<Characteristic> requirements, IReadOnlyCollection<Characteristic> results)
+        private bool IsTestPassed(IEnumerable<Characteristic> requirements, IReadOnlyCollection<Characteristic> results)
         {
             foreach (Characteristic requirement in requirements)
             {

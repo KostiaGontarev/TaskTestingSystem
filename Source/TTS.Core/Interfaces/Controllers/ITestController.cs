@@ -21,7 +21,5 @@ namespace TTS.Core.Interfaces.Controllers
 
         void Run(IList<Guid> tests, IList<string> files);
         void Stop();
-
-        bool IsTestPassed(IEnumerable<Characteristic> requirements, IReadOnlyCollection<Characteristic> results);
     }
 }
